@@ -2,138 +2,225 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zyra Hub</title>
+<link rel="icon" href="https://www.google.com/favicon.ico">
 <style>
-:root{
-  --accent:#9b59ff;
-  --glow:0 0 25px rgba(155,89,255,.9);
+:root {
+  --accent: #9b59ff;
+  --accent-light: #b366ff;
+  --glow: 0 0 25px rgba(155,89,255,.9);
 }
 
-body{
-  margin:0;
-  background:radial-gradient(circle at top,#2b0033,#000);
-  font-family:Arial,sans-serif;
-  color:#e6ccff;
-  overflow:hidden;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #1c001f, #000);
+  color: #e6ccff;
 }
 
-/* PARTICLES */
-canvas{position:fixed;inset:0;z-index:0}
+/* PARTICLES BACKGROUND */
+canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 
-/* BUTTON */
-.btn{
-  padding:12px 25px;
-  margin:6px;
-  background:linear-gradient(135deg,#6a0dad,var(--accent));
-  color:white;
-  font-weight:bold;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  box-shadow:0 6px 18px rgba(128,0,255,.7);
+/* BUTTON STYLES */
+.btn, .zyra-button {
+  padding: 12px 25px;
+  margin: 6px;
+  background: linear-gradient(135deg, #6a0dad, var(--accent));
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(128,0,255,.7);
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.btn:hover, .zyra-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(128,0,255,.8);
 }
 
-/* LOGIN / LOCK */
-.screen{
-  position:fixed;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,.7);
-  z-index:10;
+/* LOGIN SCREEN */
+#login {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.8);
+  z-index: 10;
 }
-.box{
-  background:#14001f;
-  padding:30px;
-  width:360px;
-  border-radius:18px;
-  box-shadow:var(--glow);
-  text-align:center;
+.box {
+  background: #14001f;
+  padding: 30px;
+  width: 360px;
+  border-radius: 25px;
+  box-shadow: var(--glow);
+  text-align: center;
 }
-input,select{
-  width:90%;
-  padding:12px;
-  margin:6px;
-  background:#0f0018;
-  border:1px solid var(--accent);
-  color:white;
-  border-radius:10px;
-}
-
-/* OS */
-#os{display:none;position:relative;z-index:2;height:100%}
-
-nav{
-  position:fixed;
-  bottom:15px;
-  left:50%;
-  transform:translateX(-50%);
-  background:rgba(60,0,90,.9);
-  padding:12px;
-  border-radius:18px;
-  display:flex;
-  gap:8px;
-  z-index:20;
+input {
+  width: 90%;
+  padding: 12px;
+  margin: 6px;
+  background: #0f0018;
+  border: 1px solid var(--accent);
+  color: white;
+  border-radius: 10px;
 }
 
-section{
-  display:none;
-  padding:60px;
-  height:100%;
-  overflow:auto;
-  animation:fade .35s ease;
+/* NAVIGATION */
+#os {
+  display: none;
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  overflow-y: auto;
 }
-section.active{display:block}
-@keyframes fade{from{opacity:0;transform:scale(.97)}to{opacity:1}}
+nav {
+  position: fixed;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(60,0,90,.9);
+  padding: 12px;
+  border-radius: 18px;
+  display: flex;
+  gap: 8px;
+  z-index: 20;
+}
+section {
+  display: none;
+  padding: 40px;
+  min-height: 100%;
+  animation: fade 0.35s ease;
+}
+section.active { display: block; }
+@keyframes fade { from {opacity:0; transform:scale(.97);} to {opacity:1;} }
 
-h1{font-size:55px;text-shadow:var(--glow)}
-textarea{width:95%;height:220px;background:#120018;color:white}
-iframe{width:95%;height:300px;border:none}
-
-/* Dashboard Styles (from your Zyra Dashboard) */
+/* DASHBOARD */
 .dashboard-box {
-  position:relative; margin:20px auto; max-width:460px; padding:20px;
-  display:flex; flex-direction:column; align-items:center;
-  border-radius:25px;
-  background:linear-gradient(135deg, #2b0033, #000);
-  box-shadow:0 12px 50px rgba(128,0,255,0.7);
-  overflow:hidden; z-index:5;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 35px;
+  background: linear-gradient(145deg,#2b0033,#0d0015);
+  border-radius: 25px;
+  box-shadow: 0 15px 50px rgba(128,0,255,0.7);
+  text-align: center;
+  position: relative;
 }
-.dashboard-logo-container { display:flex; align-items:center; justify-content:space-between; width:100%; margin-bottom:15px; }
-.dashboard-logo { display:flex; align-items:center; font-family:'Courier New', monospace; z-index:2; }
-.dashboard-logo .angle { color:#e6ccff; font-size:40px; margin:0 10px; animation: float 2s infinite ease-in-out; }
-.dashboard-logo .text-container { display:flex; flex-direction:column; align-items:center; }
-.dashboard-logo .main-text { font-size:40px; font-weight:bold; background:linear-gradient(90deg,#9b59ff,#b366ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.dashboard-logo .sub-text { font-size:20px; color:#e6ccff; margin-top:2px; }
-.cards-row { display:flex; justify-content:space-between; gap:20px; width:100%; flex-wrap:wrap; margin-top:30px; margin-bottom:20px; }
-.widget { display:flex; justify-content:center; align-items:center; width:45%; }
-.button-widget { width:100%; display:flex; justify-content:center; margin-bottom:10px; }
-.zyra-button { padding:15px 20px; font-size:16px; font-weight:bold; color:white; background:linear-gradient(135deg,#6a0dad,#9b59ff); border:none; border-radius:15px; cursor:pointer; transition: transform 0.2s, box-shadow 0.3s; }
-.zyra-button:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(128,0,255,0.7); }
-.battery-card, .datetime-card { background: radial-gradient(circle at top,#2b0033,#000); color:#e6ccff; box-shadow:0 8px 25px rgba(128,0,255,0.4); text-align:center; font-family:Arial, sans-serif; transition: transform 0.3s, box-shadow 0.3s; width:160px; height:160px; border-radius:18px; }
-.battery-bar-container { display:flex; flex-direction:column; align-items:center; gap:6px; margin-top:6px; }
-.bar-bg { width:80%; height:12px; background: rgba(255,255,255,0.15); border-radius:10px; overflow:hidden; }
-.bar-fill { width:0%; height:100%; background:linear-gradient(90deg,#b366ff,#e0b3ff); border-radius:10px; transition: width 0.4s ease; }
-.percent { font-size:18px; font-weight:bold; }
-.status { margin-top:6px; font-size:12px; opacity:0.85; }
-.datetime-card .title { font-size:14px; font-weight:bold; margin-bottom:6px; }
-.date { font-size:14px; font-weight:bold; margin-bottom:4px; }
-.time { font-size:20px; font-weight:bold; }
-.card-hover:hover { transform: translateY(-5px); box-shadow:0 15px 45px rgba(128,0,255,0.7); }
-.thankyou-widget { width:100%; display:flex; justify-content:center; margin-bottom:15px; }
-.thankyou-box { width:90%; background: linear-gradient(135deg, #3a005f, #5e006e); color: #e6ccff; border-radius: 18px; text-align: center; padding: 15px 20px; font-family: Arial, sans-serif; font-size: 14px; box-shadow: 0 8px 25px rgba(128,0,255,0.4); transition: transform 0.3s, box-shadow 0.3s; }
-.thankyou-box:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(128,0,255,0.6); }
-.thankyou-box p { margin: 5px 0; }
-@keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-5px); } }
+.dashboard-logo {
+  font-size: 40px;
+  font-weight: bold;
+  background: linear-gradient(90deg,#9b59ff,#b366ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 30px;
+  text-shadow: 0 0 15px rgba(155,89,255,.6);
+}
+.cards-row {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-bottom: 20px;
+}
+.card {
+  background: radial-gradient(circle at top,#2b0033,#000);
+  width: 150px;
+  height: 140px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(128,0,255,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 45px rgba(128,0,255,0.7);
+}
+.card-title { font-size: 15px; margin-bottom: 8px; color: #d8b3ff; }
+.card-value { font-size: 20px; font-weight: bold; }
+
+/* GAMES */
+#zyraBox {
+  margin: 50px auto;
+  padding: 40px;
+  width: 90%;
+  max-width: 700px;
+  background: radial-gradient(circle at top, #2b0033, #000);
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(128,0,255,0.6);
+  text-align: center;
+  color: #e6ccff;
+  position: relative;
+}
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+.zyra-style-button {
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #6a0dad, #9b59ff);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(128,0,255,0.6);
+  transition: transform 0.2s, box-shadow 0.3s;
+  text-decoration: none;
+}
+.zyra-style-button:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(128,0,255,0.7); }
+
+/* IFRAME (Games) */
+#iframeContainer {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 9999;
+  background: #000;
+}
+#iframeContainer iframe { width: 100%; height: 100%; border: none; }
+#closeIframe {
+  position: absolute;
+  top: 10px; right: 20px;
+  background: #6a0dad;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+/* MEDIA SECTION */
+#media div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
 </style>
 </head>
-
 <body>
 
 <canvas id="particles"></canvas>
 
 <!-- LOGIN -->
-<div id="login" class="screen">
+<div id="login">
   <div class="box">
-    <h1>Zyra OS</h1>
+    <h1>Zyra Hub</h1>
     <input id="lUser" placeholder="Username">
     <input id="lPass" type="password" placeholder="Password">
     <button class="btn" onclick="login()">Login</button>
@@ -141,15 +228,7 @@ iframe{width:95%;height:300px;border:none}
   </div>
 </div>
 
-<!-- LOCK -->
-<div id="lock" class="screen" style="display:none">
-  <div class="box">
-    <h1>🔒 Locked</h1>
-    <button class="btn" onclick="unlock()">Unlock</button>
-  </div>
-</div>
-
-<!-- OS -->
+<!-- MAIN APP -->
 <div id="os">
 
 <nav>
@@ -157,247 +236,163 @@ iframe{width:95%;height:300px;border:none}
   <button class="btn" onclick="openTab('games')">Games</button>
   <button class="btn" onclick="openTab('media')">Media</button>
   <button class="btn" onclick="openTab('tools')">Tools</button>
-  <button class="btn" onclick="openTab('tester')">Tester</button>
-  <button class="btn" onclick="openTab('bookmarklets')">Bookmarklets</button>
-  <button class="btn" onclick="openTab('tutorial')">Tutorial</button>
-  <button class="btn" onclick="lockOS()">Lock</button>
+  <button class="btn" onclick="openTab('zyraai')">Zyra AI</button>
   <button class="btn" onclick="logout()">Logout</button>
 </nav>
 
+<!-- HOME -->
 <section id="home" class="active">
-  <h1 id="welcome"></h1>
-  <p id="role"></p>
-
-  <!-- Dashboard added to Home -->
-  <div class="dashboard-box" id="dashboardBox">
-
-    <div class="dashboard-logo-container">
-      <div class="dashboard-logo">
-        <span class="angle">&lt;</span>
-        <div class="text-container">
-          <span class="main-text">Zyra</span>
-          <span class="sub-text">Josh Johnson</span>
-        </div>
-        <span class="angle">&gt;</span>
-      </div>
-    </div>
-
+  <div class="dashboard-box">
+    <div class="dashboard-logo" id="welcome">Welcome</div>
     <div class="cards-row">
-      <div class="widget">
-        <div class="battery-card card-hover">
-          <div class="title">🔋 Battery</div>
-          <div class="battery-bar-container">
-            <div class="bar-bg"><div class="bar-fill" id="bar"></div></div>
-            <div class="percent" id="percent">--%</div>
-          </div>
-          <div class="status" id="status">Loading…</div>
+      <div class="card">
+        <div class="card-title">🔋 Battery</div>
+        <div class="card-value" id="percent">--%</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🕒 Time</div>
+        <div class="card-value" id="time">--:--:--</div>
+      </div>
+      <div class="card">
+        <div class="card-title">👁️ Visits</div>
+        <div class="card-value">
+          <script type="text/javascript" src="https://www.stat-counter.org/count/jd4l"></script>
         </div>
       </div>
-
-      <div class="widget">
-        <div class="datetime-card card-hover">
-          <div class="title">🕒 Date & Time</div>
-          <div class="date" id="date">Loading…</div>
-          <div class="time" id="time">--:--:--</div>
-        </div>
+      <div class="card">
+        <div class="card-title">❤️ Likes</div>
+        <div class="card-value" id="likesCount">0</div>
+        <button class="btn" id="likeBtn">Like</button>
       </div>
     </div>
-
-    <div class="widget button-widget">
-      <button id="openZyra" class="zyra-button">Open ZyraAi</button>
-    </div>
-
-    <div class="widget thankyou-widget">
-      <div class="thankyou-box">
-        <p>Thank you for visiting <strong>Zyra Games</strong>! 🚀</p>
-        <p>Enjoy exploring games, media, and tools!</p>
-      </div>
-    </div>
-
   </div>
 </section>
 
+<!-- GAMES -->
 <section id="games">
-  <h1>Game Sites</h1>
-  <button class="btn" onclick="open('https://genizymath.github.io/')">GenizyMath</button>
-  <button class="btn" onclick="open('https://quack-learn.web.app/')">Duck Games</button>
+  <div id="zyraBox">
+    <h2>Game Launcher</h2>
+    <p style="font-size:14px;">Note: I did not make any of these sites.</p>
+    <div class="buttons-container">
+      <button id="openGenizy" class="zyra-style-button">Open GenizyMath</button>
+      <a href="https://psecurly-by-void.bostoncareercounselor.com/g" target="_blank" class="zyra-style-button">Velara Games</a>
+      <button id="openVoid" class="zyra-style-button">Open Void NetWork</button>
+      <a href="https://quack-learn.web.app/" target="_blank" class="zyra-style-button">Open Duck Games</a>
+    </div>
+    <div id="iframeContainer">
+      <div id="closeIframe">Close</div>
+      <iframe src="https://ccported.web.app/"></iframe>
+    </div>
+    <canvas id="particleCanvas"></canvas>
+  </div>
 </section>
 
+<!-- MEDIA -->
 <section id="media">
-  <h1>Movies</h1>
-  <button class="btn" onclick="open('https://yflix.to/home')">YFlix</button>
-  <button class="btn" onclick="open('https://arc018.to/')">Arc018</button>
+  <h1>MEDIA</h1>
+  <div>
+    <a href="https://yflix.to/home" target="_blank" class="zyra-style-button">YFlix</a>
+    <a href="https://arc018.to/" target="_blank" class="zyra-style-button">Arc018</a>
+  </div>
 </section>
 
+<!-- TOOLS -->
 <section id="tools">
   <h1>Tab Cloak</h1>
   <input id="cloakTitle" placeholder="Tab title">
   <select id="cloakIcon">
     <option value="https://www.google.com/favicon.ico">Google</option>
     <option value="https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico">Docs</option>
+    <option value="https://www.youtube.com/s/desktop/6f69b2a2/img/favicon_32.png">YouTube</option>
+    <option value="https://github.githubassets.com/favicons/favicon.png">GitHub</option>
   </select>
   <button class="btn" onclick="cloak()">Apply</button>
 </section>
 
-<section id="tester">
-  <h1>HTML Tester</h1>
-  <textarea id="editor"></textarea><br>
-  <button class="btn" onclick="run()">Run</button>
-  <iframe id="preview"></iframe>
-</section>
-
-<section id="bookmarklets">
-  <h1>Bookmarklets</h1>
-  <input value="javascript:alert('Zyra OS')" style="width:80%">
-</section>
-
-<section id="tutorial">
-  <h1>Tutorial</h1>
-  <button class="btn" onclick="open('https://www.youtube.com/watch?v=N9GUpPMWmKU')">Watch</button>
+<!-- Zyra AI -->
+<section id="zyraai">
+  <h1>Zyra AI</h1>
+  <button class="zyra-style-button" onclick="openZyra()">Open Zyra AI</button>
 </section>
 
 </div>
 
 <script>
-/* ===== USERS ===== */
+// USERS
 let users = JSON.parse(localStorage.getItem("users")||"{}");
 let current = null;
-
-// DOM Elements
 const loginScreen = document.getElementById("login");
 const osScreen = document.getElementById("os");
-const lockScreen = document.getElementById("lock");
 const welcomeText = document.getElementById("welcome");
-const roleText = document.getElementById("role");
 const lUser = document.getElementById("lUser");
 const lPass = document.getElementById("lPass");
 
-/* ADMIN DEFAULT */
-if(!users.admin){
-  users.admin = {pass:"zyraadmin",admin:true};
-  localStorage.setItem("users",JSON.stringify(users));
-}
+if(!users.admin){ users.admin={pass:"zyraadmin",admin:true}; localStorage.setItem("users",JSON.stringify(users)); }
 
-/* CREATE */
 function create(){
   const u=lUser.value.trim(), p=lPass.value;
   if(!u||!p) return alert("Fill fields");
   if(users[u]) return alert("User exists");
   users[u]={pass:p,admin:false};
   localStorage.setItem("users",JSON.stringify(users));
-  current=u;
-  localStorage.setItem("current",u);
-  start();
+  current=u; localStorage.setItem("current",u); start();
 }
 
-/* LOGIN */
 function login(){
   const u=lUser.value.trim(), p=lPass.value;
-  if(users[u] && users[u].pass===p){
-    current=u;
-    localStorage.setItem("current",u);
-    start();
-  } else alert("Wrong login");
+  if(users[u] && users[u].pass===p){ current=u; localStorage.setItem("current",u); start(); } 
+  else alert("Wrong login");
 }
 
-/* START */
 function start(){
-  loginScreen.style.display="none";
-  osScreen.style.display="block";
+  loginScreen.style.display="none"; osScreen.style.display="block";
   welcomeText.textContent="Welcome "+current;
-  roleText.textContent=users[current].admin?"ADMIN":"USER";
   initDashboard();
 }
 
-/* AUTO LOGIN */
-if(localStorage.getItem("current")){
-  current=localStorage.getItem("current");
-  start();
-}
+if(localStorage.getItem("current")){ current=localStorage.getItem("current"); start(); }
 
-/* NAV */
-function openTab(id){
-  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
+function openTab(id){ document.querySelectorAll("section").forEach(s=>s.classList.remove("active")); document.getElementById(id).classList.add("active"); }
+function logout(){ localStorage.removeItem("current"); location.reload(); }
+function cloak(){ document.title=cloakTitle.value||document.title; const l=document.createElement("link"); l.rel="icon"; l.href=cloakIcon.value; document.head.appendChild(l); }
 
-/* LOCK */
-function lockOS(){lockScreen.style.display="flex"}
-function unlock(){lockScreen.style.display="none"}
-function logout(){localStorage.removeItem("current");location.reload()}
-
-/* TOOLS */
-function run(){preview.srcdoc=editor.value}
-function cloak(){
-  document.title=cloakTitle.value||document.title;
-  const l=document.createElement("link");
-  l.rel="icon";l.href=cloakIcon.value;
-  document.head.appendChild(l);
-}
-
-/* ===== DASHBOARD ===== */
+// DASHBOARD
 function initDashboard(){
-  const openBtn = document.getElementById("openZyra");
-  openBtn.onclick = () => {
-    const win = window.open("about:blank","_blank");
-    win.document.open();
-    win.document.write(`
-      <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>ZyraAi</title>
-      <style>html,body{margin:0;padding:0;height:100%;overflow:hidden;background:linear-gradient(135deg,#2b0033,#000);} iframe{width:100%;height:100%;border:none;}</style>
-      </head><body><iframe src="https://zyragames-jj.github.io/ZyraGames.github.io/"></iframe></body></html>
-    `);
-    win.document.close();
-  };
-
-  // Battery
-  function updateBatteryDisplay(level, charging) {
-    document.getElementById("percent").textContent = Math.round(level*100)+"%";
-    document.getElementById("bar").style.width = (level*100)+"%";
-    document.getElementById("status").textContent = charging ? "⚡ Charging" : "🔌 Not charging";
-  }
-  if('getBattery' in navigator){
-    navigator.getBattery().then(battery=>{
-      updateBatteryDisplay(battery.level,battery.charging);
-      battery.addEventListener("levelchange",()=>updateBatteryDisplay(battery.level,battery.charging));
-      battery.addEventListener("chargingchange",()=>updateBatteryDisplay(battery.level,battery.charging));
-    });
-  }else{
-    updateBatteryDisplay(0,false);
-    document.getElementById("status").textContent="Battery info not supported";
-  }
-
-  // Date & Time
-  function updateDateTime(){
-    const now=new Date();
-    const days=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    const months=["January","February","March","April","May","June","July","August","September","October","November","December"];
-    const dayName=days[now.getDay()], monthName=months[now.getMonth()], dateNum=now.getDate(), year=now.getFullYear();
-    let hours=now.getHours(), minutes=now.getMinutes(), seconds=now.getSeconds();
-    const ampm=hours>=12?'PM':'AM';
-    hours=hours%12; hours=hours?hours:12;
-    const pad=num=>num.toString().padStart(2,'0');
-    document.getElementById('date').textContent=`${dayName}, ${monthName} ${dateNum}, ${year}`;
-    document.getElementById('time').textContent=`${pad(hours)}:${pad(minutes)}:${pad(seconds)} ${ampm}`;
-  }
-  updateDateTime(); setInterval(updateDateTime,1000);
+  if('getBattery' in navigator){ navigator.getBattery().then(b=>{ document.getElementById("percent").textContent=Math.round(b.level*100)+"%"; b.addEventListener("levelchange",()=>document.getElementById("percent").textContent=Math.round(b.level*100)+"%"); }); }
+  else document.getElementById("percent").textContent="0%";
+  function updateTime(){ document.getElementById("time").textContent=new Date().toLocaleTimeString(); }
+  updateTime(); setInterval(updateTime,1000);
 }
 
-/* ===== PARTICLES ===== */
+// BACKGROUND PARTICLES
 const c=document.getElementById("particles"),x=c.getContext("2d");
-c.width=innerWidth;c.height=innerHeight;
-let p=[...Array(80)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,dx:Math.random()-.5,dy:Math.random()-.5}));
-(function anim(){
-  x.clearRect(0,0,c.width,c.height);
-  p.forEach(o=>{
-    o.x+=o.dx;o.y+=o.dy;
-    if(o.x<0||o.x>c.width)o.dx*=-1;
-    if(o.y<0||o.y>c.height)o.dy*=-1;
-    x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue("--accent");
-    x.beginPath();x.arc(o.x,o.y,2,0,7);x.fill();
-  });
-  requestAnimationFrame(anim);
-})();
+c.width=innerWidth; c.height=innerHeight;
+let p=[...Array(120)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,dx:Math.random()-.5,dy:Math.random()-.5,r:Math.random()*2+1}));
+(function anim(){ x.clearRect(0,0,c.width,c.height); p.forEach(o=>{ o.x+=o.dx; o.y+=o.dy; if(o.x<0||o.x>c.width)o.dx*=-1;if(o.y<0||o.y>c.height)o.dy*=-1; x.fillStyle='rgba(155,89,255,0.8)'; x.beginPath(); x.arc(o.x,o.y,o.r,0,Math.PI*2); x.fill(); }); requestAnimationFrame(anim); })();
+
+// GAMES
+document.getElementById("openGenizy").onclick = function(){ const win = window.open("about:blank","_blank"); win.location.href="https://genizymath.github.io/"; }
+document.getElementById('openVoid').onclick = ()=>document.getElementById('iframeContainer').style.display='block';
+document.getElementById('closeIframe').onclick = ()=>document.getElementById('iframeContainer').style.display='none';
+
+// GAME PARTICLES
+const canvas2=document.getElementById('particleCanvas'),ctx=canvas2.getContext('2d');
+canvas2.width=canvas2.offsetWidth; canvas2.height=canvas2.offsetHeight;
+let particles=[]; const colors=['#b366ff','#d8b3ff','#6a0dad','#9b59ff'];
+for(let i=0;i<150;i++){ particles.push({x:Math.random()*canvas2.width,y:Math.random()*canvas2.height,size:Math.random()*3+1,color:colors[Math.floor(Math.random()*colors.length)],speed:Math.random()*1.5+0.5}); }
+function animateParticles(){ ctx.clearRect(0,0,canvas2.width,canvas2.height); particles.forEach(p=>{ p.y+=p.speed; if(p.y>canvas2.height){ p.y=0; p.x=Math.random()*canvas2.width; } ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2); ctx.fillStyle=p.color; ctx.fill(); }); requestAnimationFrame(animateParticles); }
+animateParticles();
+window.addEventListener('resize',()=>{ canvas2.width=canvas2.offsetWidth; canvas2.height=canvas2.offsetHeight; });
+
+// LIKES
+let likes=parseInt(localStorage.getItem('likes')||'0');
+const likesCount=document.getElementById('likesCount');
+const likeBtn=document.getElementById('likeBtn');
+likesCount.textContent=likes;
+likeBtn.onclick=()=>{ likes++; likesCount.textContent=likes; localStorage.setItem('likes',likes); }
+
+// Zyra AI
+function openZyra(){ window.open("about:blank").location.href="https://zyragames-jj.github.io/ZyraGames.github.io/"; }
 </script>
 
 </body>

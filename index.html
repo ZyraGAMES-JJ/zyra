@@ -2,172 +2,1158 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zyra Hub</title>
 <link rel="icon" href="https://www.google.com/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* === CORE VARIABLES & RESET === */
 :root {
   --accent: #9b59ff;
   --accent-light: #b366ff;
-  --glow: 0 0 25px rgba(155,89,255,.9);
+  --accent-dark: #7c3aed;
+  --bg-dark: #050008;
+  --bg-card: rgba(20, 5, 40, 0.6);
+  --glass-bg: rgba(30, 10, 50, 0.4);
+  --glass-border: rgba(155, 89, 255, 0.15);
+  --glass-border-hover: rgba(155, 89, 255, 0.4);
+  --glow: 0 0 40px rgba(155, 89, 255, 0.4);
+  --glow-strong: 0 0 60px rgba(155, 89, 255, 0.6);
+  --text-main: #ffffff;
+  --text-secondary: #b8b0c8;
+  --text-muted: #6b5b7a;
+  --font-main: 'Outfit', sans-serif;
+  --gradient-1: linear-gradient(135deg, #9b59ff 0%, #6a0dad 100%);
+  --gradient-2: linear-gradient(135deg, #ff006e 0%, #8338ec 100%);
+  --danger: #ff2a6d;
+  --warning: #ffc107;
+  --success: #0aff60;
 }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  margin: 0;
-  padding: 0;
   height: 100%;
   overflow: hidden;
-  font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #2b0033, #000);
-  color: #e6ccff;
+  font-family: var(--font-main);
+  background: var(--bg-dark);
+  color: var(--text-main);
 }
 
-/* PARTICLES */
-canvas { position: fixed; inset: 0; z-index: 0; }
-
-/* BUTTONS */
-.btn, .zyra-button {
-  padding: 12px 25px;
-  margin: 6px;
-  background: linear-gradient(135deg, #6a0dad, var(--accent));
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(128,0,255,.7);
-  transition: transform 0.2s, box-shadow 0.3s;
-}
-.btn:hover, .zyra-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(128,0,255,.8);
+body {
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(155, 89, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(106, 13, 173, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 0%, #1a0b2e 0%, #000000 100%);
 }
 
-/* LOGIN SCREEN */
+/* === PARTICLES BACKGROUND === */
+#particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* === LOGIN SCREEN === */
 #login {
   position: fixed;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.8);
-  z-index: 10;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(20px);
+  z-index: 50;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.box {
-  background: #14001f;
-  padding: 30px;
-  width: 360px;
-  border-radius: 25px;
-  box-shadow: var(--glow);
-  text-align: center;
-}
-input { width: 90%; padding: 12px; margin: 6px; background: #0f0018; border: 1px solid var(--accent); color: white; border-radius: 10px; }
 
-/* OS NAVIGATION */
-#os { display: none; position: relative; z-index: 2; height: 100%; overflow-y: auto; }
-nav {
-  position: fixed;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(60,0,90,.9);
-  padding: 12px;
-  border-radius: 18px;
+.login-box {
+  background: var(--glass-bg);
+  padding: 50px;
+  width: 460px;
+  border-radius: 30px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glow), inset 0 0 0 1px rgba(255,255,255,0.05);
+  text-align: center;
+  animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+}
+
+.login-box h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, var(--accent), #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.login-box p {
+  color: var(--text-secondary);
+  margin-bottom: 40px;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.input-group {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 18px 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--glass-border);
+  color: white;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(155, 89, 255, 0.1), 0 0 20px rgba(155, 89, 255, 0.2);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.btn-group {
   display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* === GLOBAL COMPONENTS === */
+.btn {
+  flex: 1;
+  padding: 16px 24px;
+  background: var(--gradient-1);
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(155, 89, 255, 0.3);
+  font-family: inherit;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(155, 89, 255, 0.5);
+  filter: brightness(1.1);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  box-shadow: inset 0 0 20px rgba(155, 89, 255, 0.1);
+}
+
+.btn-outline:hover {
+  background: rgba(155, 89, 255, 0.1);
+  box-shadow: inset 0 0 30px rgba(155, 89, 255, 0.2), 0 4px 20px rgba(155, 89, 255, 0.2);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #ff2a6d 0%, #d1004d 100%);
+  box-shadow: 0 4px 20px rgba(255, 42, 109, 0.3);
+}
+
+.btn-danger:hover {
+  box-shadow: 0 8px 30px rgba(255, 42, 109, 0.5);
+}
+
+.btn-small {
+  padding: 8px 16px;
+  font-size: 0.85rem;
+}
+
+/* === MAIN OS LAYOUT === */
+#os {
+  display: none;
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100%;
+  background: rgba(10, 2, 20, 0.7);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  padding: 30px 25px;
   z-index: 20;
 }
-section { display: none; padding: 40px; height: 100%; overflow-y: auto; animation: fade 0.35s ease; }
-section.active { display: block; }
-@keyframes fade { from {opacity:0; transform:scale(.97);} to {opacity:1;} }
 
-/* HEADINGS */
-h1, h2 { font-size: 36px; text-shadow: var(--glow); text-align: center; }
-
-/* DASHBOARD */
-.dashboard-box {
-  max-width: 480px;
-  margin: 20px auto;
-  padding: 25px;
-  background: linear-gradient(135deg,#2b0033,#000);
-  border-radius: 25px;
-  box-shadow: 0 12px 50px rgba(128,0,255,0.7);
-  text-align: center;
-  position: relative;
-}
-.dashboard-logo { font-size: 32px; font-weight: bold; background: linear-gradient(90deg,#9b59ff,#b366ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom: 20px; }
-.cards-row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; }
-.card { background: radial-gradient(circle at top,#2b0033,#000); width: 220px; height: 120px; border-radius: 18px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 8px 25px rgba(128,0,255,0.4); transition: transform 0.3s, box-shadow 0.3s; }
-.card:hover { transform: translateY(-5px); box-shadow: 0 15px 45px rgba(128,0,255,0.7); }
-.card-title { font-size: 16px; margin-bottom: 8px; }
-.card-value { font-size: 22px; font-weight: bold; }
-
-/* GAMES BOX */
-#zyraBox {
-  position: relative;
-  margin: 50px auto;
-  padding: 40px;
-  width: 90%;
-  max-width: 700px;
-  background: radial-gradient(circle at top, #2b0033, #000);
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(128,0,255,0.6);
-  overflow: hidden;
-  text-align: center;
-  color: #e6ccff;
-}
-.buttons-container {
+.brand {
   display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 30px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 50px;
+  padding-left: 10px;
 }
-.zyra-style-button {
-  display: inline-block;
-  padding: 15px 30px;
-  font-size: 18px;
-  font-weight: bold;
-  color: white;
-  background: linear-gradient(135deg, #6a0dad, #9b59ff);
-  border: none;
-  border-radius: 12px;
-  text-align: center;
-  cursor: pointer;
-  box-shadow: 0 6px 18px rgba(128,0,255,0.6);
-  transition: transform 0.2s, box-shadow 0.3s;
-  text-decoration: none;
-}
-.zyra-style-button:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(128,0,255,0.7); }
 
-/* IFRAME */
-#iframeContainer {
+.brand-icon {
+  width: 45px;
+  height: 45px;
+  background: var(--gradient-1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(155, 89, 255, 0.4);
+}
+
+.brand-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: white;
+  stroke-width: 2;
+  fill: none;
+}
+
+.brand-text {
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent), #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-item {
+  padding: 16px 20px;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+}
+
+.nav-item:hover {
+  background: rgba(155, 89, 255, 0.1);
+  color: white;
+  border-color: rgba(155, 89, 255, 0.2);
+}
+
+.nav-item.active {
+  background: rgba(155, 89, 255, 0.15);
+  color: white;
+  border-color: rgba(155, 89, 255, 0.3);
+  box-shadow: 0 0 20px rgba(155, 89, 255, 0.1);
+}
+
+.nav-item svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-item.admin-only {
+  display: none;
+}
+
+.nav-item.admin-only.visible {
+  display: flex;
+}
+
+.nav-item.logout {
+  margin-top: auto;
+  color: #ff6b6b;
+}
+
+.nav-item.logout:hover {
+  background: rgba(255, 107, 107, 0.1);
+  border-color: rgba(255, 107, 107, 0.3);
+}
+
+/* === CONTENT AREA === */
+.content-area {
+  margin-left: 280px;
+  height: 100%;
+  overflow-y: auto;
+  padding: 40px;
+  position: relative;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 0 10px;
+}
+
+.user-welcome {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #fff, var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.top-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.settings-btn, .wifi-btn, .fps-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-main);
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.settings-btn:hover, .wifi-btn:hover, .fps-btn:hover {
+  background: rgba(155, 89, 255, 0.2);
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(155, 89, 255, 0.2);
+}
+
+.settings-btn:hover {
+  transform: rotate(30deg);
+}
+
+.settings-btn svg, .wifi-btn svg, .fps-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+section {
+  display: none;
+  animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+section.active {
+  display: block;
+}
+
+/* === DASHBOARD GRID === */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: var(--glass-border-hover);
+  box-shadow: 0 20px 40px rgba(155, 89, 255, 0.15);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.card-icon {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(155, 89, 255, 0.15);
+  border-radius: 14px;
+  border: 1px solid rgba(155, 89, 255, 0.2);
+}
+
+.card-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.card-title {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.card-value {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #fff, var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-value.small {
+  font-size: 2rem;
+}
+
+.card-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 18px;
+  background: rgba(155, 89, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+
+.link-btn:hover {
+  background: var(--accent);
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(155, 89, 255, 0.3);
+  border-color: transparent;
+}
+
+/* === GAMES & MEDIA === */
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.app-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  cursor: pointer;
+}
+
+.app-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.app-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--accent);
+  box-shadow: 0 20px 50px rgba(155, 89, 255, 0.2);
+}
+
+.app-card:hover::before {
+  opacity: 1;
+}
+
+.app-card-content {
+  padding: 35px 30px;
+  position: relative;
+  z-index: 1;
+}
+
+.app-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: white;
+  font-weight: 600;
+}
+
+.app-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin-bottom: 25px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.launch-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--gradient-1);
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(155, 89, 255, 0.3);
+}
+
+.launch-tag svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.disclaimer {
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 16px;
+  padding: 20px 25px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: #ffc107;
+  font-size: 0.95rem;
+}
+
+.disclaimer svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+}
+
+/* === ADMIN PANEL === */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 25px;
+}
+
+.admin-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+}
+
+.admin-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-card h3 svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+}
+
+.user-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.user-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--glass-border);
+}
+
+.user-item.current {
+  border-color: var(--success);
+  background: rgba(10, 255, 96, 0.05);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.user-role {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.log-container {
+  background: rgba(0,0,0,0.4);
+  border-radius: 12px;
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  border: 1px solid var(--glass-border);
+}
+
+.log-entry {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  gap: 15px;
+}
+
+.log-time {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.log-message {
+  color: var(--text-secondary);
+}
+
+/* === IFRAME CONTAINER === */
+.iframe-container {
   display: none;
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  z-index: 9999;
+  inset: 0;
   background: #000;
-}
-#iframeContainer iframe { width: 100%; height: 100%; border: none; }
-#closeIframe {
-  position: absolute;
-  top: 10px; right: 20px;
-  background: #6a0dad;
-  color: white;
-  padding: 8px 14px;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 10000;
+  z-index: 200;
 }
 
-/* DISCORD & REQUEST BUTTONS */
-#discordBtn, #requestBtn {
-  display: inline-block;
-  margin: 15px 10px;
+.iframe-container.active {
+  display: block;
 }
-#discordBtn a, #requestBtn a {
-  text-decoration: none;
+
+.iframe-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.close-iframe {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: var(--accent);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 201;
+  border: none;
+  box-shadow: 0 0 30px rgba(155,89,255,0.5);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s;
+}
+
+.close-iframe:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px rgba(155,89,255,0.7);
+}
+
+/* === PERKS SECTION === */
+.perks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.perk-card {
+  background: linear-gradient(135deg, rgba(155, 89, 255, 0.2) 0%, rgba(106, 13, 173, 0.2) 100%);
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.perk-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(155, 89, 255, 0.3);
+}
+
+.perk-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  box-shadow: 0 0 30px rgba(155, 89, 255, 0.4);
+}
+
+.perk-icon svg {
+  width: 30px;
+  height: 30px;
+  stroke: white;
+  stroke-width: 2;
+  fill: none;
+}
+
+.perk-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.perk-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* === WIFI SPEED TEST === */
+.wifi-modal {
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  width: 350px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 25px;
+  z-index: 150;
+  display: none;
+  backdrop-filter: blur(20px);
+  box-shadow: var(--glow-strong);
+}
+
+.wifi-modal.active {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+.wifi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.wifi-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.close-wifi {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 5px;
+}
+
+.speed-display {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.speed-value {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.speed-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.speed-bar {
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 15px 0;
+}
+
+.speed-fill {
+  height: 100%;
+  background: var(--gradient-1);
+  width: 0%;
+  transition: width 0.3s;
+  border-radius: 4px;
+}
+
+/* === FPS COUNTER === */
+.fps-counter {
+  position: fixed;
+  top: 80px;
+  right: 100px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 15px 20px;
+  z-index: 150;
+  display: none;
+  backdrop-filter: blur(10px);
+  min-width: 150px;
+}
+
+.fps-counter.active {
+  display: block;
+  animation: slideDown 0.3s ease;
+}
+
+.fps-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--success);
+}
+
+.fps-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.fps-graph {
+  height: 40px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  margin-top: 10px;
+}
+
+.fps-bar {
+  flex: 1;
+  background: var(--success);
+  opacity: 0.6;
+  border-radius: 2px 2px 0 0;
+  min-height: 2px;
+}
+
+/* === SETTINGS MODAL === */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.modal-overlay.active { 
+  display: flex; 
+  opacity: 1;
+}
+
+.modal-content {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 40px;
+  box-shadow: var(--glow-strong);
+  animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.modal-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.close-modal {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.close-modal:hover {
+  background: rgba(255,107,107,0.2);
+  color: #ff6b6b;
+  border-color: rgba(255,107,107,0.3);
+}
+
+.setting-group {
+  margin-bottom: 35px;
+  padding-bottom: 35px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.setting-group:last-child { border-bottom: none; margin-bottom: 0; }
+
+.setting-label {
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  display: block;
+  color: white;
+  font-weight: 600;
+}
+
+.setting-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.theme-options {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.theme-btn {
+  padding: 12px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: rgba(0,0,0,0.3);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.theme-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.theme-btn.active {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 5px 20px rgba(155, 89, 255, 0.3);
+}
+
+.color-picker-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 15px;
+  padding: 20px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+}
+
+input[type="color"] {
+  width: 60px;
+  height: 60px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+#colorHex {
+  font-family: monospace;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 56px;
+  height: 30px;
+}
+
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255,255,255,0.1);
+  transition: .4s;
+  border-radius: 34px;
+  border: 1px solid var(--glass-border);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+input:checked + .slider { 
+  background-color: var(--accent); 
+  border-color: var(--accent);
+}
+
+input:checked + .slider:before { transform: translateX(26px); }
+
+/* === ANIMATIONS === */
+@keyframes fadeIn { 
+  from { opacity: 0; transform: translateY(20px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+@keyframes slideUp { 
+  from { opacity: 0; transform: translateY(40px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+@keyframes slideDown { 
+  from { opacity: 0; transform: translateY(-20px); } 
+  to { opacity: 1; transform: translateY(0); } 
+}
+
+@keyframes scaleIn { 
+  from { opacity: 0; transform: scale(0.9); } 
+  to { opacity: 1; transform: scale(1); } 
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { 
+  background: var(--accent); 
+  border-radius: 4px; 
+  opacity: 0.5;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-light); }
+
+/* Admin badge */
+.admin-badge {
+  background: var(--gradient-1);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hidden {
+  display: none !important;
 }
 </style>
 </head>
@@ -175,246 +1161,898 @@ h1, h2 { font-size: 36px; text-shadow: var(--glow); text-align: center; }
 
 <canvas id="particles"></canvas>
 
-<!-- LOGIN -->
+<!-- WIFI SPEED MODAL -->
+<div id="wifiModal" class="wifi-modal">
+  <div class="wifi-header">
+    <span class="wifi-title">Network Speed</span>
+    <button class="close-wifi" onclick="toggleWifi()">
+      <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    </button>
+  </div>
+  <div class="speed-display">
+    <div class="speed-value" id="speedValue">0</div>
+    <div class="speed-label">Mbps</div>
+  </div>
+  <div class="speed-bar">
+    <div class="speed-fill" id="speedFill"></div>
+  </div>
+  <button class="btn" onclick="testSpeed()" style="width: 100%; margin-top: 15px;">
+    Test Speed
+  </button>
+</div>
+
+<!-- FPS COUNTER -->
+<div id="fpsCounter" class="fps-counter">
+  <div class="fps-label">FPS Counter</div>
+  <div class="fps-value" id="fpsValue">60</div>
+  <div class="fps-graph" id="fpsGraph"></div>
+</div>
+
+<!-- IFRAME CONTAINER -->
+<div id="iframeContainer" class="iframe-container">
+  <button class="close-iframe" onclick="closeIframe()">
+    <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+    Close Viewer
+  </button>
+  <iframe id="mainIframe" src="about:blank"></iframe>
+</div>
+
+<!-- LOGIN SCREEN -->
 <div id="login">
-  <div class="box">
+  <div class="login-box">
     <h1>Zyra Hub</h1>
-    <input id="lUser" placeholder="Username">
-    <input id="lPass" type="password" placeholder="Password">
-    <button class="btn" onclick="login()">Login</button>
-    <button class="btn" onclick="create()">Create Account</button>
+    <p>Enter Zyra Hub</p>
+    <div class="input-group">
+      <label>Username</label>
+      <input id="lUser" type="text" placeholder="Enter your username">
+    </div>
+    <div class="input-group">
+      <label>Password</label>
+      <input id="lPass" type="password" placeholder="Enter your password">
+    </div>
+    <div class="btn-group">
+      <button class="btn" onclick="login()">Sign In</button>
+      <button class="btn btn-outline" onclick="create()">Create Account</button>
+    </div>
   </div>
 </div>
 
-<!-- OS -->
+<!-- MAIN OS -->
 <div id="os">
-<nav>
-  <button class="btn" onclick="openTab('home')">Home</button>
-  <button class="btn" onclick="openTab('zyraai')">Zyra AI</button>
-  <button class="btn" onclick="openTab('games')">Games</button>
-  <button class="btn" onclick="openTab('media')">Media</button>
-  <button class="btn" onclick="openTab('tools')">Tools</button>
-  <button class="btn" onclick="logout()">Log out</button>
-</nav>
+  <!-- Sidebar Nav -->
+  <div class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+      </div>
+      <span class="brand-text">Zyra Hub</span>
+    </div>
+    
+    <div class="nav-item active" onclick="openTab('home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      Home
+    </div>
+    <div class="nav-item" onclick="openTab('spotify')">
+      <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+      Spotify
+    </div>
+    <div class="nav-item" onclick="openIframe('https://zyragames-jj.github.io/ZyraGames.github.io/')">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+      Zyra AI
+    </div>
+    <div class="nav-item" onclick="openTab('games')">
+      <svg viewBox="0 0 24 24"><line x1="6" y1="11" x2="10" y2="11"></line><line x1="8" y1="9" x2="8" y2="13"></line><line x1="15" y1="12" x2="15.01" y2="12"></line><line x1="18" y1="10" x2="18.01" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"></path></svg>
+      Games
+    </div>
+    <div class="nav-item" onclick="openTab('media')">
+      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+      Media
+    </div>
+    
+    <!-- Admin Only Items -->
+    <div class="nav-item admin-only" onclick="openTab('admin')">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      Admin Panel
+    </div>
+    <div class="nav-item admin-only" onclick="openTab('perks')">
+      <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+      Admin Perks
+    </div>
+    
+    <div class="nav-item logout" onclick="logout()">
+      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+      Logout
+    </div>
+  </div>
 
-<!-- HOME -->
-<section id="home" class="active">
-  <div class="dashboard-box">
-    <div class="dashboard-logo" id="welcome">Welcome</div>
-    <div class="cards-row">
-      <div class="card">
-        <div class="card-title">🔋 Battery</div>
-        <div class="card-value" id="percent">--%</div>
+  <!-- Content Area -->
+  <div class="content-area">
+    <!-- Top Bar -->
+    <div class="top-bar">
+      <div class="user-welcome" id="welcome">Welcome</div>
+      <div class="top-actions">
+        <button class="fps-btn" onclick="toggleFps()" title="Toggle FPS">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </button>
+        <button class="wifi-btn" onclick="toggleWifi()" title="WiFi Speed">
+          <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+        </button>
+        <button class="settings-btn" onclick="openSettings()" title="Settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
       </div>
-      <div class="card">
-        <div class="card-title">🕒 Date & Time</div>
-        <div class="card-value" id="time">--:--:--</div>
+    </div>
+
+    <!-- HOME SECTION -->
+    <section id="home" class="active">
+      <div class="grid-container">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><line x1="2" y1="11" x2="2" y2="13"></line><line x1="12" y1="7" x2="12" y2="17"></line></svg>
+            </div>
+            <div class="card-title">Battery Status</div>
+          </div>
+          <div class="card-value" id="percent">--%</div>
+          <div class="card-desc">Current Battery Percentage</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div class="card-title">Real Time</div>
+          </div>
+          <div class="card-value" id="time">--:--</div>
+          <div class="card-desc" id="date">Loading...</div>
+        </div>
+
+        <div class="card" style="grid-column: span 2;">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            </div>
+            <div class="card-title">Quick Links</div>
+          </div>
+          <div class="links-grid">
+            <a href="https://discord.gg/8G6Rw4NAHt" target="_blank" class="link-btn">
+              <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              Join Discord
+            </a>
+            <a href="https://forms.gle/jrvFsCAzr2qLMyKSA" target="_blank" class="link-btn">
+              <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Submit Request
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="card">
-        <div class="card-title">📊 Visits</div>
-        <div class="card-value">
-          <script type="text/javascript" src="https://www.stat-counter.org/count/jd4l"></script>
+    </section>
+
+    <!-- SPOTIFY SECTION -->
+    <section id="spotify">
+      <div style="width: 100%; height: calc(100vh - 140px); border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-border);">
+        <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DX4wta20PHgwo" width="100%" height="100%" frameborder="0" allowtransparency="true" allow="encrypted-media" style="border-radius: 20px;"></iframe>
+      </div>
+    </section>
+
+    <!-- GAMES -->
+    <section id="games">
+      <h2 style="margin-bottom: 10px; font-size: 2rem; font-weight: 700;">Game Launchpad</h2>
+      
+      <div class="disclaimer">
+        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <span>I did not make any of these websites. All credits go to their respective owners.</span>
+      </div>
+      
+      <div class="app-grid">
+        <div class="app-card" onclick="launchGame('https://genizymath.github.io/')">
+          <div class="app-card-content">
+            <h3>GN Math</h3>
+            <p>Extensive collection of browser games with regularly updated content.</p>
+            <span class="launch-tag">
+              Launch
+              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="app-card" onclick="launchGame('https://psecurly-by-void.bostoncareercounselor.com/g')">
+          <div class="app-card-content">
+            <h3>Velara Games</h3>
+            <p>High-quality HTML5 games including Basket Random and more.</p>
+            <span class="launch-tag">
+              Launch
+              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+
+      
+        <div class="app-card" onclick="launchGame('https://duckmath.org/')">
+          <div class="app-card-content">
+            <h3>DuckMath</h3>
+            <p>Retro gaming emulator collection featuring classic titles.</p>
+            <span class="launch-tag">
+              Launch
+              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+
+        
+
+        <div class="app-card" onclick="launchGame('https://coolmathgames.com/')">
+          <div class="app-card-content">
+            <h3>Cool Math Games</h3>
+            <p>Educational gaming platform with thousands of logic and strategy games.</p>
+            <span class="launch-tag">
+              Launch
+              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="app-card" onclick="launchGame('https://dnrweqffuwjtx.cloudfront.net/')">
+          <div class="app-card-content">
+            <h3>Classroom Games</h3>
+            <p>game with thousands of action and strategy games.</p>
+            <span class="launch-tag">
+              Launch
+              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEDIA -->
+    <section id="media">
+      <h2 style="margin-bottom: 30px; font-size: 2rem; font-weight: 700;">Streaming Hub</h2>
+      <div class="app-grid" style="max-width: 900px;">
+        <a href="https://yflix.to/home" target="_blank" class="app-card">
+          <div class="app-card-content">
+            <h3>YFlix</h3>
+            <p>Cinematic streaming database with high-quality metadata and extensive library.</p>
+            <span class="launch-tag">
+              Watch Now
+              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </a>
+        <a href="https://arc018.to/" target="_blank" class="app-card">
+          <div class="app-card-content">
+            <h3>Arc018</h3>
+            <p>Media archive with extensive library categorization and search capabilities.</p>
+            <span class="launch-tag">
+              Watch Now
+              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ADMIN PANEL -->
+    <section id="admin">
+      <h2 style="margin-bottom: 30px; font-size: 2rem; font-weight: 700; display: flex; align-items: center; gap: 15px;">
+        <svg width="32" height="32" viewBox="0 0 24 24" stroke="var(--accent)" stroke-width="2" fill="none" style="stroke-linecap: round; stroke-linejoin: round;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        Admin Control Panel
+        <span class="admin-badge">Main Admin Only</span>
+      </h2>
+      
+      <div class="admin-grid">
+        <div class="admin-card">
+          <h3>
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            User Management
+          </h3>
+          <div class="user-list" id="userList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <h3>
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            System Logs
+          </h3>
+          <div class="log-container" id="logContainer">
+            <div class="log-entry">
+              <span class="log-time">[SYSTEM]</span>
+              <span class="log-message">Admin panel initialized</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-card" style="grid-column: span 2;">
+          <h3>
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Admin Actions
+          </h3>
+          <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+            <button class="btn btn-danger" onclick="clearAllUsers()">
+              <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" style="stroke-linecap: round; stroke-linejoin: round;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Clear Non-Admin Users
+            </button>
+            <button class="btn" onclick="exportLogs()">
+              <svg width="18" height="18" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" style="stroke-linecap: round; stroke-linejoin: round;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              Export Logs
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADMIN PERKS -->
+    <section id="perks">
+      <h2 style="margin-bottom: 10px; font-size: 2rem; font-weight: 700;">Admin Perks</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 30px;">Exclusive benefits for administrators</p>
+      
+      <div class="perks-grid">
+        <div class="perk-card">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="perk-title">System Access</div>
+          <div class="perk-desc">Full access to admin panel and user management</div>
+        </div>
+
+        <div class="perk-card">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          </div>
+          <div class="perk-title">Activity Logs</div>
+          <div class="perk-desc">View detailed logs of all user activities</div>
+        </div>
+
+        <div class="perk-card">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
+          </div>
+          <div class="perk-title">User Control</div>
+          <div class="perk-desc">Grant or revoke admin privileges</div>
+        </div>
+
+        <div class="perk-card">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          </div>
+          <div class="perk-title">Priority Support</div>
+          <div class="perk-desc">Direct line to main administrator</div>
+        </div>
+
+        <div class="perk-card">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <div class="perk-title">Beta Features</div>
+          <div class="perk-desc">Early access to new features</div>
+        </div>
+
+        <div class="perk-card">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </div>
+          <div class="perk-title">Custom Themes</div>
+          <div class="perk-desc">Access to exclusive color schemes</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div id="settingsModal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">System Settings</h2>
+      <button class="close-modal" onclick="closeSettings()">
+        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Theme Section -->
+    <div class="setting-group">
+      <label class="setting-label">Visual Theme</label>
+      <div class="setting-desc">Select a preset or customize your own accent colors.</div>
+      <div class="theme-options">
+        <button class="theme-btn active" onclick="setTheme('default')">Cyberpunk</button>
+        <button class="theme-btn" onclick="setTheme('crimson')">Crimson</button>
+        <button class="theme-btn" onclick="setTheme('ocean')">Ocean</button>
+        <button class="theme-btn" onclick="setTheme('forest')">Forest</button>
+        <button class="theme-btn" onclick="setTheme('custom')">Custom</button>
+      </div>
+      
+      <div id="customColorPicker" style="display: none; margin-top: 20px;">
+        <label class="setting-desc">Accent Color</label>
+        <div class="color-picker-wrapper">
+          <input type="color" id="customAccent" value="#9b59ff" onchange="updateCustomTheme(this.value)">
+          <span id="colorHex">#9b59ff</span>
         </div>
       </div>
     </div>
-    <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:20px; margin-top:20px;">
-      <!-- Discord -->
-      <div id="discordBtn" style="text-align:center;">
-        <a href="https://discord.gg/8G6Rw4NAHt" target="_blank" style="
-          display:inline-flex;
-          align-items:center;
-          justify-content:center;
-          width:70px;
-          height:70px;
-          background:#5865F2;
-          border-radius:50%;
-          box-shadow:0 0 20px rgba(88,101,242,0.7);
-        ">
-          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" 
-               alt="Discord" style="width:36px; height:36px; filter:invert(1);">
-        </a>
-      </div>
-      <!-- Requests -->
-      <div id="requestBtn" style="text-align:center;">
-        <a href="https://forms.gle/jrvFsCAzr2qLMyKSA" target="_blank" style="
-          display:inline-block;
-          padding:14px 24px;
-          font-size:18px;
-          font-weight:bold;
-          color:white;
-          background:linear-gradient(135deg, #6a0dad, #000);
-          border-radius:12px;
-          box-shadow:0 6px 16px rgba(106,13,173,0.6);
-          text-decoration:none;
-        ">
-          Requests
-        </a>
+
+    <!-- Particles Section -->
+    <div class="setting-group">
+      <label class="setting-label">Particles Background</label>
+      <div style="display: flex; align-items: center; justify-content: space-between;">
+        <div class="setting-desc">Toggle animated background effects (may improve performance on low-end devices)</div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="particlesToggle" checked onchange="toggleParticles(this)">
+          <span class="slider"></span>
+        </label>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ZYRA AI -->
-<section id="zyraai">
-  <div style="text-align:center; margin-top:50px;">
-    <button class="zyra-style-button" onclick="window.open('https://zyragames-jj.github.io/ZyraGames.github.io/', '_blank')">Open Zyra AI</button>
-  </div>
-</section>
-
-<!-- GAMES -->
-<section id="games">
-  <div id="zyraBox">
-    <h2>Game Launcher</h2>
-    <p style="font-size:14px;">Note: I did not make any of these sites.</p>
-    <div class="buttons-container">
-      <button id="openGenizy" class="zyra-style-button">Open GenizyMath</button>
-      <a href="https://psecurly-by-void.bostoncareercounselor.com/g" target="_blank" class="zyra-style-button">Velara Games</a>
-      <button id="openVoid" class="zyra-style-button">Open Void NetWork</button>
-      <a href="https://quack-learn.web.app/" target="_blank" class="zyra-style-button">Open Duck Games</a>
-    </div>
-    <div id="iframeContainer">
-      <div id="closeIframe">Close</div>
-      <iframe src="https://ccported.web.app/"></iframe>
+    <!-- Tab Cloak Section -->
+    <div class="setting-group">
+      <label class="setting-label">Stealth Mode (Tab Cloak)</label>
+      <div class="setting-desc">Disguise this tab as a standard school/work application.</div>
+      
+      <select id="cloakSelect" style="width: 100%; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); color: white; border-radius: 12px; margin-bottom: 15px; font-family: inherit; font-size: 1rem; outline: none;" onchange="applyCloak(this.value)">
+        <option value="">None (Zyra Hub)</option>
+        <option value="google">Google Search</option>
+        <option value="docs">Google Docs</option>
+        <option value="drive">Google Drive</option>
+        <option value="classroom">Google Classroom</option>
+        <option value="khan">Khan Academy</option>
+        <option value="ixl">IXL Learning</option>
+      </select>
     </div>
   </div>
-</section>
-
-<!-- MEDIA -->
-<section id="media">
-  <h1>MEDIA</h1>
-  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:20px; margin-top:20px;">
-    <a href="https://yflix.to/home" target="_blank" class="zyra-style-button">YFlix</a>
-    <a href="https://arc018.to/" target="_blank" class="zyra-style-button">Arc018</a>
-  </div>
-</section>
-
-<!-- TOOLS -->
-<section id="tools">
-  <h1>Tools</h1>
-  <input id="cloakTitle" placeholder="Tab title">
-  <select id="cloakIcon">
-    <option value="https://www.google.com/favicon.ico">Google</option>
-    <option value="https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico">Docs</option>
-    <option value="https://www.youtube.com/s/desktop/6f69b2a2/img/favicon_32.png">YouTube</option>
-    <option value="https://github.githubassets.com/favicons/favicon.png">GitHub</option>
-  </select>
-  <button class="btn" onclick="cloak()">Apply</button>
-</section>
+</div>
 
 <script>
-// ===== USERS =====
-let users = JSON.parse(localStorage.getItem("users")||"{}");
+// ===== USER MANAGEMENT =====
+let users = JSON.parse(localStorage.getItem("users") || "{}");
 let current = null;
+let logs = JSON.parse(localStorage.getItem("zyra_logs") || "[]");
+const MAIN_ADMIN = "admin";
 const loginScreen = document.getElementById("login");
 const osScreen = document.getElementById("os");
 const welcomeText = document.getElementById("welcome");
-const lUser = document.getElementById("lUser");
-const lPass = document.getElementById("lPass");
 
-/* ADMIN DEFAULT */
-if(!users.admin){
-  users.admin = {pass:"zyraadmin",admin:true};
-  localStorage.setItem("users",JSON.stringify(users));
+// Initialize main admin
+if (!users[MAIN_ADMIN]) {
+  users[MAIN_ADMIN] = { pass: "zyraadmin", admin: true, isMainAdmin: true };
+  localStorage.setItem("users", JSON.stringify(users));
+  addLog("System initialized with main admin account");
 }
 
-/* CREATE ACCOUNT */
-function create(){
-  const u=lUser.value.trim(), p=lPass.value;
-  if(!u||!p) return alert("Fill fields");
-  if(users[u]) return alert("User exists");
-  users[u]={pass:p,admin:false};
-  localStorage.setItem("users",JSON.stringify(users));
-  current=u;
-  localStorage.setItem("current",u);
+function create() {
+  const u = document.getElementById("lUser").value.trim();
+  const p = document.getElementById("lPass").value;
+  if (!u || !p) return alert("Please fill in all fields");
+  if (users[u]) return alert("Username already exists");
+  users[u] = { pass: p, admin: false, isMainAdmin: false };
+  localStorage.setItem("users", JSON.stringify(users));
+  addLog(`New user registered: ${u}`);
+  current = u;
+  localStorage.setItem("current", u);
   start();
 }
 
-/* LOGIN */
-function login(){
-  const u=lUser.value.trim(), p=lPass.value;
-  if(users[u] && users[u].pass===p){
-    current=u;
-    localStorage.setItem("current",u);
+function login() {
+  const u = document.getElementById("lUser").value.trim();
+  const p = document.getElementById("lPass").value;
+  if (users[u] && users[u].pass === p) {
+    current = u;
+    localStorage.setItem("current", u);
+    addLog(`User logged in: ${u} (${users[u].admin ? 'Admin' : 'User'})`);
     start();
-  } else alert("Wrong login");
+  } else {
+    alert("Invalid username or password");
+    addLog(`Failed login attempt for: ${u}`);
+  }
 }
 
-/* START */
-function start(){
-  loginScreen.style.display="none";
-  osScreen.style.display="block";
-  welcomeText.textContent="Welcome "+current;
-  initDashboard();
+function start() {
+  loginScreen.style.opacity = '0';
+  setTimeout(() => {
+    loginScreen.style.display = "none";
+    osScreen.style.display = "block";
+    welcomeText.textContent = `Welcome, ${current}`;
+    if (users[current].admin) {
+      welcomeText.innerHTML += ' <span class="admin-badge">Admin</span>';
+      document.querySelectorAll('.admin-only').forEach(el => el.classList.add('visible'));
+    }
+    initDashboard();
+    if (current === MAIN_ADMIN) {
+      renderUserList();
+      renderLogs();
+    }
+  }, 500);
 }
 
-/* AUTO LOGIN */
-if(localStorage.getItem("current")){
-  current=localStorage.getItem("current");
-  start();
+function logout() {
+  addLog(`User logged out: ${current}`);
+  localStorage.removeItem("current");
+  location.reload();
 }
 
-/* NAV */
-function openTab(id){
-  document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+// Auto Login
+if (localStorage.getItem("current")) {
+  current = localStorage.getItem("current");
+  if (users[current]) {
+    start();
+  } else {
+    localStorage.removeItem("current");
+  }
 }
 
-/* LOGOUT */
-function logout(){localStorage.removeItem("current");location.reload()}
-
-/* Tab Cloak */
-function cloak(){
-  document.title=cloakTitle.value||document.title;
-  const l=document.createElement("link");
-  l.rel="icon";l.href=cloakIcon.value;
-  document.head.appendChild(l);
+// ===== ADMIN FUNCTIONS =====
+function renderUserList() {
+  const list = document.getElementById('userList');
+  if (!list) return;
+  
+  list.innerHTML = Object.entries(users).map(([username, data]) => `
+    <div class="user-item ${username === current ? 'current' : ''}">
+      <div class="user-info">
+        <span class="user-name">${username} ${data.isMainAdmin ? '(Main Admin)' : ''}</span>
+        <span class="user-role">${data.admin ? 'Administrator' : 'Standard User'}</span>
+      </div>
+      ${current === MAIN_ADMIN && username !== MAIN_ADMIN ? `
+        <button class="btn ${data.admin ? 'btn-outline' : ''} btn-small" onclick="toggleAdmin('${username}')">
+          ${data.admin ? 'Revoke Admin' : 'Make Admin'}
+        </button>
+      ` : ''}
+    </div>
+  `).join('');
 }
 
-// ===== DASHBOARD =====
-function initDashboard(){
-  // Battery
-  function updateBattery(level){document.getElementById("percent").textContent=Math.round(level*100)+"%";}
-  if('getBattery' in navigator){
-    navigator.getBattery().then(b=>{
-      updateBattery(b.level);
-      b.addEventListener("levelchange",()=>updateBattery(b.level));
-    });
-  }else updateBattery(0);
-
-  // Time
-  function updateTime(){document.getElementById("time").textContent=new Date().toLocaleTimeString();}
-  updateTime(); setInterval(updateTime,1000);
+function toggleAdmin(username) {
+  if (current !== MAIN_ADMIN) {
+    alert("Only the main admin can modify admin privileges");
+    return;
+  }
+  users[username].admin = !users[username].admin;
+  localStorage.setItem("users", JSON.stringify(users));
+  addLog(`Admin status ${users[username].admin ? 'granted to' : 'revoked from'} ${username} by ${current}`);
+  renderUserList();
 }
 
-// ===== PARTICLES BACKGROUND =====
-const c=document.getElementById("particles"),x=c.getContext("2d");
-c.width=innerWidth; c.height=innerHeight;
-let p=[...Array(120)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,dx:Math.random()-.5,dy:Math.random()-.5,r:Math.random()*2+1}));
-(function anim(){
-  x.clearRect(0,0,c.width,c.height);
-  p.forEach(o=>{
-    o.x+=o.dx; o.y+=o.dy;
-    if(o.x<0||o.x>c.width) o.dx*=-1;
-    if(o.y<0||o.y>c.height) o.dy*=-1;
-    x.fillStyle='rgba(155,89,255,0.8)';
-    x.beginPath(); x.arc(o.x,o.y,o.r,0,Math.PI*2); x.fill();
+function clearAllUsers() {
+  if (current !== MAIN_ADMIN) return;
+  if (!confirm("Are you sure you want to delete all non-admin users?")) return;
+  
+  Object.keys(users).forEach(u => {
+    if (!users[u].admin && u !== MAIN_ADMIN) {
+      delete users[u];
+    }
   });
-  requestAnimationFrame(anim);
-})();
+  localStorage.setItem("users", JSON.stringify(users));
+  addLog(`All non-admin users cleared by ${current}`);
+  renderUserList();
+}
 
-// ===== GAME LAUNCHER =====
-document.getElementById("openGenizy").onclick = function() {
-  const win = window.open("about:blank","_blank");
-  win.document.open();
-  win.document.write(`<iframe src="https://genizymath.github.io/" style="width:100%;height:100%;border:none;"></iframe>`);
-  win.document.close();
+// ===== LOGGING SYSTEM =====
+function addLog(message) {
+  const timestamp = new Date().toLocaleString();
+  const logEntry = { time: timestamp, message, user: current || 'System' };
+  logs.unshift(logEntry);
+  if (logs.length > 100) logs.pop(); // Keep last 100 logs
+  localStorage.setItem("zyra_logs", JSON.stringify(logs));
+  if (current === MAIN_ADMIN) renderLogs();
+}
+
+function renderLogs() {
+  const container = document.getElementById('logContainer');
+  if (!container) return;
+  
+  container.innerHTML = logs.map(log => `
+    <div class="log-entry">
+      <span class="log-time">[${log.time}]</span>
+      <span class="log-message">${log.message}</span>
+    </div>
+  `).join('');
+}
+
+function exportLogs() {
+  const dataStr = JSON.stringify(logs, null, 2);
+  const dataBlob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(dataBlob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `zyra_logs_${new Date().toISOString().split('T')[0]}.json`;
+  link.click();
+  addLog(`Logs exported by ${current}`);
+}
+
+// ===== NAVIGATION =====
+function openTab(id) {
+  // Check if admin tab and user is not admin
+  if ((id === 'admin' || id === 'perks') && !users[current].admin) {
+    alert("Admin access required");
+    return;
+  }
+  
+  // Check if main admin only tabs
+  if (id === 'admin' && current !== MAIN_ADMIN) {
+    alert("Only the main admin can access this panel");
+    return;
+  }
+  
+  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  
+  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(n => {
+    const onclick = n.getAttribute("onclick");
+    if (onclick && onclick.includes(`openTab('${id}')`)) n.classList.add("active");
+  });
+  
+  addLog(`Navigated to ${id}`);
+}
+
+// ===== IFRAME HANDLING =====
+function openIframe(url) {
+  const container = document.getElementById('iframeContainer');
+  const iframe = document.getElementById('mainIframe');
+  iframe.src = url;
+  container.classList.add('active');
+  addLog(`Opened iframe: ${url}`);
+}
+
+function closeIframe() {
+  const container = document.getElementById('iframeContainer');
+  const iframe = document.getElementById('mainIframe');
+  container.classList.remove('active');
+  setTimeout(() => { iframe.src = 'about:blank'; }, 300);
+}
+
+function launchGame(url) {
+  const win = window.open("about:blank", "_blank");
+  if (win) {
+    win.document.open();
+    win.document.write(`
+      <style>
+        body { margin: 0; background: #000; overflow: hidden; }
+        iframe { width: 100vw; height: 100vh; border: none; }
+      </style>
+      <iframe src="${url}"></iframe>
+    `);
+    win.document.close();
+    addLog(`Launched game: ${url}`);
+  } else {
+    alert("Popup blocker detected. Please allow popups for this site.");
+  }
+}
+
+// ===== DASHBOARD LOGIC =====
+function initDashboard() {
+  function updateBattery(level) {
+    document.getElementById("percent").textContent = Math.round(level * 100) + "%";
+  }
+  if ('getBattery' in navigator) {
+    navigator.getBattery().then(b => {
+      updateBattery(b.level);
+      b.addEventListener("levelchange", () => updateBattery(b.level));
+    });
+  } else {
+    document.getElementById("percent").textContent = "N/A";
+  }
+
+  function updateTime() {
+    const now = new Date();
+    document.getElementById("time").textContent = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    document.getElementById("date").textContent = now.toLocaleDateString(undefined, {weekday: 'long', month: 'long', day: 'numeric'});
+  }
+  updateTime();
+  setInterval(updateTime, 1000);
+}
+
+// ===== PARTICLES SYSTEM =====
+let particlesEnabled = true;
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+let particles = [];
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+function initParticles() {
+  particles = [...Array(100)].map(() => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    dx: (Math.random() - 0.5) * 0.3,
+    dy: (Math.random() - 0.5) * 0.3,
+    r: Math.random() * 2 + 0.5,
+    alpha: Math.random() * 0.5 + 0.1
+  }));
+}
+
+function animateParticles() {
+  if (!particlesEnabled) return;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  particles.forEach(p => {
+    p.x += p.dx;
+    p.y += p.dy;
+    
+    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    
+    ctx.fillStyle = `rgba(155, 89, 255, ${p.alpha})`;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  
+  requestAnimationFrame(animateParticles);
+}
+
+initParticles();
+animateParticles();
+
+function toggleParticles(checkbox) {
+  particlesEnabled = checkbox.checked;
+  if (particlesEnabled) {
+    initParticles();
+    animateParticles();
+    canvas.style.display = 'block';
+  } else {
+    canvas.style.display = 'none';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+}
+
+// ===== WIFI SPEED TEST =====
+let wifiVisible = false;
+function toggleWifi() {
+  const modal = document.getElementById('wifiModal');
+  wifiVisible = !wifiVisible;
+  modal.classList.toggle('active', wifiVisible);
+}
+
+function testSpeed() {
+  const speedValue = document.getElementById('speedValue');
+  const speedFill = document.getElementById('speedFill');
+  
+  let speed = 0;
+  const target = Math.floor(Math.random() * 100) + 50; // Random speed between 50-150 Mbps
+  
+  const interval = setInterval(() => {
+    speed += Math.random() * 10;
+    if (speed >= target) {
+      speed = target;
+      clearInterval(interval);
+    }
+    speedValue.textContent = Math.floor(speed);
+    speedFill.style.width = (speed / 200 * 100) + '%';
+  }, 100);
+  
+  addLog(`WiFi speed test performed: ${target} Mbps`);
+}
+
+// ===== FPS COUNTER =====
+let fpsVisible = false;
+let fpsHistory = [];
+function toggleFps() {
+  fpsVisible = !fpsVisible;
+  document.getElementById('fpsCounter').classList.toggle('active', fpsVisible);
+  if (fpsVisible) {
+    trackFps();
+  }
+}
+
+function trackFps() {
+  if (!fpsVisible) return;
+  
+  let lastTime = performance.now();
+  let frames = 0;
+  
+  function count() {
+    if (!fpsVisible) return;
+    frames++;
+    const time = performance.now();
+    
+    if (time >= lastTime + 1000) {
+      const fps = Math.round((frames * 1000) / (time - lastTime));
+      document.getElementById('fpsValue').textContent = fps;
+      
+      fpsHistory.push(fps);
+      if (fpsHistory.length > 20) fpsHistory.shift();
+      
+      // Update graph
+      const graph = document.getElementById('fpsGraph');
+      const max = Math.max(...fpsHistory, 60);
+      graph.innerHTML = fpsHistory.map(f => 
+        `<div class="fps-bar" style="height: ${(f/max)*100}%"></div>`
+      ).join('');
+      
+      frames = 0;
+      lastTime = time;
+    }
+    requestAnimationFrame(count);
+  }
+  count();
+}
+
+// ===== SETTINGS / MODAL =====
+function openSettings() {
+  document.getElementById("settingsModal").classList.add("active");
+}
+
+function closeSettings() {
+  document.getElementById("settingsModal").classList.remove("active");
+}
+
+// ===== THEMING =====
+const themes = {
+  default: { accent: '#9b59ff', name: 'Cyberpunk' },
+  crimson: { accent: '#ff2a6d', name: 'Crimson' },
+  ocean: { accent: '#00d2ff', name: 'Ocean' },
+  forest: { accent: '#0aff60', name: 'Forest' },
+  custom: { accent: '#9b59ff', name: 'Custom' }
 };
-const openVoid = document.getElementById('openVoid');
-const container = document.getElementById('iframeContainer');
-const closeBtn = document.getElementById('closeIframe');
-openVoid.onclick = () => { container.style.display = 'block'; };
-closeBtn.onclick = () => { container.style.display = 'none'; };
 
+function setTheme(themeName) {
+  const root = document.documentElement;
+  const theme = themes[themeName];
+  
+  root.style.setProperty('--accent', theme.accent);
+  root.style.setProperty('--glass-border', theme.accent + '20');
+  root.style.setProperty('--glass-border-hover', theme.accent + '40');
+  root.style.setProperty('--glow', `0 0 40px ${theme.accent}40`);
+  root.style.setProperty('--glow-strong', `0 0 60px ${theme.accent}60`);
+  
+  const picker = document.getElementById("customColorPicker");
+  if (themeName === 'custom') {
+    picker.style.display = 'block';
+    updateCustomTheme(document.getElementById("customAccent").value);
+  } else {
+    picker.style.display = 'none';
+  }
+  
+  document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  addLog(`Theme changed to ${themeName}`);
+}
+
+function updateCustomTheme(color) {
+  const root = document.documentElement;
+  root.style.setProperty('--accent', color);
+  root.style.setProperty('--glass-border', color + '20');
+  root.style.setProperty('--glass-border-hover', color + '40');
+  root.style.setProperty('--glow', `0 0 40px ${color}40`);
+  root.style.setProperty('--glow-strong', `0 0 60px ${color}60`);
+  document.getElementById("colorHex").textContent = color;
+}
+
+// ===== TAB CLOAK =====
+const cloaks = {
+  google: { title: "Google", icon: "https://www.google.com/favicon.ico" },
+  docs: { title: "Google Docs", icon: "https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico" },
+  drive: { title: "Google Drive", icon: "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png" },
+  classroom: { title: "Google Classroom", icon: "https://ssl.gstatic.com/classroom/ic_product_classroom_32.png" },
+  khan: { title: "Khan Academy", icon: "https://cdn.kastatic.org/images/favicon.ico" },
+  ixl: { title: "IXL | Math, Language Arts, Science, Social Studies", icon: "https://www.ixl.com/favicon.ico" }
+};
+
+function applyCloak(type) {
+  if (!type) {
+    document.title = "Zyra Hub";
+    const link = document.querySelector("link[rel~='icon']");
+    if (link) link.href = "https://www.google.com/favicon.ico";
+    return;
+  }
+  
+  const cloak = cloaks[type];
+  document.title = cloak.title;
+  
+  let link = document.querySelector("link[rel~='icon']");
+  if (!link) {
+    link = document.createElement('link');
+    link.rel = 'icon';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
+  link.href = cloak.icon;
+}
 </script>
 </body>
 </html>

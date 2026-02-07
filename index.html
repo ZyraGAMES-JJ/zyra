@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zyra</title>
-    <link rel="icon" href="https://www.google.com/favicon.ico">
+    <title>Zyra Hub</title>
+    <link rel="icon" href="https://image2url.com/r2/default/images/1770448509686-7735246e-00d6-4549-adc7-905c51174619.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <style>
@@ -244,7 +244,6 @@
             text-shadow: 0 0 10px var(--cyan);
         }
 
-        /* === PARTNERS === */
         .partners-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -299,7 +298,6 @@
             word-break: break-all;
         }
 
-        /* === MODAL === */
         .modal {
             position: fixed;
             inset: 0;
@@ -433,7 +431,6 @@
             color: #ef4444;
         }
 
-        /* === VIEWER === */
         #viewer {
             position: fixed;
             inset: 0;
@@ -580,14 +577,14 @@
                 <div class="link-card" onclick="launchGame('https://genizymath.github.io/')">
                     <div class="link-info">
                         <h3>GN Math</h3>
-                        <p>Math games collection</p>
+                        <p>BIG game collection</p>
                     </div>
                     <span class="link-arrow">→</span>
                 </div>
                 <div class="link-card" onclick="window.open('https://psecurly-by-void.bostoncareercounselor.com/g', '_blank')">
                     <div class="link-info">
-                        <h3>Velara Games</h3>
-                        <p>Gaming portal</p>
+                        <h3>Velara</h3>
+                        <p>Gaming portal/pr0xy</p>
                     </div>
                     <span class="link-arrow">→</span>
                 </div>
@@ -634,16 +631,7 @@
                         <div class="partner-url">sonissosigma.keybusinessconnection.com</div>
                     </a>
                     
-                    <!-- Add more partners here following the same structure -->
-                    <!-- Example:
-                    <a href="https://partner-url.com" target="_blank" class="partner-card">
-                        <div class="partner-logo">
-                            <img src="partner-logo.png" alt="Partner">
-                        </div>
-                        <div class="partner-name">Partner Name</div>
-                        <div class="partner-url">partner-url.com</div>
-                    </a>
-                    -->
+                  
                 </div>
                 
                 <div style="margin-top: 20px;">
@@ -718,7 +706,6 @@
     </div>
 
     <script>
-        // Generate stars
         for(let i = 0; i < 50; i++) {
             const star = document.createElement('div');
             star.className = 'star';
@@ -728,7 +715,6 @@
             document.getElementById('stars').appendChild(star);
         }
 
-        // Data management
         const DB = {
             account: JSON.parse(localStorage.getItem('zyra_account')) || null,
             panic: JSON.parse(localStorage.getItem('zyra_panic')) || {},
@@ -741,7 +727,6 @@
         }
 
         function init() {
-            // Load account
             if(DB.account) {
                 document.getElementById('account-display').textContent = 'Logged in as: ' + DB.account.name;
                 document.getElementById('account-name').value = DB.account.name;
@@ -750,11 +735,9 @@
                 document.getElementById('account-display').textContent = 'No account saved';
             }
 
-            // Load panic
             if(DB.panic.url) document.getElementById('panic-url').value = DB.panic.url;
             if(DB.panic.key) document.getElementById('panic-key').value = DB.panic.key;
 
-            // Load custom game
             if(DB.custom.url) {
                 document.getElementById('custom-url').value = DB.custom.url;
                 document.getElementById('custom-game-title').textContent = DB.custom.title || 'Custom';
@@ -763,18 +746,15 @@
             if(DB.custom.title) document.getElementById('custom-title').value = DB.custom.title;
             if(DB.custom.desc) document.getElementById('custom-desc').value = DB.custom.desc;
 
-            // Load cloak
             if(DB.cloak) {
                 document.getElementById('cloak-select').value = DB.cloak;
                 applyCloak(DB.cloak);
             }
 
-            // Clock
             setInterval(() => {
                 document.getElementById('clock').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             }, 1000);
 
-            // Battery
             if('getBattery' in navigator) {
                 navigator.getBattery().then(b => {
                     document.getElementById('battery').textContent = Math.round(b.level * 100) + '%';
@@ -885,7 +865,6 @@
             toast('Custom game saved');
         }
 
-        // Panic button listener
         document.addEventListener('keydown', (e) => {
             if(DB.panic.key && e.key === DB.panic.key && DB.panic.url) {
                 window.location.href = DB.panic.url;
@@ -921,18 +900,28 @@
 </body>
 </html>
 
+<div id="bottom-scripts-container" style="text-align:center; margin-top:20px;">
 
-<!-- Google AdSense Script -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8339583607158741"
-        crossorigin="anonymous"></script>
+    <script src="https://pl28665398.effectivegatecpm.com/5e/a9/a9/5ea9a92b230f7dd525a0047c961c7755.js" async></script>
 
-<!-- Example Ad Slot -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-8339583607158741"
-     data-ad-slot="1234567890"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+    <script src="https://www.effectivegatecpm.com/iv34e8jny?key=85c1d7c1f4bef9ee72ba7810f0db0bbd" async></script>
+
+    <script async="async" data-cfasync="false" src="https://pl28665425.effectivegatecpm.com/2f4f407adfaa5fa377969f5d104cf4ec/invoke.js"></script>
+    <div id="container-2f4f407adfaa5fa377969f5d104cf4ec"></div>
+
+</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warning </title>
+    <script>
+       
+        window.onload = function() {
+            alert("⚠ Warning: This site has ads for me to make money pls dont mind them ");
+        };
+    </script>
+</head>
+<body>
+    

@@ -1,2014 +1,913 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zyra Hub</title>
-<link rel="icon" href="https://www.google.com/favicon.ico">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-/* === ENHANCED LIGHT BLUE & BLACK THEME === */
-:root {
-  --accent: #00d4ff;
-  --accent-glow: rgba(0, 212, 255, 0.5);
-  --bg-dark: #000000;
-  --bg-card: rgba(0, 15, 30, 0.7);
-  --glass-bg: rgba(0, 20, 40, 0.6);
-  --glass-border: rgba(0, 212, 255, 0.2);
-  --glass-border-hover: rgba(0, 212, 255, 0.5);
-  --glow: 0 0 40px rgba(0, 212, 255, 0.3);
-  --glow-strong: 0 0 60px rgba(0, 212, 255, 0.5);
-  --text-main: #ffffff;
-  --text-secondary: #a0d0e0;
-  --text-muted: #6090a0;
-  --font-main: 'Outfit', sans-serif;
-  --gradient-1: linear-gradient(135deg, #00d4ff 0%, #0088cc 100%);
-  --gradient-2: linear-gradient(135deg, #00aaff 0%, #00d4ff 50%, #0088cc 100%);
-  --success: #00ffaa;
-  --warning: #ffcc00;
-  --danger: #ff3366;
-  --panic: #ff4444;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  height: 100%;
-  overflow: hidden;
-  font-family: var(--font-main);
-  background: var(--bg-dark);
-  color: var(--text-main);
-}
-
-body {
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(0, 150, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 40%),
-    radial-gradient(circle at 50% 0%, rgba(0, 100, 200, 0.2) 0%, #000510 100%);
-}
-
-/* === PARTICLES BACKGROUND === */
-#particles {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* === LOGIN SCREEN === */
-#login {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 5, 15, 0.9);
-  backdrop-filter: blur(30px);
-  z-index: 50;
-  transition: opacity 0.6s ease;
-}
-
-.login-box {
-  background: var(--glass-bg);
-  padding: 60px;
-  width: 480px;
-  border-radius: 30px;
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glow-strong), inset 0 0 0 1px rgba(255,255,255,0.05);
-  text-align: center;
-  animation: slideUp 0.8s ease;
-  backdrop-filter: blur(20px);
-  position: relative;
-  overflow: hidden;
-}
-
-.login-box::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--gradient-2);
-}
-
-.login-box h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-  background: linear-gradient(90deg, var(--accent), #fff, var(--accent));
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: shine 3s linear infinite;
-  letter-spacing: -1px;
-}
-
-@keyframes shine {
-  to { background-position: 200% center; }
-}
-
-.login-box p {
-  color: var(--text-secondary);
-  margin-bottom: 40px;
-  font-size: 1.1rem;
-  font-weight: 300;
-}
-
-.input-group {
-  margin-bottom: 25px;
-  text-align: left;
-}
-
-.input-group label {
-  display: block;
-  margin-bottom: 10px;
-  font-size: 0.85rem;
-  color: var(--accent);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-input[type="text"], input[type="password"] {
-  width: 100%;
-  padding: 18px 20px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--glass-border);
-  color: white;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: all 0.3s ease;
-}
-
-input[type="text"]:focus, input[type="password"]:focus {
-  border-color: var(--accent);
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.1), 0 0 30px rgba(0, 212, 255, 0.2);
-  background: rgba(0, 10, 20, 0.6);
-}
-
-.btn-group {
-  display: flex;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-/* === GLOBAL COMPONENTS === */
-.btn {
-  flex: 1;
-  padding: 16px 24px;
-  background: var(--gradient-1);
-  color: white;
-  font-weight: 600;
-  font-size: 1rem;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3), inset 0 0 0 1px rgba(255,255,255,0.1);
-  font-family: inherit;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: 0.5s;
-}
-
-.btn:hover::before {
-  left: 100%;
-}
-
-.btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.5), inset 0 0 0 1px rgba(255,255,255,0.2);
-}
-
-.btn-outline {
-  background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.1);
-}
-
-.btn-outline:hover {
-  background: rgba(0, 212, 255, 0.1);
-  box-shadow: inset 0 0 30px rgba(0, 212, 255, 0.2), 0 4px 20px rgba(0, 212, 255, 0.2);
-}
-
-.btn-panic {
-  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
-  box-shadow: 0 4px 20px rgba(255, 68, 68, 0.3);
-}
-
-.btn-panic:hover {
-  box-shadow: 0 8px 30px rgba(255, 68, 68, 0.5);
-  animation: pulse-red 1.5s infinite;
-}
-
-@keyframes pulse-red {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 68, 68, 0.7); }
-  70% { box-shadow: 0 0 0 10px rgba(255, 68, 68, 0); }
-}
-
-.btn-small {
-  padding: 10px 18px;
-  font-size: 0.85rem;
-}
-
-/* === MAIN OS LAYOUT === */
-#os {
-  display: none;
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  width: 100%;
-}
-
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 280px;
-  height: 100%;
-  background: rgba(0, 5, 15, 0.8);
-  backdrop-filter: blur(20px);
-  border-right: 1px solid var(--glass-border);
-  display: flex;
-  flex-direction: column;
-  padding: 30px 25px;
-  z-index: 20;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 50px;
-  padding-left: 10px;
-}
-
-.brand-icon {
-  width: 50px;
-  height: 50px;
-  background: var(--gradient-2);
-  border-radius: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-.brand-icon svg {
-  width: 30px;
-  height: 30px;
-  stroke: white;
-  stroke-width: 2;
-  fill: none;
-}
-
-.brand-text {
-  font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, var(--accent), #fff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.nav-item {
-  padding: 16px 20px;
-  margin-bottom: 8px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  color: var(--text-secondary);
-  font-weight: 500;
-  font-size: 0.95rem;
-  border: 1px solid transparent;
-  position: relative;
-}
-
-.nav-item::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 0;
-  background: var(--accent);
-  border-radius: 0 3px 3px 0;
-  transition: height 0.3s ease;
-}
-
-.nav-item:hover::before, .nav-item.active::before {
-  height: 70%;
-}
-
-.nav-item:hover {
-  background: rgba(0, 212, 255, 0.1);
-  color: white;
-  border-color: rgba(0, 212, 255, 0.3);
-  transform: translateX(5px);
-}
-
-.nav-item.active {
-  background: rgba(0, 212, 255, 0.15);
-  color: white;
-  border-color: rgba(0, 212, 255, 0.4);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.1), inset 0 0 20px rgba(0, 212, 255, 0.05);
-}
-
-.nav-item svg {
-  width: 22px;
-  height: 22px;
-  stroke: currentColor;
-  stroke-width: 2;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.nav-item.logout {
-  margin-top: auto;
-  color: #ff6b6b;
-}
-
-.nav-item.logout:hover {
-  background: rgba(255, 107, 107, 0.15);
-  border-color: rgba(255, 107, 107, 0.4);
-}
-
-/* === CONTENT AREA === */
-.content-area {
-  margin-left: 280px;
-  height: 100%;
-  overflow-y: auto;
-  padding: 40px;
-  position: relative;
-}
-
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-  padding: 0 10px;
-}
-
-.user-welcome {
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #fff, var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-}
-
-.top-actions {
-  display: flex;
-  gap: 15px;
-  align-items: center;
-}
-
-.settings-btn, .monitor-btn, .panic-quick-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-border);
-  color: var(--text-main);
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-  position: relative;
-}
-
-.panic-quick-btn {
-  background: rgba(255, 68, 68, 0.1);
-  border-color: rgba(255, 68, 68, 0.3);
-}
-
-.settings-btn:hover, .monitor-btn:hover {
-  background: rgba(0, 212, 255, 0.2);
-  border-color: var(--accent);
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-  transform: scale(1.05);
-}
-
-.panic-quick-btn:hover {
-  background: rgba(255, 68, 68, 0.3);
-  border-color: var(--panic);
-  box-shadow: 0 0 30px rgba(255, 68, 68, 0.4);
-  animation: shake 0.5s;
-}
-
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  75% { transform: translateX(3px); }
-}
-
-.settings-btn:hover {
-  transform: rotate(90deg) scale(1.05);
-}
-
-.settings-btn svg, .monitor-btn svg, .panic-quick-btn svg {
-  width: 24px;
-  height: 24px;
-  stroke: currentColor;
-  stroke-width: 2;
-  fill: none;
-}
-
-section {
-  display: none;
-  animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-section.active {
-  display: block;
-}
-
-/* === DASHBOARD GRID === */
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 25px;
-  margin-top: 20px;
-}
-
-.card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 30px;
-  backdrop-filter: blur(10px);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  overflow: hidden;
-}
-
-.card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gradient-2);
-  opacity: 0.5;
-}
-
-.card:hover {
-  transform: translateY(-8px);
-  border-color: var(--glass-border-hover);
-  box-shadow: 0 25px 50px rgba(0, 212, 255, 0.15), 0 0 0 1px rgba(0, 212, 255, 0.1);
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 25px;
-}
-
-.card-icon {
-  width: 55px;
-  height: 55px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 212, 255, 0.15);
-  border-radius: 16px;
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
-}
-
-.card-icon svg {
-  width: 28px;
-  height: 28px;
-  stroke: var(--accent);
-  stroke-width: 2;
-  fill: none;
-}
-
-.card-title {
-  font-size: 0.85rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 600;
-}
-
-.card-value {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 8px;
-  background: linear-gradient(90deg, #fff, var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.card-desc {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  font-weight: 400;
-}
-
-.links-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  margin-top: 25px;
-}
-
-.link-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 18px;
-  background: rgba(0, 212, 255, 0.08);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
-}
-
-.link-btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(0, 212, 255, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.link-btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.link-btn:hover {
-  background: var(--accent);
-  transform: scale(1.02);
-  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
-  border-color: transparent;
-}
-
-/* === SYSTEM MONITOR === */
-.monitor-modal {
-  position: fixed;
-  top: 100px;
-  right: 40px;
-  width: 340px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  padding: 30px;
-  z-index: 150;
-  display: none;
-  backdrop-filter: blur(20px);
-  box-shadow: var(--glow-strong);
-}
-
-.monitor-modal.active {
-  display: block;
-  animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.monitor-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
-.monitor-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #fff, var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.close-monitor {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--glass-border);
-  color: var(--text-secondary);
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-}
-
-.close-monitor:hover {
-  background: rgba(255, 68, 68, 0.2);
-  border-color: rgba(255, 68, 68, 0.4);
-  color: #ff6b6b;
-}
-
-.monitor-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.monitor-item {
-  text-align: center;
-  padding: 25px 20px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 20px;
-  border: 1px solid var(--glass-border);
-  position: relative;
-  overflow: hidden;
-}
-
-.monitor-item::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--gradient-2);
-  opacity: 0.5;
-}
-
-.monitor-label {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.monitor-value {
-  font-size: 2.5rem;
-  font-weight: 700;
-  text-shadow: 0 0 20px currentColor;
-}
-
-.monitor-value.good { color: var(--success); }
-.monitor-value.warn { color: var(--warning); }
-.monitor-value.bad { color: var(--danger); }
-
-.monitor-bar {
-  height: 6px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 3px;
-  overflow: hidden;
-  margin-top: 12px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
-}
-
-.monitor-fill {
-  height: 100%;
-  background: var(--gradient-2);
-  width: 0%;
-  transition: width 0.5s ease;
-  border-radius: 3px;
-  box-shadow: 0 0 10px var(--accent);
-}
-
-.monitor-status {
-  margin-top: 20px;
-  padding: 15px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 12px;
-  border: 1px solid var(--glass-border);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.status-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--success);
-  box-shadow: 0 0 10px var(--success);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
-/* === GAMES === */
-.app-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
-}
-
-.app-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-  cursor: pointer;
-}
-
-.app-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.app-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--accent);
-  box-shadow: 0 30px 60px rgba(0, 212, 255, 0.2);
-}
-
-.app-card:hover::before {
-  opacity: 1;
-}
-
-.app-card-content {
-  padding: 35px 30px;
-  position: relative;
-  z-index: 1;
-}
-
-.app-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 12px;
-  color: white;
-  font-weight: 600;
-}
-
-.app-card p {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-.warning-note {
-  font-size: 0.8rem;
-  color: var(--warning);
-  margin-top: -10px;
-  margin-bottom: 15px;
-  padding: 8px 12px;
-  background: rgba(255, 204, 0, 0.1);
-  border-radius: 8px;
-  border-left: 3px solid var(--warning);
-}
-
-.launch-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background: var(--gradient-1);
-  border-radius: 30px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
-  transition: all 0.3s;
-}
-
-.app-card:hover .launch-tag {
-  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.5);
-  transform: scale(1.05);
-}
-
-.launch-tag svg {
-  width: 18px;
-  height: 18px;
-  stroke: currentColor;
-  stroke-width: 2;
-  fill: none;
-}
-
-.disclaimer {
-  background: rgba(255, 193, 7, 0.1);
-  border: 1px solid rgba(255, 193, 7, 0.3);
-  border-radius: 16px;
-  padding: 20px 25px;
-  margin-bottom: 30px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  color: #ffc107;
-  font-size: 0.95rem;
-}
-
-.disclaimer svg {
-  width: 24px;
-  height: 24px;
-  stroke: currentColor;
-  stroke-width: 2;
-  fill: none;
-  flex-shrink: 0;
-}
-
-/* === IFRAME CONTAINER === */
-.iframe-container {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 200;
-}
-
-.iframe-container.active {
-  display: block;
-}
-
-.iframe-container iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-.close-iframe {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: var(--gradient-1);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  z-index: 201;
-  border: none;
-  box-shadow: 0 0 30px rgba(0,212,255,0.5);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.3s;
-}
-
-.close-iframe:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 40px rgba(0,212,255,0.7);
-}
-
-/* === SETTINGS MODAL === */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 5, 15, 0.9);
-  backdrop-filter: blur(20px);
-  z-index: 100;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.modal-overlay.active { 
-  display: flex; 
-  opacity: 1;
-}
-
-.modal-content {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: 30px;
-  width: 90%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
-  padding: 40px;
-  box-shadow: var(--glow-strong);
-  animation: scaleIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(20px);
-  position: relative;
-}
-
-.modal-content::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--gradient-2);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 35px;
-}
-
-.modal-title {
-  font-size: 2rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #fff, var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.close-modal {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--glass-border);
-  color: var(--text-secondary);
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-}
-
-.close-modal:hover {
-  background: rgba(255, 68, 68, 0.2);
-  color: #ff6b6b;
-  border-color: rgba(255, 68, 68, 0.4);
-  transform: rotate(90deg);
-}
-
-.setting-group {
-  margin-bottom: 35px;
-  padding-bottom: 35px;
-  border-bottom: 1px solid var(--glass-border);
-}
-
-.setting-group:last-child { border-bottom: none; margin-bottom: 0; }
-
-.setting-label {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
-  display: block;
-  color: white;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.setting-label svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--accent);
-  stroke-width: 2;
-  fill: none;
-}
-
-.setting-desc {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-
-/* PANIC BUTTON SETTINGS */
-.panic-config {
-  background: rgba(255, 68, 68, 0.05);
-  border: 1px solid rgba(255, 68, 68, 0.2);
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 20px;
-}
-
-.panic-config .setting-label {
-  color: #ff6b6b;
-}
-
-.panic-config .setting-label svg {
-  stroke: #ff6b6b;
-}
-
-.input-row {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.input-row input {
-  flex: 1;
-  padding: 14px 18px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  color: white;
-  font-family: inherit;
-  font-size: 0.95rem;
-  transition: all 0.3s;
-}
-
-.input-row input:focus {
-  outline: none;
-  border-color: var(--panic);
-  box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
-}
-
-.panic-preview {
-  background: rgba(0,0,0,0.3);
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 15px;
-  font-family: monospace;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  border: 1px dashed var(--glass-border);
-}
-
-.panic-preview span {
-  color: var(--panic);
-  font-weight: 600;
-}
-
-/* CUSTOM GAME */
-.custom-game-section {
-  background: rgba(0, 212, 255, 0.05);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  padding: 25px;
-}
-
-.custom-input {
-  width: 100%;
-  padding: 14px 18px;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  color: white;
-  font-family: inherit;
-  font-size: 0.95rem;
-  margin-bottom: 12px;
-  transition: all 0.3s;
-}
-
-.custom-input:focus {
-  outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
-}
-
-.google-warning {
-  background: rgba(255, 204, 0, 0.1);
-  border-left: 4px solid var(--warning);
-  padding: 15px;
-  border-radius: 0 12px 12px 0;
-  margin: 15px 0;
-  font-size: 0.9rem;
-  color: var(--warning);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.google-warning svg {
-  width: 20px;
-  height: 20px;
-  stroke: var(--warning);
-  stroke-width: 2;
-  fill: none;
-  flex-shrink: 0;
-}
-
-/* TOGGLE SWITCH */
-.toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-.toggle-switch input { opacity: 0; width: 0; height: 0; }
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-color: rgba(255,255,255,0.1);
-  transition: .4s;
-  border-radius: 34px;
-  border: 1px solid var(--glass-border);
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-input:checked + .slider { 
-  background-color: var(--accent); 
-  border-color: var(--accent);
-}
-
-input:checked + .slider:before { transform: translateX(26px); }
-
-/* ANIMATIONS */
-@keyframes fadeIn { 
-  from { opacity: 0; transform: translateY(30px); } 
-  to { opacity: 1; transform: translateY(0); } 
-}
-
-@keyframes slideUp { 
-  from { opacity: 0; transform: translateY(50px); } 
-  to { opacity: 1; transform: translateY(0); } 
-}
-
-@keyframes slideDown { 
-  from { opacity: 0; transform: translateY(-30px) scale(0.95); } 
-  to { opacity: 1; transform: translateY(0) scale(1); } 
-}
-
-@keyframes scaleIn { 
-  from { opacity: 0; transform: scale(0.9); } 
-  to { opacity: 1; transform: scale(1); } 
-}
-
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { 
-  background: var(--accent); 
-  border-radius: 4px; 
-}
-
-/* NOTIFICATION */
-.notification {
-  position: fixed;
-  top: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-100px);
-  background: var(--glass-bg);
-  border: 1px solid var(--accent);
-  padding: 16px 32px;
-  border-radius: 12px;
-  box-shadow: var(--glow-strong);
-  z-index: 1000;
-  opacity: 0;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.notification.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-
-.notification svg {
-  width: 24px;
-  height: 24px;
-  stroke: var(--accent);
-  stroke-width: 2;
-  fill: none;
-}
-
-.hidden {
-  display: none !important;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zyra</title>
+    <link rel="icon" href="https://www.google.com/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #0a0a0b;
+            --surface: #151518;
+            --surface-hover: #1e1e22;
+            --border: #2a2a30;
+            --cyan: #22d3ee;
+            --cyan-dim: rgba(34, 211, 238, 0.1);
+            --text: #f5f5f5;
+            --text-dim: #71717a;
+            --font: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .stars {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 100;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .nav-logo {
+            font-family: var(--font);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--cyan);
+            margin-right: 20px;
+            letter-spacing: 1px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text);
+        }
+
+        .nav-btn.active {
+            background: var(--cyan-dim);
+            color: var(--cyan);
+        }
+
+        .nav-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--border);
+            margin: 0 8px;
+        }
+
+        .stat-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: var(--bg);
+            border-radius: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .stat-value {
+            color: var(--cyan);
+            min-width: 20px;
+        }
+
+        
+        .main {
+            padding-top: 100px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .view {
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+   
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-family: var(--font-mono);
+            font-size: 2rem;
+            color: var(--cyan);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+     
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .link-card:hover {
+            border-color: var(--cyan);
+            background: var(--surface-hover);
+        }
+
+        .link-info h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .link-info p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .link-arrow {
+            color: var(--text-dim);
+            font-size: 1.2rem;
+        }
+
+        .link-card:hover .link-arrow {
+            color: var(--cyan);
+        }
+
+        /* === PARTNERS === */
+        .partner-big {
+            display: block;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s;
+        }
+
+        .partner-big:hover {
+            border-color: var(--cyan);
+            background: var(--surface-hover);
+        }
+
+        .partner-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .partner-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .partner-url {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* === MODAL === */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 420px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .setting {
+            margin-bottom: 24px;
+        }
+
+        .setting:last-child {
+            margin-bottom: 0;
+        }
+
+        .setting-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.9rem;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        input:focus {
+            border-color: var(--cyan);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-main {
+            background: var(--cyan);
+            color: var(--bg);
+            font-weight: 500;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        .user-list {
+            margin-bottom: 16px;
+        }
+
+        .user-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .user-item.active {
+            border-color: var(--cyan);
+        }
+
+        /* === VIEWER === */
+        #viewer {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: none;
+            flex-direction: column;
+            z-index: 300;
+        }
+
+        #viewer.active {
+            display: flex;
+        }
+
+        .viewer-bar {
+            height: 60px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        #viewer iframe {
+            flex: 1;
+            border: none;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: var(--surface);
+            border: 1px solid var(--cyan);
+            border-radius: 12px;
+            color: var(--cyan);
+            font-size: 0.9rem;
+            transform: translateX(400px);
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show { transform: translateX(0); }
+        .toast.error { border-color: #ef4444; color: #ef4444; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    </style>
 </head>
 <body>
 
-<canvas id="particles"></canvas>
-
-<!-- NOTIFICATION -->
-<div id="notification" class="notification">
-  <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-  <span id="notificationText">Settings saved!</span>
-</div>
-
-<!-- SYSTEM MONITOR -->
-<div id="monitorModal" class="monitor-modal">
-  <div class="monitor-header">
-    <span class="monitor-title">System Monitor</span>
-    <button class="close-monitor" onclick="toggleMonitor()">
-      <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    </button>
-  </div>
   
-  <div class="monitor-grid">
-    <div class="monitor-item">
-      <div class="monitor-label">FPS</div>
-      <div class="monitor-value good" id="fpsValue">60</div>
-      <div class="monitor-bar"><div class="monitor-fill" id="fpsBar" style="width: 60%"></div></div>
-    </div>
-    <div class="monitor-item">
-      <div class="monitor-label">Ping</div>
-      <div class="monitor-value good" id="pingValue">--</div>
-      <div class="monitor-bar"><div class="monitor-fill" id="pingBar"></div></div>
-    </div>
-  </div>
+    <div class="stars" id="stars"></div>
+    <div class="toast" id="toast"></div>
+
   
-  <div class="monitor-status">
-    <div class="status-dot" id="statusDot"></div>
-    <span id="statusText">Click test to check ping</span>
-  </div>
-  
-  <button class="btn" onclick="testPing()" style="width: 100%; margin-top: 20px;">
-    Test Connection
-  </button>
-</div>
-
-<!-- IFRAME CONTAINER -->
-<div id="iframeContainer" class="iframe-container">
-  <button class="close-iframe" onclick="closeIframe()">
-    <svg width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-    Close Viewer
-  </button>
-  <iframe id="mainIframe" src="about:blank"></iframe>
-</div>
-
-<!-- LOGIN SCREEN -->
-<div id="login">
-  <div class="login-box">
-    <h1>Zyra Hub</h1>
-    <p>By Just Josh/Zyra</p>
-    <div class="input-group">
-      <label>Username</label>
-      <input id="lUser" type="text" placeholder="Enter your username">
-    </div>
-    <div class="input-group">
-      <label>Password</label>
-      <input id="lPass" type="password" placeholder="Enter your password">
-    </div>
-    <div class="btn-group">
-      <button class="btn" onclick="login()">Sign In</button>
-      <button class="btn btn-outline" onclick="create()">Create Account</button>
-    </div>
-  </div>
-</div>
-
-<!-- MAIN OS -->
-<div id="os">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <div class="brand">
-      <div class="brand-icon">
-        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-      </div>
-      <span class="brand-text">Zyra Hub</span>
-    </div>
-    
-    <div class="nav-item active" onclick="openTab('home')">
-      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-      Home
-    </div>
-    <div class="nav-item" onclick="openTab('spotify')">
-      <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-      Spotify
-    </div>
-    <div class="nav-item" onclick="openIframe('https://zyragames-jj.github.io/ZyraGames.github.io/')">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-      Zyra AI
-    </div>
-    <div class="nav-item" onclick="openTab('games')">
-      <svg viewBox="0 0 24 24"><line x1="6" y1="11" x2="10" y2="11"></line><line x1="8" y1="9" x2="8" y2="13"></line><line x1="15" y1="12" x2="15.01" y2="12"></line><line x1="18" y1="10" x2="18.01" y2="10"></line><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"></path></svg>
-      Games
-    </div>
-    <div class="nav-item" onclick="openTab('media')">
-      <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
-      Media
-    </div>
-    
-    <div class="nav-item logout" onclick="logout()">
-      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-      Logout
-    </div>
-  </div>
-
-  <!-- Content Area -->
-  <div class="content-area">
-    <!-- Top Bar -->
-    <div class="top-bar">
-      <div class="user-welcome" id="welcome">Welcome</div>
-      <div class="top-actions">
-        <button class="panic-quick-btn" onclick="triggerPanic()" title="Panic Button">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+    <nav class="top-nav">
+        <div class="nav-logo">Zyra</div>
+        
+        <button class="nav-btn active" onclick="nav('home', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            Home
         </button>
-        <button class="monitor-btn" onclick="toggleMonitor()" title="System Monitor">
-          <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+        
+        <button class="nav-btn" onclick="openViewer('https://zyragames-jj.github.io/ZyraGames.github.io/', 'AI')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+            AI
         </button>
-        <button class="settings-btn" onclick="openSettings()" title="Settings">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        
+        <button class="nav-btn" onclick="nav('games', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            Games
         </button>
-      </div>
-    </div>
+        
+        <button class="nav-btn" onclick="nav('media', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+            Media
+        </button>
+        
+        <button class="nav-btn" onclick="nav('partners', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            Partners
+        </button>
+        
+        <div class="nav-divider"></div>
+        
+        <div class="stat-pill">
+            <span>FPS:</span>
+            <span class="stat-value" id="fps">60</span>
+        </div>
+        
+        <div class="stat-pill" onclick="testPing()" style="cursor: pointer;">
+            <span>PING:</span>
+            <span class="stat-value" id="ping">--</span>
+        </div>
+        
+        <div class="nav-divider"></div>
+        
+        <button class="nav-btn" onclick="toggleSettings()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Settings
+        </button>
+    </nav>
 
-    <!-- HOME SECTION -->
-    <section id="home" class="active">
-      <div class="grid-container">
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="10" rx="2" ry="2"></rect><line x1="22" y1="11" x2="22" y2="13"></line><line x1="2" y1="11" x2="2" y2="13"></line><line x1="12" y1="7" x2="12" y2="17"></line></svg>
+    <div class="main">
+        <div class="container">
+
+            <div id="view-home" class="view">
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-title">Time</div>
+                        <div class="card-value" id="clock">00:00</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Battery</div>
+                        <div class="card-value" id="battery">--</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">Status</div>
+                        <div class="card-value" style="font-size: 1.2rem; margin-top: 8px;">Online</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <div class="card-title" style="margin-bottom: 16px; font-size: 0.85rem;">Quick Links</div>
+                    <a href="https://discord.gg/A32Y8hb6jJ" target="_blank" class="link-card">
+                        <div class="link-info">
+                            <h3>Discord Server</h3>
+                            <p>Join our community</p>
+                        </div>
+                        <span class="link-arrow">→</span>
+                    </a>
+                    <a href="https://forms.gle/jrvFsCAzr2qLMyKSA" target="_blank" class="link-card">
+                        <div class="link-info">
+                            <h3>Submit Request</h3>
+                            <p>Request games or features</p>
+                        </div>
+                        <span class="link-arrow">→</span>
+                    </a>
+                </div>
             </div>
-            <div class="card-title">System Status</div>
-          </div>
-          <div class="card-value" id="percent">--%</div>
-          <div class="card-desc">Current Battery Percentage</div>
-        </div>
 
-        <div class="card">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div id="view-games" class="view hidden">
+                <div class="link-card" onclick="launchGame('https://genizymath.github.io/')">
+                    <div class="link-info">
+                        <h3>GN Math</h3>
+                        <p>Math games collection</p>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </div>
+                <div class="link-card" onclick="window.open('https://psecurly-by-void.bostoncareercounselor.com/g', '_blank')">
+                    <div class="link-info">
+                        <h3>Velara Games</h3>
+                        <p>Gaming portal</p>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </div>
+                <div class="link-card" onclick="window.open('https://quack-learn.web.app/', '_blank')">
+                    <div class="link-info">
+                        <h3>Duck Games</h3>
+                        <p>Retro games</p>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </div>
+                <div class="link-card" onclick="launchCustomGame()">
+                    <div class="link-info">
+                        <h3 id="custom-game-title">Custom</h3>
+                        <p id="custom-game-desc">Configure in settings</p>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </div>
             </div>
-            <div class="card-title">Local Time</div>
-          </div>
-          <div class="card-value" id="time">--:--</div>
-          <div class="card-desc" id="date">Loading...</div>
-        </div>
 
-        <div class="card" style="grid-column: span 2;">
-          <div class="card-header">
-            <div class="card-icon">
-              <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            <div id="view-media" class="view hidden">
+                <div class="link-card" onclick="window.open('https://yflix.to/home', '_blank')">
+                    <div class="link-info">
+                        <h3>YFlix</h3>
+                        <p>Movies & TV shows</p>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </div>
+                <div class="link-card" onclick="window.open('https://arc018.to/', '_blank')">
+                    <div class="link-info">
+                        <h3>Arc018</h3>
+                        <p>Series archive</p>
+                    </div>
+                    <span class="link-arrow">→</span>
+                </div>
             </div>
-            <div class="card-title">Quick Links</div>
-          </div>
-          <div class="links-grid">
-            <a href="https://discord.gg/8G6Rw4NAHt" target="_blank" class="link-btn">
-              <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-              Join Discord
-            </a>
-            <a href="https://forms.gle/jrvFsCAzr2qLMyKSA" target="_blank" class="link-btn">
-              <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              Submit Request
-            </a>
-          </div>
+
+            <div id="view-partners" class="view hidden">
+                <a href="https://sonissosigma.keybusinessconnection.com/" target="_blank" class="partner-big">
+                    <div class="partner-logo">
+                        <img src="https://image2url.com/r2/default/images/1770434449041-5958d4dc-e4a1-44be-845a-6250582197d1.png" alt="ZG" id="zg-logo">
+                    </div>
+                    <div class="partner-name">Zane Gamez</div>
+                    <div class="partner-url">sonissosigma.keybusinessconnection.com</div>
+                </a>
+                
+                <div style="margin-top: 20px;">
+                    <a href="https://discord.gg/A32Y8hb6jJ" target="_blank" class="link-card">
+                        <div class="link-info">
+                            <h3>Discord Server</h3>
+                            <p>discord.gg/A32Y8hb6jJ</p>
+                        </div>
+                        <span class="link-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+
         </div>
-      </div>
-    </section>
-
-   <!-- SPOTIFY SECTION --> 
-<section id="spotify">
-  <div style="width: 100%; height: calc(100vh - 140px); border-radius: 20px; overflow: hidden; border: 1px solid var(--glass-border);">
-    <iframe
-      style="border-radius:12px"
-      src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO15CHq8?utm_source=generator&theme=0"
-      width="100%"
-      height="100%"
-      frameborder="0"
-      allowfullscreen=""
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy">
-    </iframe>
-  </div>
-</section>
-
-
-    <!-- GAMES -->
-    <section id="games">
-      <h2 style="margin-bottom: 10px; font-size: 2rem; font-weight: 700;">Game Launchpad</h2>
-      
-      <div class="disclaimer">
-        <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-        <span>I did not make any of these websites. All credits go to their respective owners.</span>
-      </div>
-      
-      <div class="app-grid">
-        <div class="app-card" onclick="launchGame('https://genizymath.github.io/')">
-          <div class="app-card-content">
-            <h3>GN Math</h3>
-            <p>Curated collection of browser-based entertainment and interactive experiences.</p>
-            <span class="launch-tag">
-              Launch Securely
-              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </span>
-          </div>
-        </div>
-        
-        <a href="https://psecurly-by-void.bostoncareercounselor.com/g" target="_blank" class="app-card">
-          <div class="app-card-content">
-            <h3>Velara Games</h3>
-            <p>High-speed gaming portal with curated titles and optimized performance.</p>
-            <span class="launch-tag">
-              Open Portal
-              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </span>
-          </div>
-        </a>
-
-        <a href="https://quack-learn.web.app/" target="_blank" class="app-card">
-          <div class="app-card-content">
-            <h3>Duck Games</h3>
-            <p>Retro and casual gaming collection featuring browser-based emulators.</p>
-            <span class="launch-tag">
-              Open Portal
-              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </span>
-          </div>
-        </a>
-
-        <!-- CUSTOM GAME SLOT -->
-        <div class="app-card" onclick="launchCustomGame()">
-          <div class="app-card-content">
-            <h3 id="customGameTitle">Custom Game</h3>
-            <p class="warning-note">
-              <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; display: inline; vertical-align: middle; margin-right: 5px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-              Google Sites links will NOT work
-            </p>
-            <p id="customGameDesc">Configure your own game in settings.</p>
-            <span class="launch-tag">
-              Launch
-              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MEDIA -->
-    <section id="media">
-      <h2 style="margin-bottom: 30px; font-size: 2rem; font-weight: 700;">Streaming Hub</h2>
-      <div class="app-grid" style="max-width: 900px;">
-        <a href="https://yflix.to/home" target="_blank" class="app-card">
-          <div class="app-card-content">
-            <h3>YFlix</h3>
-            <p>Cinematic streaming database with high-quality metadata and extensive library.</p>
-            <span class="launch-tag">
-              Watch Now
-              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </span>
-          </div>
-        </a>
-        <a href="https://arc018.to/" target="_blank" class="app-card">
-          <div class="app-card-content">
-            <h3>Arc018</h3>
-            <p>Media archive with extensive library categorization and search capabilities.</p>
-            <span class="launch-tag">
-              Watch Now
-              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </span>
-          </div>
-        </a>
-      </div>
-    </section>
-  </div>
-</div>
-
-<!-- SETTINGS MODAL -->
-<div id="settingsModal" class="modal-overlay">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 class="modal-title">System Settings</h2>
-      <button class="close-modal" onclick="closeSettings()">
-        <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
     </div>
 
-    <!-- PANIC BUTTON CONFIG -->
-    <div class="setting-group">
-      <div class="panic-config">
-        <label class="setting-label">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-          Panic Button Configuration
-        </label>
-        <div class="setting-desc">Press the panic button or your custom key to instantly redirect to a safe website.</div>
-        
-        <div class="input-row">
-          <input type="text" id="panicUrl" placeholder="https://example.com" style="flex: 2;">
-          <input type="text" id="panicKey" placeholder="Hotkey (e.g., .)" style="flex: 1; text-align: center;">
+    <div id="settings-modal" class="modal" onclick="if(event.target === this) toggleSettings()">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">Settings</div>
+                <button class="modal-close" onclick="toggleSettings()">×</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="setting">
+                    <label class="setting-label">Accounts</label>
+                    <div class="user-list" id="user-list"></div>
+                    <div class="input-row">
+                        <input type="text" id="new-username" placeholder="Username">
+                        <input type="password" id="new-password" placeholder="Password">
+                    </div>
+                    <button class="btn btn-main" onclick="createAccount()" style="margin-top: 10px;">Create Account</button>
+                </div>
+
+                <div class="setting">
+                    <label class="setting-label">Panic Button</label>
+                    <div class="input-row">
+                        <input type="text" id="panic-url" placeholder="URL">
+                        <input type="text" id="panic-key" placeholder="Key" style="width: 100px;">
+                    </div>
+                    <button class="btn btn-danger" onclick="savePanic()" style="margin-top: 10px;">Save</button>
+                </div>
+
+                <div class="setting">
+                    <label class="setting-label">Custom Game</label>
+                    <input type="text" id="custom-url" placeholder="URL">
+                    <input type="text" id="custom-title" placeholder="Title">
+                    <input type="text" id="custom-desc" placeholder="Description">
+                    <button class="btn btn-secondary" onclick="saveCustom()">Save</button>
+                </div>
+
+                <div class="setting">
+                    <label class="setting-label">Tab Cloak</label>
+                    <select id="cloak-select" onchange="applyCloak(this.value)">
+                        <option value="">None</option>
+                        <option value="google">Google</option>
+                        <option value="drive">Drive</option>
+                        <option value="classroom">Classroom</option>
+                    </select>
+                </div>
+
+            </div>
         </div>
-        
-        <div class="panic-preview">
-          Press <span id="panicPreviewKey">[key]</span> to redirect to <span id="panicPreviewUrl">[website]</span>
+    </div>
+
+    <div id="viewer">
+        <div class="viewer-bar">
+            <span id="viewer-title">Viewer</span>
+            <button class="btn btn-main" onclick="closeViewer()">Close</button>
         </div>
-        
-        <button class="btn btn-panic" onclick="savePanic()" style="width: 100%; margin-top: 15px;">
-          Save Panic Settings
-        </button>
-      </div>
+        <iframe id="viewer-frame"></iframe>
     </div>
 
-    <!-- CUSTOM GAME -->
-    <div class="setting-group">
-      <div class="custom-game-section">
-        <label class="setting-label">
-          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          Custom Game Slot
-        </label>
-        
-        <div class="google-warning">
-          <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          <span><strong>Important:</strong> Google Sites websites (sites.google.com) will NOT work due to security restrictions.</span>
-        </div>
-        
-        <input type="text" id="customGameUrl" class="custom-input" placeholder="https://example.com/game">
-        <input type="text" id="customGameTitleInput" class="custom-input" placeholder="Game Title">
-        <input type="text" id="customGameDescInput" class="custom-input" placeholder="Game Description">
-        
-        <button class="btn" onclick="saveCustomGame()" style="width: 100%;">
-          Save Custom Game
-        </button>
-      </div>
-    </div>
+    <script>
+        for(let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            document.getElementById('stars').appendChild(star);
+        }
 
-    <div class="setting-group">
-      <label class="setting-label">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-        Appearance
-      </label>
-      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-        <div class="setting-desc">Animated background particles</div>
-        <label class="toggle-switch">
-          <input type="checkbox" id="particlesToggle" checked onchange="toggleParticles(this)">
-          <span class="slider"></span>
-        </label>
-      </div>
-      <div style="display: flex; align-items: center; justify-content: space-between;">
-        <div class="setting-desc">Remember last tab on login</div>
-        <label class="toggle-switch">
-          <input type="checkbox" id="autoSaveToggle" checked onchange="toggleAutoSave(this)">
-          <span class="slider"></span>
-        </label>
-      </div>
-    </div>
+        const DB = {
+            users: JSON.parse(localStorage.getItem('zyra_users')) || {},
+            current: localStorage.getItem('zyra_current'),
+            panic: { url: localStorage.getItem('zyra_panic_url'), key: localStorage.getItem('zyra_panic_key') },
+            custom: JSON.parse(localStorage.getItem('zyra_custom')) || {},
+            cloak: localStorage.getItem('zyra_cloak')
+        };
 
-    <div class="setting-group">
-      <label class="setting-label">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line></svg>
-        Stealth Mode (Tab Cloak)
-      </label>
-      <div class="setting-desc">Disguise this tab as a standard school/work application.</div>
-      <select id="cloakSelect" style="width: 100%; padding: 15px; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); color: white; border-radius: 12px; font-family: inherit; font-size: 1rem; outline: none;" onchange="applyCloak(this.value)">
-        <option value="">None (Zyra Hub)</option>
-        <option value="google">Google Search</option>
-        <option value="docs">Google Docs</option>
-        <option value="drive">Google Drive</option>
-        <option value="classroom">Google Classroom</option>
-        <option value="khan">Khan Academy</option>
-        <option value="ixl">IXL Learning</option>
-      </select>
-    </div>
-  </div>
-</div>
+        if(!DB.users.guest) { DB.users.guest = {pass: 'guest'}; save('users', DB.users); }
+        if(!DB.current) { DB.current = 'guest'; save('current', 'guest'); }
 
-<script>
-// ===== USER MANAGEMENT =====
-let users = JSON.parse(localStorage.getItem("users") || "{}");
-let current = null;
-const loginScreen = document.getElementById("login");
-const osScreen = document.getElementById("os");
-const welcomeText = document.getElementById("welcome");
+        function save(k, v) { localStorage.setItem('zyra_' + k, v); }
 
-// Default admin
-if (!users.admin) {
-  users.admin = { pass: "zyraadmin" };
-  localStorage.setItem("users", JSON.stringify(users));
-}
+        function init() {
+            renderUsers();
+            
+            if(DB.panic.url) document.getElementById('panic-url').value = DB.panic.url;
+            if(DB.panic.key) document.getElementById('panic-key').value = DB.panic.key;
+            if(DB.custom.url) document.getElementById('custom-url').value = DB.custom.url;
+            if(DB.custom.title) {
+                document.getElementById('custom-title').value = DB.custom.title;
+                document.getElementById('custom-game-title').textContent = DB.custom.title;
+            }
+            if(DB.custom.desc) {
+                document.getElementById('custom-desc').value = DB.custom.desc;
+                document.getElementById('custom-game-desc').textContent = DB.custom.desc;
+            }
+            if(DB.cloak) {
+                document.getElementById('cloak-select').value = DB.cloak;
+                applyCloak(DB.cloak);
+            }
 
-function create() {
-  const u = document.getElementById("lUser").value.trim();
-  const p = document.getElementById("lPass").value;
-  if (!u || !p) return alert("Please fill in all fields");
-  if (users[u]) return alert("Username already exists");
-  users[u] = { pass: p };
-  localStorage.setItem("users", JSON.stringify(users));
-  current = u;
-  localStorage.setItem("current", u);
-  start();
-}
+            document.getElementById('zg-logo').src = 'https://image2url.com/r2/default/images/1770434449041-5958d4dc-e4a1-44be-845a-6250582197d1.png';
 
-function login() {
-  const u = document.getElementById("lUser").value.trim();
-  const p = document.getElementById("lPass").value;
-  if (users[u] && users[u].pass === p) {
-    current = u;
-    localStorage.setItem("current", u);
-    start();
-  } else {
-    alert("Invalid username or password");
-  }
-}
+            setInterval(() => {
+                document.getElementById('clock').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            }, 1000);
 
-function start() {
-  loginScreen.style.opacity = '0';
-  setTimeout(() => {
-    loginScreen.style.display = "none";
-    osScreen.style.display = "block";
-    welcomeText.textContent = `Welcome, ${current}`;
-    initDashboard();
-    loadSettings();
-    loadLastSession();
-  }, 500);
-}
+            if('getBattery' in navigator) {
+                navigator.getBattery().then(b => {
+                    document.getElementById('battery').textContent = Math.round(b.level * 100) + '%';
+                    b.addEventListener('levelchange', () => {
+                        document.getElementById('battery').textContent = Math.round(b.level * 100) + '%';
+                    });
+                });
+            }
 
-function logout() {
-  localStorage.removeItem("current");
-  location.reload();
-}
+            // FPS
+            let last = performance.now(), frames = 0;
+            function loop() {
+                frames++;
+                const now = performance.now();
+                if(now >= last + 1000) {
+                    document.getElementById('fps').textContent = Math.round((frames * 1000) / (now - last));
+                    frames = 0;
+                    last = now;
+                }
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
 
-if (localStorage.getItem("current")) {
-  current = localStorage.getItem("current");
-  if (users[current]) {
-    start();
-  } else {
-    localStorage.removeItem("current");
-  }
-}
+        init();
 
-// ===== PANIC BUTTON =====
-let panicUrl = localStorage.getItem('panicUrl') || '';
-let panicKey = localStorage.getItem('panicKey') || '';
+        function testPing() {
+            const el = document.getElementById('ping');
+            el.textContent = '...';
+            setTimeout(() => {
+                el.textContent = Math.floor(Math.random() * 60 + 20) + 'ms';
+            }, 500);
+        }
 
-function savePanic() {
-  panicUrl = document.getElementById('panicUrl').value;
-  panicKey = document.getElementById('panicKey').value;
-  
-  if (panicUrl && panicKey) {
-    localStorage.setItem('panicUrl', panicUrl);
-    localStorage.setItem('panicKey', panicKey);
-    updatePanicPreview();
-    showNotification('Panic button configured!');
-  } else {
-    alert('Please enter both URL and hotkey');
-  }
-}
+        function nav(view, el) {
+            document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+            document.getElementById('view-' + view).classList.remove('hidden');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            if(el) el.classList.add('active');
+        }
 
-function updatePanicPreview() {
-  document.getElementById('panicPreviewKey').textContent = panicKey || '[key]';
-  document.getElementById('panicPreviewUrl').textContent = panicUrl || '[website]';
-}
+        function openViewer(url, title) {
+            document.getElementById('viewer-title').textContent = title;
+            document.getElementById('viewer-frame').src = url;
+            document.getElementById('viewer').classList.add('active');
+        }
 
-function triggerPanic() {
-  if (panicUrl) {
-    window.location.href = panicUrl;
-  } else {
-    alert('Configure panic button in settings first!');
-    openSettings();
-  }
-}
+        function closeViewer() {
+            document.getElementById('viewer').classList.remove('active');
+            setTimeout(() => document.getElementById('viewer-frame').src = '', 300);
+        }
 
-// Keyboard listener for panic
-document.addEventListener('keydown', (e) => {
-  if (panicKey && e.key === panicKey && document.getElementById('os').style.display === 'block') {
-    triggerPanic();
-  }
-});
+        function launchGame(url) {
+            const w = window.open('about:blank', '_blank');
+            if(w) {
+                w.document.write(`<!DOCTYPE html><html><head><title>Game</title><style>body{margin:0;background:#000}</style></head><body><iframe src="${url}" style="width:100vw;height:100vh;border:none;"></iframe></body></html>`);
+                w.document.close();
+            } else toast('Popup blocked', true);
+        }
 
-// ===== CUSTOM GAME =====
-function saveCustomGame() {
-  const url = document.getElementById('customGameUrl').value;
-  const title = document.getElementById('customGameTitleInput').value;
-  const desc = document.getElementById('customGameDescInput').value;
-  
-  if (url) {
-    localStorage.setItem('customGame', JSON.stringify({ url, title, desc }));
-    showNotification('Custom game saved!');
-    loadSettings();
-  }
-}
+        function launchCustomGame() {
+            if(DB.custom.url) launchGame(DB.custom.url);
+            else { toast('Configure in settings', true); toggleSettings(); }
+        }
 
-function launchCustomGame() {
-  const data = JSON.parse(localStorage.getItem('customGame') || '{}');
-  if (data.url) {
-    launchGame(data.url);
-  } else {
-    alert('Configure your custom game in settings first!');
-    openSettings();
-  }
-}
+        function toggleSettings() {
+            document.getElementById('settings-modal').classList.toggle('active');
+            renderUsers();
+        }
 
-// ===== NAVIGATION =====
-function openTab(id) {
-  document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-  
-  document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
-  document.querySelectorAll(".nav-item").forEach(n => {
-    const onclick = n.getAttribute("onclick");
-    if (onclick && onclick.includes(`openTab('${id}')`)) n.classList.add("active");
-  });
-  
-  if (document.getElementById('autoSaveToggle').checked) {
-    localStorage.setItem('lastTab', id);
-  }
-}
+        function renderUsers() {
+            const list = document.getElementById('user-list');
+            list.innerHTML = '';
+            Object.keys(DB.users).forEach(u => {
+                const div = document.createElement('div');
+                div.className = 'user-item' + (u === DB.current ? ' active' : '');
+                div.innerHTML = `
+                    <span>${u}</span>
+                    <div>
+                        ${u !== DB.current ? `<button class="btn btn-secondary" onclick="switchUser('${u}')" style="padding: 6px 12px; font-size: 0.75rem;">Switch</button>` : ''}
+                        ${u !== 'guest' ? `<button class="btn btn-danger" onclick="deleteUser('${u}')" style="padding: 6px 12px; font-size: 0.75rem;">Delete</button>` : ''}
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
 
-function loadLastSession() {
-  const lastTab = localStorage.getItem('lastTab');
-  if (lastTab && document.getElementById('autoSaveToggle').checked) {
-    openTab(lastTab);
-  }
-}
+        function switchUser(u) {
+            DB.current = u;
+            save('current', u);
+            renderUsers();
+            toast(`Switched to ${u}`);
+        }
 
-function toggleAutoSave(checkbox) {
-  if (!checkbox.checked) {
-    localStorage.removeItem('lastTab');
-  }
-}
+        function deleteUser(u) {
+            if(!confirm(`Delete ${u}?`)) return;
+            delete DB.users[u];
+            save('users', DB.users);
+            if(DB.current === u) switchUser('guest');
+            renderUsers();
+        }
 
-// ===== IFRAME =====
-function openIframe(url) {
-  const container = document.getElementById('iframeContainer');
-  const iframe = document.getElementById('mainIframe');
-  iframe.src = url;
-  container.classList.add('active');
-}
+        function createAccount() {
+            const u = document.getElementById('new-username').value.trim();
+            const p = document.getElementById('new-password').value;
+            if(!u || !p) return toast('Enter username and password', true);
+            if(DB.users[u]) return toast('User exists', true);
+            DB.users[u] = {pass: p};
+            save('users', DB.users);
+            document.getElementById('new-username').value = '';
+            document.getElementById('new-password').value = '';
+            renderUsers();
+            toast('Account created');
+        }
 
-function closeIframe() {
-  const container = document.getElementById('iframeContainer');
-  const iframe = document.getElementById('mainIframe');
-  container.classList.remove('active');
-  setTimeout(() => { iframe.src = 'about:blank'; }, 300);
-}
+        function savePanic() {
+            const url = document.getElementById('panic-url').value;
+            const key = document.getElementById('panic-key').value;
+            if(url && key) {
+                save('panic_url', url);
+                save('panic_key', key);
+                DB.panic = {url, key};
+                toast('Saved');
+            }
+        }
 
-function launchGame(url) {
-  const win = window.open("about:blank", "_blank");
-  if (win) {
-    win.document.open();
-    win.document.write(`
-      <style>
-        body { margin: 0; background: #000; overflow: hidden; }
-        iframe { width: 100vw; height: 100vh; border: none; }
-      </style>
-      <iframe src="${url}"></iframe>
-    `);
-    win.document.close();
-  } else {
-    alert("Popup blocker detected. Please allow popups.");
-  }
-}
+        function saveCustom() {
+            DB.custom = {
+                url: document.getElementById('custom-url').value,
+                title: document.getElementById('custom-title').value || 'Custom',
+                desc: document.getElementById('custom-desc').value || 'Custom game'
+            };
+            save('custom', JSON.stringify(DB.custom));
+            document.getElementById('custom-game-title').textContent = DB.custom.title;
+            document.getElementById('custom-game-desc').textContent = DB.custom.desc;
+            toast('Saved');
+        }
 
-// ===== DASHBOARD =====
-function initDashboard() {
-  if ('getBattery' in navigator) {
-    navigator.getBattery().then(b => {
-      document.getElementById("percent").textContent = Math.round(b.level * 100) + "%";
-      b.addEventListener("levelchange", () => {
-        document.getElementById("percent").textContent = Math.round(b.level * 100) + "%";
-      });
-    });
-  } else {
-    document.getElementById("percent").textContent = "N/A";
-  }
+        document.addEventListener('keydown', (e) => {
+            if(DB.panic.key && e.key === DB.panic.key) {
+                window.location.href = DB.panic.url;
+            }
+        });
 
-  function updateTime() {
-    const now = new Date();
-    document.getElementById("time").textContent = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    document.getElementById("date").textContent = now.toLocaleDateString(undefined, {weekday: 'long', month: 'long', day: 'numeric'});
-  }
-  updateTime();
-  setInterval(updateTime, 1000);
-  
-  trackFps();
-}
+        const cloaks = {
+            google: {t: 'Google', i: 'https://www.google.com/favicon.ico'},
+            drive: {t: 'Drive', i: 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png'},
+            classroom: {t: 'Classroom', i: 'https://ssl.gstatic.com/classroom/ic_product_classroom_32.png'}
+        };
 
-// ===== SYSTEM MONITOR =====
-let monitorVisible = false;
-function toggleMonitor() {
-  monitorVisible = !monitorVisible;
-  document.getElementById('monitorModal').classList.toggle('active', monitorVisible);
-  if (monitorVisible) testPing();
-}
+        function applyCloak(type) {
+            save('cloak', type);
+            if(!type) {
+                document.title = 'Zyra';
+                document.querySelector('link[rel="icon"]').href = 'https://www.google.com/favicon.ico';
+                return;
+            }
+            document.title = cloaks[type].t;
+            document.querySelector('link[rel="icon"]').href = cloaks[type].i;
+        }
 
-function testPing() {
-  const pingEl = document.getElementById('pingValue');
-  const pingBar = document.getElementById('pingBar');
-  const statusDot = document.getElementById('statusDot');
-  const statusText = document.getElementById('statusText');
-  
-  pingEl.textContent = '--';
-  statusText.textContent = 'Testing...';
-  statusDot.style.background = 'var(--warning)';
-  
-  setTimeout(() => {
-    const ping = Math.floor(Math.random() * 80) + 20;
-    pingEl.textContent = ping + 'ms';
-    
-    if (ping < 50) {
-      pingEl.className = 'monitor-value good';
-      pingBar.style.width = '30%';
-      statusDot.style.background = 'var(--success)';
-      statusText.textContent = 'Excellent Connection';
-    } else if (ping < 100) {
-      pingEl.className = 'monitor-value warn';
-      pingBar.style.width = '60%';
-      statusDot.style.background = 'var(--warning)';
-      statusText.textContent = 'Good Connection';
-    } else {
-      pingEl.className = 'monitor-value bad';
-      pingBar.style.width = '90%';
-      statusDot.style.background = 'var(--danger)';
-      statusText.textContent = 'Poor Connection';
-    }
-  }, 800);
-}
+        function toast(msg, err) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast' + (err ? ' error' : '');
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+    </script>
 
-// FPS
-function trackFps() {
-  let lastTime = performance.now();
-  let frames = 0;
-  
-  function count() {
-    frames++;
-    const time = performance.now();
-    
-    if (time >= lastTime + 1000) {
-      const fps = Math.round((frames * 1000) / (time - lastTime));
-      const fpsEl = document.getElementById('fpsValue');
-      const fpsBar = document.getElementById('fpsBar');
-      
-      fpsEl.textContent = fps;
-      
-      if (fps >= 55) {
-        fpsEl.className = 'monitor-value good';
-        fpsBar.style.width = '100%';
-      } else if (fps >= 30) {
-        fpsEl.className = 'monitor-value warn';
-        fpsBar.style.width = '60%';
-      } else {
-        fpsEl.className = 'monitor-value bad';
-        fpsBar.style.width = '30%';
-      }
-      
-      frames = 0;
-      lastTime = time;
-    }
-    requestAnimationFrame(count);
-  }
-  count();
-}
-
-// ===== PARTICLES =====
-let particlesEnabled = true;
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-let particles = [];
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
-
-function initParticles() {
-  particles = [...Array(100)].map(() => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    dx: (Math.random() - 0.5) * 0.3,
-    dy: (Math.random() - 0.5) * 0.3,
-    r: Math.random() * 2 + 0.5,
-    alpha: Math.random() * 0.5 + 0.1
-  }));
-}
-
-function animateParticles() {
-  if (!particlesEnabled) return;
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-  particles.forEach(p => {
-    p.x += p.dx;
-    p.y += p.dy;
-    
-    if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
-    
-    ctx.fillStyle = `rgba(0, 212, 255, ${p.alpha})`;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
-  });
-  
-  requestAnimationFrame(animateParticles);
-}
-
-initParticles();
-animateParticles();
-
-function toggleParticles(checkbox) {
-  particlesEnabled = checkbox.checked;
-  if (particlesEnabled) {
-    initParticles();
-    animateParticles();
-    canvas.style.display = 'block';
-  } else {
-    canvas.style.display = 'none';
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-}
-
-// ===== SETTINGS =====
-function openSettings() {
-  document.getElementById("settingsModal").classList.add("active");
-  loadSettings();
-}
-
-function closeSettings() {
-  document.getElementById("settingsModal").classList.remove("active");
-}
-
-function loadSettings() {
-  // Panic
-  document.getElementById('panicUrl').value = panicUrl;
-  document.getElementById('panicKey').value = panicKey;
-  updatePanicPreview();
-  
-  // Custom game
-  const game = JSON.parse(localStorage.getItem('customGame') || '{}');
-  document.getElementById('customGameUrl').value = game.url || '';
-  document.getElementById('customGameTitleInput').value = game.title || '';
-  document.getElementById('customGameDescInput').value = game.desc || '';
-  
-  if (game.title) document.getElementById('customGameTitle').textContent = game.title;
-  if (game.desc) document.getElementById('customGameDesc').textContent = game.desc;
-}
-
-function showNotification(text) {
-  const notif = document.getElementById('notification');
-  document.getElementById('notificationText').textContent = text;
-  notif.classList.add('show');
-  setTimeout(() => notif.classList.remove('show'), 3000);
-}
-
-// ===== TAB CLOAK =====
-const cloaks = {
-  google: { title: "Google", icon: "https://www.google.com/favicon.ico" },
-  docs: { title: "Google Docs", icon: "https://ssl.gstatic.com/docs/documents/images/kix-favicon7.ico" },
-  drive: { title: "Google Drive", icon: "https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png" },
-  classroom: { title: "Google Classroom", icon: "https://ssl.gstatic.com/classroom/ic_product_classroom_32.png" },
-  khan: { title: "Khan Academy", icon: "https://cdn.kastatic.org/images/favicon.ico" },
-  ixl: { title: "IXL | Math, Language Arts, Science, Social Studies", icon: "https://www.ixl.com/favicon.ico" }
-};
-
-function applyCloak(type) {
-  if (!type) {
-    document.title = "Zyra Hub";
-    const link = document.querySelector("link[rel~='icon']");
-    if (link) link.href = "https://www.google.com/favicon.ico";
-    return;
-  }
-  
-  const cloak = cloaks[type];
-  document.title = cloak.title;
-  
-  let link = document.querySelector("link[rel~='icon']");
-  if (!link) {
-    link = document.createElement('link');
-    link.rel = 'icon';
-    document.head.appendChild(link);
-  }
-  link.href = cloak.icon;
-}
-</script>
 </body>
 </html>

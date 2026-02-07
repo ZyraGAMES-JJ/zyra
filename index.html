@@ -15,14 +15,15 @@
         }
 
         :root {
-            --bg: #0a0a0b;
-            --surface: #151518;
-            --surface-hover: #1e1e22;
-            --border: #2a2a30;
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface-hover: #111111;
+            --border: #22d3ee;
             --cyan: #22d3ee;
             --cyan-dim: rgba(34, 211, 238, 0.1);
-            --text: #f5f5f5;
-            --text-dim: #71717a;
+            --cyan-glow: rgba(34, 211, 238, 0.3);
+            --text: #ffffff;
+            --text-dim: #22d3ee;
             --font: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
         }
@@ -46,10 +47,11 @@
             position: absolute;
             width: 2px;
             height: 2px;
-            background: var(--text);
+            background: var(--cyan);
             border-radius: 50%;
             opacity: 0.3;
             animation: twinkle 3s infinite;
+            box-shadow: 0 0 4px var(--cyan);
         }
 
         @keyframes twinkle {
@@ -70,7 +72,7 @@
             align-items: center;
             gap: 8px;
             z-index: 100;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px var(--cyan-glow);
         }
 
         .nav-logo {
@@ -80,6 +82,7 @@
             color: var(--cyan);
             margin-right: 20px;
             letter-spacing: 1px;
+            text-shadow: 0 0 10px var(--cyan);
         }
 
         .nav-btn {
@@ -99,11 +102,13 @@
         .nav-btn:hover {
             background: var(--surface-hover);
             color: var(--text);
+            box-shadow: 0 0 10px var(--cyan-glow);
         }
 
         .nav-btn.active {
             background: var(--cyan-dim);
             color: var(--cyan);
+            box-shadow: 0 0 15px var(--cyan-glow);
         }
 
         .nav-btn svg {
@@ -124,6 +129,7 @@
             gap: 6px;
             padding: 8px 14px;
             background: var(--bg);
+            border: 1px solid var(--border);
             border-radius: 8px;
             font-family: var(--font-mono);
             font-size: 0.75rem;
@@ -133,6 +139,7 @@
         .stat-value {
             color: var(--cyan);
             min-width: 20px;
+            text-shadow: 0 0 5px var(--cyan);
         }
 
         
@@ -169,6 +176,7 @@
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 16px;
+            box-shadow: 0 0 10px var(--cyan-glow);
         }
 
         .card-title {
@@ -183,11 +191,12 @@
             font-family: var(--font-mono);
             font-size: 2rem;
             color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
         }
 
-        .grid-3 {
+        .grid-2 {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 16px;
         }
 
@@ -204,11 +213,14 @@
             text-decoration: none;
             margin-bottom: 12px;
             transition: all 0.2s;
+            box-shadow: 0 0 5px var(--cyan-glow);
         }
 
         .link-card:hover {
             border-color: var(--cyan);
             background: var(--surface-hover);
+            box-shadow: 0 0 20px var(--cyan-glow);
+            transform: translateX(5px);
         }
 
         .link-info h3 {
@@ -229,32 +241,43 @@
 
         .link-card:hover .link-arrow {
             color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
         }
 
         /* === PARTNERS === */
-        .partner-big {
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .partner-card {
             display: block;
             background: var(--surface);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 40px;
+            border-radius: 12px;
+            padding: 20px;
             text-align: center;
             text-decoration: none;
             color: var(--text);
             transition: all 0.2s;
+            box-shadow: 0 0 5px var(--cyan-glow);
         }
 
-        .partner-big:hover {
+        .partner-card:hover {
             border-color: var(--cyan);
             background: var(--surface-hover);
+            box-shadow: 0 0 15px var(--cyan-glow);
+            transform: translateY(-3px);
         }
 
         .partner-logo {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 20px;
-            border-radius: 24px;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 12px;
+            border-radius: 12px;
             overflow: hidden;
+            border: 1px solid var(--border);
         }
 
         .partner-logo img {
@@ -264,21 +287,23 @@
         }
 
         .partner-name {
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
+            color: var(--cyan);
         }
 
         .partner-url {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             color: var(--text-dim);
+            word-break: break-all;
         }
 
         /* === MODAL === */
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             display: none;
             align-items: center;
             justify-content: center;
@@ -297,6 +322,7 @@
             border-radius: 16px;
             max-height: 80vh;
             overflow-y: auto;
+            box-shadow: 0 0 30px var(--cyan-glow);
         }
 
         .modal-header {
@@ -310,6 +336,7 @@
         .modal-title {
             font-size: 1.1rem;
             font-weight: 500;
+            color: var(--cyan);
         }
 
         .modal-close {
@@ -324,7 +351,8 @@
         }
 
         .modal-close:hover {
-            color: var(--text);
+            color: var(--cyan);
+            text-shadow: 0 0 10px var(--cyan);
         }
 
         .modal-body {
@@ -360,6 +388,7 @@
 
         input:focus {
             border-color: var(--cyan);
+            box-shadow: 0 0 10px var(--cyan-glow);
         }
 
         .input-row {
@@ -382,6 +411,10 @@
             font-weight: 500;
         }
 
+        .btn-main:hover {
+            box-shadow: 0 0 15px var(--cyan);
+        }
+
         .btn-secondary {
             background: transparent;
             border: 1px solid var(--border);
@@ -391,31 +424,13 @@
         .btn-secondary:hover {
             border-color: var(--cyan);
             color: var(--cyan);
+            box-shadow: 0 0 10px var(--cyan-glow);
         }
 
         .btn-danger {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
             color: #ef4444;
-        }
-
-        .user-list {
-            margin-bottom: 16px;
-        }
-
-        .user-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            margin-bottom: 8px;
-        }
-
-        .user-item.active {
-            border-color: var(--cyan);
         }
 
         /* === VIEWER === */
@@ -460,6 +475,7 @@
             transform: translateX(400px);
             transition: 0.3s;
             z-index: 1000;
+            box-shadow: 0 0 20px var(--cyan-glow);
         }
 
         .toast.show { transform: translateX(0); }
@@ -468,6 +484,7 @@
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
     </style>
 </head>
 <body>
@@ -529,7 +546,7 @@
         <div class="container">
 
             <div id="view-home" class="view">
-                <div class="grid-3">
+                <div class="grid-2">
                     <div class="card">
                         <div class="card-title">Time</div>
                         <div class="card-value" id="clock">00:00</div>
@@ -537,10 +554,6 @@
                     <div class="card">
                         <div class="card-title">Battery</div>
                         <div class="card-value" id="battery">--</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Status</div>
-                        <div class="card-value" style="font-size: 1.2rem; margin-top: 8px;">Online</div>
                     </div>
                 </div>
 
@@ -612,13 +625,26 @@
             </div>
 
             <div id="view-partners" class="view hidden">
-                <a href="https://sonissosigma.keybusinessconnection.com/" target="_blank" class="partner-big">
-                    <div class="partner-logo">
-                        <img src="https://image2url.com/r2/default/images/1770434449041-5958d4dc-e4a1-44be-845a-6250582197d1.png" alt="ZG" id="zg-logo">
-                    </div>
-                    <div class="partner-name">Zane Gamez</div>
-                    <div class="partner-url">sonissosigma.keybusinessconnection.com</div>
-                </a>
+                <div class="partners-grid">
+                    <a href="https://sonissosigma.keybusinessconnection.com/" target="_blank" class="partner-card">
+                        <div class="partner-logo">
+                            <img src="https://image2url.com/r2/default/images/1770434449041-5958d4dc-e4a1-44be-845a-6250582197d1.png" alt="ZG" id="zg-logo">
+                        </div>
+                        <div class="partner-name">Zane Gamez</div>
+                        <div class="partner-url">sonissosigma.keybusinessconnection.com</div>
+                    </a>
+                    
+                    <!-- Add more partners here following the same structure -->
+                    <!-- Example:
+                    <a href="https://partner-url.com" target="_blank" class="partner-card">
+                        <div class="partner-logo">
+                            <img src="partner-logo.png" alt="Partner">
+                        </div>
+                        <div class="partner-name">Partner Name</div>
+                        <div class="partner-url">partner-url.com</div>
+                    </a>
+                    -->
+                </div>
                 
                 <div style="margin-top: 20px;">
                     <a href="https://discord.gg/A32Y8hb6jJ" target="_blank" class="link-card">
@@ -643,30 +669,30 @@
             <div class="modal-body">
 
                 <div class="setting">
-                    <label class="setting-label">Accounts</label>
-                    <div class="user-list" id="user-list"></div>
+                    <label class="setting-label">Account</label>
+                    <div id="account-display" style="padding: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; color: var(--cyan);"></div>
                     <div class="input-row">
-                        <input type="text" id="new-username" placeholder="Username">
-                        <input type="password" id="new-password" placeholder="Password">
+                        <input type="text" id="account-name" placeholder="Username">
+                        <input type="password" id="account-pass" placeholder="Password" style="width: 120px;">
                     </div>
-                    <button class="btn btn-main" onclick="createAccount()" style="margin-top: 10px;">Create Account</button>
+                    <button class="btn btn-main" onclick="saveAccount()" style="margin-top: 10px;">Save Account</button>
                 </div>
 
                 <div class="setting">
                     <label class="setting-label">Panic Button</label>
                     <div class="input-row">
-                        <input type="text" id="panic-url" placeholder="URL">
-                        <input type="text" id="panic-key" placeholder="Key" style="width: 100px;">
+                        <input type="text" id="panic-url" placeholder="URL (e.g., https://google.com)">
+                        <input type="text" id="panic-key" placeholder="Key (e.g., `)" style="width: 100px;">
                     </div>
-                    <button class="btn btn-danger" onclick="savePanic()" style="margin-top: 10px;">Save</button>
+                    <button class="btn btn-danger" onclick="savePanic()" style="margin-top: 10px;">Save Panic</button>
                 </div>
 
                 <div class="setting">
                     <label class="setting-label">Custom Game</label>
-                    <input type="text" id="custom-url" placeholder="URL">
+                    <input type="text" id="custom-url" placeholder="Game URL">
                     <input type="text" id="custom-title" placeholder="Title">
                     <input type="text" id="custom-desc" placeholder="Description">
-                    <button class="btn btn-secondary" onclick="saveCustom()">Save</button>
+                    <button class="btn btn-secondary" onclick="saveCustom()">Save Custom Game</button>
                 </div>
 
                 <div class="setting">
@@ -692,6 +718,7 @@
     </div>
 
     <script>
+        // Generate stars
         for(let i = 0; i < 50; i++) {
             const star = document.createElement('div');
             star.className = 'star';
@@ -701,44 +728,53 @@
             document.getElementById('stars').appendChild(star);
         }
 
+        // Data management
         const DB = {
-            users: JSON.parse(localStorage.getItem('zyra_users')) || {},
-            current: localStorage.getItem('zyra_current'),
-            panic: { url: localStorage.getItem('zyra_panic_url'), key: localStorage.getItem('zyra_panic_key') },
+            account: JSON.parse(localStorage.getItem('zyra_account')) || null,
+            panic: JSON.parse(localStorage.getItem('zyra_panic')) || {},
             custom: JSON.parse(localStorage.getItem('zyra_custom')) || {},
-            cloak: localStorage.getItem('zyra_cloak')
+            cloak: localStorage.getItem('zyra_cloak') || ''
         };
 
-        if(!DB.users.guest) { DB.users.guest = {pass: 'guest'}; save('users', DB.users); }
-        if(!DB.current) { DB.current = 'guest'; save('current', 'guest'); }
-
-        function save(k, v) { localStorage.setItem('zyra_' + k, v); }
+        function save(key, value) {
+            localStorage.setItem('zyra_' + key, typeof value === 'string' ? value : JSON.stringify(value));
+        }
 
         function init() {
-            renderUsers();
-            
+            // Load account
+            if(DB.account) {
+                document.getElementById('account-display').textContent = 'Logged in as: ' + DB.account.name;
+                document.getElementById('account-name').value = DB.account.name;
+                document.getElementById('account-pass').value = DB.account.pass;
+            } else {
+                document.getElementById('account-display').textContent = 'No account saved';
+            }
+
+            // Load panic
             if(DB.panic.url) document.getElementById('panic-url').value = DB.panic.url;
             if(DB.panic.key) document.getElementById('panic-key').value = DB.panic.key;
-            if(DB.custom.url) document.getElementById('custom-url').value = DB.custom.url;
-            if(DB.custom.title) {
-                document.getElementById('custom-title').value = DB.custom.title;
-                document.getElementById('custom-game-title').textContent = DB.custom.title;
+
+            // Load custom game
+            if(DB.custom.url) {
+                document.getElementById('custom-url').value = DB.custom.url;
+                document.getElementById('custom-game-title').textContent = DB.custom.title || 'Custom';
+                document.getElementById('custom-game-desc').textContent = DB.custom.desc || 'Custom game';
             }
-            if(DB.custom.desc) {
-                document.getElementById('custom-desc').value = DB.custom.desc;
-                document.getElementById('custom-game-desc').textContent = DB.custom.desc;
-            }
+            if(DB.custom.title) document.getElementById('custom-title').value = DB.custom.title;
+            if(DB.custom.desc) document.getElementById('custom-desc').value = DB.custom.desc;
+
+            // Load cloak
             if(DB.cloak) {
                 document.getElementById('cloak-select').value = DB.cloak;
                 applyCloak(DB.cloak);
             }
 
-            document.getElementById('zg-logo').src = 'https://image2url.com/r2/default/images/1770434449041-5958d4dc-e4a1-44be-845a-6250582197d1.png';
-
+            // Clock
             setInterval(() => {
                 document.getElementById('clock').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             }, 1000);
 
+            // Battery
             if('getBattery' in navigator) {
                 navigator.getBattery().then(b => {
                     document.getElementById('battery').textContent = Math.round(b.level * 100) + '%';
@@ -794,7 +830,7 @@
         function launchGame(url) {
             const w = window.open('about:blank', '_blank');
             if(w) {
-                w.document.write(`<!DOCTYPE html><html><head><title>Game</title><style>body{margin:0;background:#000}</style></head><body><iframe src="${url}" style="width:100vw;height:100vh;border:none;"></iframe></body></html>`);
+                w.document.write('<!DOCTYPE html><html><head><title>Game</title><style>body{margin:0;background:#000}</style></head><body><iframe src="' + url + '" style="width:100vw;height:100vh;border:none;"></iframe></body></html>');
                 w.document.close();
             } else toast('Popup blocked', true);
         }
@@ -806,79 +842,52 @@
 
         function toggleSettings() {
             document.getElementById('settings-modal').classList.toggle('active');
-            renderUsers();
         }
 
-        function renderUsers() {
-            const list = document.getElementById('user-list');
-            list.innerHTML = '';
-            Object.keys(DB.users).forEach(u => {
-                const div = document.createElement('div');
-                div.className = 'user-item' + (u === DB.current ? ' active' : '');
-                div.innerHTML = `
-                    <span>${u}</span>
-                    <div>
-                        ${u !== DB.current ? `<button class="btn btn-secondary" onclick="switchUser('${u}')" style="padding: 6px 12px; font-size: 0.75rem;">Switch</button>` : ''}
-                        ${u !== 'guest' ? `<button class="btn btn-danger" onclick="deleteUser('${u}')" style="padding: 6px 12px; font-size: 0.75rem;">Delete</button>` : ''}
-                    </div>
-                `;
-                list.appendChild(div);
-            });
-        }
-
-        function switchUser(u) {
-            DB.current = u;
-            save('current', u);
-            renderUsers();
-            toast(`Switched to ${u}`);
-        }
-
-        function deleteUser(u) {
-            if(!confirm(`Delete ${u}?`)) return;
-            delete DB.users[u];
-            save('users', DB.users);
-            if(DB.current === u) switchUser('guest');
-            renderUsers();
-        }
-
-        function createAccount() {
-            const u = document.getElementById('new-username').value.trim();
-            const p = document.getElementById('new-password').value;
-            if(!u || !p) return toast('Enter username and password', true);
-            if(DB.users[u]) return toast('User exists', true);
-            DB.users[u] = {pass: p};
-            save('users', DB.users);
-            document.getElementById('new-username').value = '';
-            document.getElementById('new-password').value = '';
-            renderUsers();
-            toast('Account created');
+        function saveAccount() {
+            const name = document.getElementById('account-name').value.trim();
+            const pass = document.getElementById('account-pass').value;
+            if(!name || !pass) return toast('Enter username and password', true);
+            
+            DB.account = { name: name, pass: pass };
+            save('account', DB.account);
+            document.getElementById('account-display').textContent = 'Logged in as: ' + name;
+            toast('Account saved');
         }
 
         function savePanic() {
-            const url = document.getElementById('panic-url').value;
-            const key = document.getElementById('panic-key').value;
-            if(url && key) {
-                save('panic_url', url);
-                save('panic_key', key);
-                DB.panic = {url, key};
-                toast('Saved');
-            }
+            const url = document.getElementById('panic-url').value.trim();
+            const key = document.getElementById('panic-key').value.trim();
+            
+            if(!url || !key) return toast('Enter both URL and key', true);
+            
+            DB.panic = { url: url, key: key };
+            save('panic', DB.panic);
+            toast('Panic button saved');
         }
 
         function saveCustom() {
-            DB.custom = {
-                url: document.getElementById('custom-url').value,
-                title: document.getElementById('custom-title').value || 'Custom',
-                desc: document.getElementById('custom-desc').value || 'Custom game'
+            const url = document.getElementById('custom-url').value.trim();
+            const title = document.getElementById('custom-title').value.trim();
+            const desc = document.getElementById('custom-desc').value.trim();
+            
+            if(!url) return toast('Enter game URL', true);
+            
+            DB.custom = { 
+                url: url, 
+                title: title || 'Custom', 
+                desc: desc || 'Custom game' 
             };
-            save('custom', JSON.stringify(DB.custom));
+            save('custom', DB.custom);
+            
             document.getElementById('custom-game-title').textContent = DB.custom.title;
             document.getElementById('custom-game-desc').textContent = DB.custom.desc;
-            toast('Saved');
+            toast('Custom game saved');
         }
 
+        // Panic button listener
         document.addEventListener('keydown', (e) => {
-            if(DB.panic.key && e.key === DB.panic.key) {
+            if(DB.panic.key && e.key === DB.panic.key && DB.panic.url) {
                 window.location.href = DB.panic.url;
             }
         });
@@ -911,3 +920,19 @@
 
 </body>
 </html>
+
+
+<!-- Google AdSense Script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8339583607158741"
+        crossorigin="anonymous"></script>
+
+<!-- Example Ad Slot -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-8339583607158741"
+     data-ad-slot="1234567890"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>

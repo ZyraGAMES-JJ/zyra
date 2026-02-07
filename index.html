@@ -123,25 +123,6 @@
             margin: 0 8px;
         }
 
-        .stat-pill {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-dim);
-        }
-
-        .stat-value {
-            color: var(--cyan);
-            min-width: 20px;
-            text-shadow: 0 0 5px var(--cyan);
-        }
-
         
         .main {
             padding-top: 100px;
@@ -506,6 +487,47 @@
         .partners-box .link-card {
             margin-bottom: 0;
         }
+
+        /* Stats display in settings */
+        .stats-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .stat-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .stat-number {
+            font-family: var(--font-mono);
+            font-size: 1.5rem;
+            color: var(--cyan);
+            text-shadow: 0 0 5px var(--cyan);
+        }
+
+        .stat-box.clickable {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .stat-box.clickable:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 10px var(--cyan-glow);
+        }
     </style>
 </head>
 <body>
@@ -542,18 +564,6 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             Partners
         </button>
-        
-        <div class="nav-divider"></div>
-        
-        <div class="stat-pill">
-            <span>FPS:</span>
-            <span class="stat-value" id="fps">60</span>
-        </div>
-        
-        <div class="stat-pill" onclick="testPing()" style="cursor: pointer;">
-            <span>PING:</span>
-            <span class="stat-value" id="ping">--</span>
-        </div>
         
         <div class="nav-divider"></div>
         
@@ -646,6 +656,7 @@
             </div>
 
             <div id="view-partners" class="view hidden">
+                <!-- Partners Box containing both Partner and Discord - Title removed -->
                 <div class="partners-box">
                     <div class="partners-box-content">
                         <a href="https://sonissosigma.keybusinessconnection.com/" target="_blank" class="partner-card">
@@ -677,6 +688,21 @@
                 <button class="modal-close" onclick="toggleSettings()">×</button>
             </div>
             <div class="modal-body">
+
+                <!-- Stats Section moved to Settings -->
+                <div class="setting">
+                    <label class="setting-label">Performance Stats</label>
+                    <div class="stats-display">
+                        <div class="stat-box">
+                            <div class="stat-label">FPS</div>
+                            <div class="stat-number" id="fps">60</div>
+                        </div>
+                        <div class="stat-box clickable" onclick="testPing()">
+                            <div class="stat-label">PING</div>
+                            <div class="stat-number" id="ping">--</div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="setting">
                     <label class="setting-label">Account</label>

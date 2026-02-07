@@ -482,6 +482,30 @@
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
+
+        /* New Box Styles for Partners & Discord */
+        .partners-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px var(--cyan-glow);
+        }
+
+        .partners-box-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .partners-box .partner-card {
+            margin-bottom: 0;
+        }
+
+        .partners-box .link-card {
+            margin-bottom: 0;
+        }
     </style>
 </head>
 <body>
@@ -622,26 +646,25 @@
             </div>
 
             <div id="view-partners" class="view hidden">
-                <div class="partners-grid">
-                    <a href="https://sonissosigma.keybusinessconnection.com/" target="_blank" class="partner-card">
-                        <div class="partner-logo">
-                            <img src="https://image2url.com/r2/default/images/1770434449041-5958d4dc-e4a1-44be-845a-6250582197d1.png" alt="ZG" id="zg-logo">
-                        </div>
-                        <div class="partner-name">Zane Gamez</div>
-                        <div class="partner-url">sonissosigma.keybusinessconnection.com</div>
-                    </a>
-                    
-                  
-                </div>
-                
-                <div style="margin-top: 20px;">
-                    <a href="https://discord.gg/A32Y8hb6jJ" target="_blank" class="link-card">
-                        <div class="link-info">
-                            <h3>Discord Server</h3>
-                            <p>discord.gg/A32Y8hb6jJ</p>
-                        </div>
-                        <span class="link-arrow">→</span>
-                    </a>
+                <!-- Partners Box containing both Partner and Discord - Title removed -->
+                <div class="partners-box">
+                    <div class="partners-box-content">
+                        <a href="https://sonissosigma.keybusinessconnection.com/" target="_blank" class="partner-card">
+                            <div class="partner-logo">
+                                <img src="https://image2url.com/r2/default/images/1770434449041-5958d4dc-e4a1-44be-845a-6250582197d1.png" alt="ZG">
+                            </div>
+                            <div class="partner-name">Zane Gamez</div>
+                            <div class="partner-url">sonissosigma.keybusinessconnection.com</div>
+                        </a>
+                        
+                        <a href="https://discord.gg/A32Y8hb6jJ" target="_blank" class="link-card">
+                            <div class="link-info">
+                                <h3>Discord Server</h3>
+                                <p>discord.gg/A32Y8hb6jJ</p>
+                            </div>
+                            <span class="link-arrow">→</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -924,4 +947,5 @@
     </script>
 </head>
 <body>
-    
+</body>
+</html>

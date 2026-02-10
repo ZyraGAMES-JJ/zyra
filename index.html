@@ -1,41 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8339583607158741"
-     crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zyra Hub</title>
     <link rel="icon" href="https://image2url.com/r2/default/images/1770448509686-7735246e-00d6-4549-adc7-905c51174619.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
+    <script src="https://unpkg.com/psl@latest/dist/psl.umd.cjs"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        :root {
-            --bg: #000000;
-            --surface: #0a0a0a;
-            --surface-hover: #111111;
-            --border: #22d3ee;
-            --cyan: #22d3ee;
-            --cyan-dim: rgba(34, 211, 238, 0.1);
-            --cyan-glow: rgba(34, 211, 238, 0.3);
-            --text: #ffffff;
-            --text-dim: #22d3ee;
-            --font: 'Inter', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-        }
-
+        
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--font);
-            min-height: 100vh;
-            overflow-x: hidden;
+            background: #0d0d0d;
+            color: #e5e5e5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            height: 100vh;
+            overflow: hidden;
         }
 
         .stars {
@@ -49,922 +32,1339 @@
             position: absolute;
             width: 2px;
             height: 2px;
-            background: var(--cyan);
+            background: #0891b2;
             border-radius: 50%;
-            opacity: 0.3;
-            animation: twinkle 3s infinite;
-            box-shadow: 0 0 4px var(--cyan);
+            opacity: 0.35;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.8; }
-        }
-
-        .top-nav {
+        .top {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 12px 24px;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background: #141414;
+            border-bottom: 1px solid #262626;
             display: flex;
             align-items: center;
-            gap: 8px;
+            padding: 0 16px;
+            gap: 10px;
             z-index: 100;
-            box-shadow: 0 0 20px var(--cyan-glow);
         }
 
-        .nav-logo {
-            font-family: var(--font);
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--cyan);
-            margin-right: 20px;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px var(--cyan);
+        .nav {
+            display: flex;
+            gap: 6px;
         }
 
-        .nav-btn {
+        .nav button {
+            width: 34px;
+            height: 34px;
+            background: #171717;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            color: #737373;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+
+        .nav button:hover {
+            background: #1f1f1f;
+            color: #e5e5e5;
+            border-color: #404040;
+        }
+
+        .address-bar {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: #171717;
+            border: 1px solid #2a2a2a;
+            border-radius: 25px;
+            padding: 0 16px;
+            height: 38px;
+            gap: 12px;
+            transition: all 0.15s;
+        }
+
+        .address-bar:focus-within {
+            border-color: #0891b2;
+            background: #1f1f1f;
+        }
+
+        .address-bar .icon {
+            font-size: 18px;
+            color: #0891b2;
+        }
+
+        .address-bar input {
+            flex: 1;
             background: transparent;
             border: none;
-            border-radius: 10px;
-            color: var(--text-dim);
-            font-size: 0.9rem;
+            color: #e5e5e5;
+            font-size: 14px;
+            outline: none;
+            text-align: center;
+        }
+
+        .address-bar input::placeholder {
+            color: #525252;
+        }
+
+        .go-btn {
+            background: #0891b2;
+            border: none;
+            color: #000;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: background 0.15s;
         }
 
-        .nav-btn:hover {
-            background: var(--surface-hover);
-            color: var(--text);
-            box-shadow: 0 0 10px var(--cyan-glow);
+        .go-btn:hover {
+            background: #0e7490;
         }
 
-        .nav-btn.active {
-            background: var(--cyan-dim);
-            color: var(--cyan);
-            box-shadow: 0 0 15px var(--cyan-glow);
+        .home-btn {
+            width: 34px;
+            height: 34px;
+            background: #171717;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            color: #737373;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .nav-btn svg {
-            width: 18px;
-            height: 18px;
+        .home-btn:hover {
+            background: #1f1f1f;
+            color: #e5e5e5;
         }
 
-        .nav-divider {
-            width: 1px;
-            height: 24px;
-            background: var(--border);
-            margin: 0 8px;
+        .tab-bar {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            right: 0;
+            height: 36px;
+            background: #0d0d0d;
+            border-bottom: 1px solid #262626;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            gap: 4px;
+            z-index: 99;
+            overflow-x: auto;
         }
 
-        
-        .main {
-            padding-top: 100px;
-            min-height: 100vh;
+        .tab-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            background: #171717;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #737373;
+            cursor: pointer;
+            max-width: 140px;
+            min-width: 90px;
+            transition: all 0.15s;
+        }
+
+        .tab:hover {
+            background: #1f1f1f;
+        }
+
+        .tab.active {
+            background: #141414;
+            border-color: #0891b2;
+            color: #0891b2;
+        }
+
+        .tab-title {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tab-close {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.15s;
+            font-size: 14px;
+        }
+
+        .tab:hover .tab-close {
+            opacity: 1;
+        }
+
+        .tab-close:hover {
+            background: #dc2626;
+            color: #fff;
+        }
+
+        .new-tab {
+            width: 28px;
+            height: 28px;
+            background: transparent;
+            border: none;
+            border-radius: 6px;
+            color: #525252;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .new-tab:hover {
+            background: #1f1f1f;
+            color: #e5e5e5;
+        }
+
+        .content {
+            position: fixed;
+            top: 86px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #0d0d0d;
+            overflow-y: auto;
+        }
+
+        .tab-content {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .ntp {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 86px);
+            padding: 30px 20px;
             position: relative;
             z-index: 1;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px;
+        .logo {
+            font-size: 64px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 50px;
+            color: #0891b2;
+            text-shadow: 0 0 50px rgba(8,145,178,0.3);
         }
 
-        .view {
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-   
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 16px;
-            box-shadow: 0 0 10px var(--cyan-glow);
-        }
-
-        .card-title {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .card-value {
-            font-family: var(--font-mono);
-            font-size: 2rem;
-            color: var(--cyan);
-            text-shadow: 0 0 10px var(--cyan);
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-
-     
-        .link-card {
+        .sc {
             display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 45px;
+        }
+
+        .item {
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            padding: 20px 24px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: var(--text);
+            gap: 10px;
+            cursor: pointer;
             text-decoration: none;
-            margin-bottom: 12px;
-            transition: all 0.2s;
-            box-shadow: 0 0 5px var(--cyan-glow);
+            color: inherit;
+            transition: transform 0.15s;
         }
 
-        .link-card:hover {
-            border-color: var(--cyan);
-            background: var(--surface-hover);
-            box-shadow: 0 0 20px var(--cyan-glow);
-            transform: translateX(5px);
-        }
-
-        .link-info h3 {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .link-info p {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
-
-        .link-arrow {
-            color: var(--text-dim);
-            font-size: 1.2rem;
-        }
-
-        .link-card:hover .link-arrow {
-            color: var(--cyan);
-            text-shadow: 0 0 10px var(--cyan);
-        }
-
-        .partners-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 16px;
-        }
-
-        .partner-card {
-            display: block;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            text-decoration: none;
-            color: var(--text);
-            transition: all 0.2s;
-            box-shadow: 0 0 5px var(--cyan-glow);
-        }
-
-        .partner-card:hover {
-            border-color: var(--cyan);
-            background: var(--surface-hover);
-            box-shadow: 0 0 15px var(--cyan-glow);
+        .item:hover {
             transform: translateY(-3px);
         }
 
-        .partner-logo {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 12px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border);
+        .icon-box {
+            width: 68px;
+            height: 68px;
+            background: #171717;
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0891b2;
+            transition: all 0.15s;
         }
 
-        .partner-logo img {
+        .item:hover .icon-box {
+            background: rgba(8,145,178,0.08);
+            border-color: #0891b2;
+        }
+
+        .icon-box svg {
+            width: 26px;
+            height: 26px;
+        }
+
+        .item span {
+            font-size: 13px;
+            color: #737373;
+            font-weight: 500;
+        }
+
+        .item:hover span {
+            color: #a3a3a3;
+        }
+
+        .dc {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: #4752c4;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 4px 20px rgba(71,82,196,0.3);
+        }
+
+        .dc:hover {
+            background: #3c45a5;
+            transform: translateY(-1px);
+        }
+
+        .page {
+            display: none;
+            padding: 24px 20px;
+            max-width: 720px;
+            margin: 0 auto;
+            min-height: calc(100vh - 86px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page h1 {
+            font-size: 28px;
+            margin-bottom: 6px;
+            font-weight: 700;
+            color: #f5f5f5;
+        }
+
+        .page > p {
+            color: #525252;
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+
+        .card {
+            background: #141414;
+            border: 1px solid #262626;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .card small {
+            color: #525252;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .card .big {
+            font-size: 24px;
+            color: #0891b2;
+            margin-top: 6px;
+            font-weight: 700;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #141414;
+            border: 1px solid #262626;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.15s;
+        }
+
+        .link:hover {
+            border-color: #0891b2;
+            background: #171717;
+        }
+
+        .link h3 {
+            font-size: 15px;
+            margin-bottom: 3px;
+            font-weight: 600;
+            color: #f5f5f5;
+        }
+
+        .link p {
+            color: #737373;
+            font-size: 13px;
+        }
+
+        .link .ar {
+            color: #404040;
+            font-size: 16px;
+            transition: all 0.15s;
+        }
+
+        .link:hover .ar {
+            color: #0891b2;
+        }
+
+        .pr {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .pa {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 28px;
+            background: #141414;
+            border: 1px solid #262626;
+            border-radius: 10px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.15s;
+        }
+
+        .pa:hover {
+            border-color: #0891b2;
+        }
+
+        .pl {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 14px;
+            background: #0d0d0d;
+        }
+
+        .pl img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        .partner-name {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--cyan);
-        }
-
-        .partner-url {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            word-break: break-all;
-        }
-
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.9);
-            display: none;
+        .pl.dc {
+            background: #4752c4;
+            display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .pa h3 {
+            color: #0891b2;
+            margin-bottom: 4px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .pa p {
+            color: #737373;
+            font-size: 12px;
+        }
+
+        .proxy-frame {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            z-index: 999999;
+            margin: 0px;
+            border: 0px solid black;
+            display: none;
+        }
+
+        .settings-btn {
+            width: 34px;
+            height: 34px;
+            background: #171717;
+            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            color: #737373;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-btn:hover {
+            background: #1f1f1f;
+            color: #e5e5e5;
+        }
+
+        .settings-panel {
+            position: fixed;
+            top: 50px;
+            right: 0;
+            width: 280px;
+            background: #141414;
+            border-left: 1px solid #262626;
+            height: calc(100vh - 50px);
+            transform: translateX(100%);
+            transition: transform 0.2s;
             z-index: 200;
             padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-box {
-            width: 420px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 0 30px var(--cyan-glow);
         }
 
-        .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .settings-panel.show {
+            transform: translateX(0);
         }
 
-        .modal-title {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--cyan);
+        .settings-section {
+            margin-bottom: 20px;
         }
 
-        .modal-close {
-            width: 32px;
-            height: 32px;
-            background: transparent;
-            border: none;
-            color: var(--text-dim);
-            cursor: pointer;
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-
-        .modal-close:hover {
-            color: var(--cyan);
-            text-shadow: 0 0 10px var(--cyan);
-        }
-
-        .modal-body {
-            padding: 24px;
-        }
-
-        .setting {
-            margin-bottom: 24px;
-        }
-
-        .setting:last-child {
-            margin-bottom: 0;
-        }
-
-        .setting-label {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            margin-bottom: 8px;
+        .settings-section label {
             display: block;
+            font-size: 11px;
+            color: #525252;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
-        input, select {
-            width: 100%;
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .stat {
+            background: #0d0d0d;
+            border: 1px solid #262626;
+            border-radius: 6px;
             padding: 12px;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 0.9rem;
-            outline: none;
-            margin-bottom: 10px;
-        }
-
-        input:focus {
-            border-color: var(--cyan);
-            box-shadow: 0 0 10px var(--cyan-glow);
-        }
-
-        .input-row {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            text-align: center;
             cursor: pointer;
+        }
+
+        .stat:hover {
+            border-color: #333;
+        }
+
+        .stat div:first-child {
+            font-size: 10px;
+            color: #525252;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+
+        .stat div:last-child {
+            font-size: 20px;
+            color: #0891b2;
+            font-weight: 700;
+        }
+
+        .settings-section input, .settings-section select {
+            width: 100%;
+            padding: 8px;
+            background: #0d0d0d;
+            border: 1px solid #2a2a2a;
+            border-radius: 5px;
+            color: #e5e5e5;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .settings-section button {
+            width: 100%;
+            padding: 10px;
+            background: #0891b2;
             border: none;
-            transition: all 0.2s;
+            border-radius: 5px;
+            color: #000;
+            font-weight: 600;
+            cursor: pointer;
         }
 
-        .btn-main {
-            background: var(--cyan);
-            color: var(--bg);
-            font-weight: 500;
+        .settings-section button:hover {
+            background: #0e7490;
         }
 
-        .btn-main:hover {
-            box-shadow: 0 0 15px var(--cyan);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--cyan);
-            color: var(--cyan);
-            box-shadow: 0 0 10px var(--cyan-glow);
-        }
-
-        .btn-danger {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-        }
-
-        #viewer {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
-            display: none;
-            flex-direction: column;
-            z-index: 300;
-        }
-
-        #viewer.active {
-            display: flex;
-        }
-
-        .viewer-bar {
-            height: 60px;
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-        }
-
-        #viewer iframe {
-            flex: 1;
-            border: none;
+        .btn-red {
+            background: rgba(220,38,38,0.1) !important;
+            border: 1px solid rgba(220,38,38,0.3) !important;
+            color: #dc2626 !important;
         }
 
         .toast {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            padding: 16px 24px;
-            background: var(--surface);
-            border: 1px solid var(--cyan);
-            border-radius: 12px;
-            color: var(--cyan);
-            font-size: 0.9rem;
-            transform: translateX(400px);
-            transition: 0.3s;
-            z-index: 1000;
-            box-shadow: 0 0 20px var(--cyan-glow);
-        }
-
-        .toast.show { transform: translateX(0); }
-        .toast.error { border-color: #ef4444; color: #ef4444; }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--cyan); }
-
-        /* New Box Styles for Partners & Discord */
-        .partners-box {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            margin-top: 20px;
-            box-shadow: 0 0 10px var(--cyan-glow);
-        }
-
-        .partners-box-content {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .partners-box .partner-card {
-            margin-bottom: 0;
-        }
-
-        .partners-box .link-card {
-            margin-bottom: 0;
-        }
-
-        /* Stats display in settings */
-        .stats-display {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 10px;
-        }
-
-        .stat-box {
-            background: var(--bg);
-            border: 1px solid var(--border);
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            background: #141414;
+            border: 1px solid #2a2a2a;
             border-radius: 8px;
-            padding: 12px;
-            text-align: center;
+            color: #e5e5e5;
+            transform: translateX(400px);
+            transition: transform 0.25s;
+            z-index: 3000;
         }
 
-        .stat-label {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
+        .toast.show {
+            transform: translateX(0);
         }
 
-        .stat-number {
-            font-family: var(--font-mono);
-            font-size: 1.5rem;
-            color: var(--cyan);
-            text-shadow: 0 0 5px var(--cyan);
+        .toast.error {
+            border-color: #dc2626;
+            color: #dc2626;
         }
 
-        .stat-box.clickable {
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .stat-box.clickable:hover {
-            border-color: var(--cyan);
-            box-shadow: 0 0 10px var(--cyan-glow);
+        @media(max-width: 600px) {
+            .logo { font-size: 52px; margin-bottom: 40px; }
+            .sc { gap: 16px; }
+            .icon-box { width: 60px; height: 60px; }
+            .grid, .pr { grid-template-columns: 1fr; }
+            .top { padding: 10px 12px; }
+            .page { padding: 20px 16px; }
         }
     </style>
 </head>
 <body>
-
-  
     <div class="stars" id="stars"></div>
+
+    <div class="top">
+        <div class="nav">
+            <button onclick="goBack()" title="Back">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button onclick="goForward()" title="Forward">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
+            <button onclick="reload()" title="Reload">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </button>
+        </div>
+
+        <button class="home-btn" onclick="goHome()" title="Home">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </button>
+
+        <button class="settings-btn" onclick="toggleSettings()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+    </div>
+
+    <div class="tab-bar" id="tabBar">
+        <button class="new-tab" onclick="newTab()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+    </div>
+
+    <div class="content" id="content"></div>
+
+    <div class="settings-panel" id="settings">
+        <div class="sethead" style="padding: 14px 16px; border-bottom: 1px solid #262626; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h3 style="color: #0891b2; font-size: 15px; font-weight: 600;">Settings</h3>
+            <button onclick="toggleSettings()" style="background:none;border:none;color:#525252;font-size:18px;cursor:pointer">×</button>
+        </div>
+        
+        <div class="settings-section">
+            <label>Stats</label>
+            <div class="stats">
+                <div class="stat">
+                    <div>FPS</div>
+                    <div id="fps">60</div>
+                </div>
+                <div class="stat" onclick="ping()">
+                    <div>PING</div>
+                    <div id="ping">--</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-section">
+            <label>Account</label>
+            <div id="ainfo" style="padding:10px;background:#0d0d0d;border-radius:5px;margin-bottom:10px;color:#0891b2;font-size:13px;border:1px solid #262626">No account</div>
+            <input type="text" id="in-name" placeholder="Username">
+            <input type="password" id="in-pass" placeholder="Password">
+            <button onclick="saveacc()">Save</button>
+        </div>
+
+        <div class="settings-section">
+            <label>Panic Button</label>
+            <div style="display:flex;gap:8px">
+                <input type="text" id="panicUrl" placeholder="URL" style="flex:1">
+                <input type="text" id="panicKey" placeholder="Key" style="width:70px">
+            </div>
+            <button class="btn-red" onclick="savePanic()">Set</button>
+        </div>
+
+        <div class="settings-section">
+            <label>Custom Game</label>
+            <input type="text" id="in-curl" placeholder="URL">
+            <input type="text" id="in-ctitle" placeholder="Title">
+            <input type="text" id="in-cdesc" placeholder="Description">
+            <button onclick="savecust()" style="background: transparent; border: 1px solid #404040; color: #e5e5e5;">Save</button>
+        </div>
+
+        <div class="settings-section">
+            <label>Cloak</label>
+            <select id="cloak" onchange="applyCloak(this.value)">
+                <option value="">None</option>
+                <option value="google">Google</option>
+                <option value="drive">Drive</option>
+                <option value="classroom">Classroom</option>
+            </select>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
-  
-    <nav class="top-nav">
-        <div class="nav-logo">Zyra</div>
-        
-        <button class="nav-btn active" onclick="nav('home', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-            Home
-        </button>
-        
-        <button class="nav-btn" onclick="openViewer('https://zyragames-jj.github.io/ZyraGames.github.io/', 'AI')">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-            AI
-        </button>
-        
-        <button class="nav-btn" onclick="nav('games', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            Games
-        </button>
-        
-        <button class="nav-btn" onclick="nav('media', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line></svg>
-            Media
-        </button>
-        
-        <button class="nav-btn" onclick="nav('partners', this)">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            Partners
-        </button>
-        
-        <div class="nav-divider"></div>
-        
-        <button class="nav-btn" onclick="toggleSettings()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            Settings
-        </button>
-    </nav>
+    <script>
+        const sb = document.getElementById('stars');
+        for(let i=0; i<35; i++) {
+            const s = document.createElement('div');
+            s.className = 'star';
+            s.style.left = Math.random()*100+'%';
+            s.style.top = Math.random()*100+'%';
+            sb.appendChild(s);
+        }
 
-    <div class="main">
-        <div class="container">
+        let tabs = [];
+        let activeTab = null;
+        let tabCounter = 0;
 
-            <div id="view-home" class="view">
-                <div class="grid-2">
-                    <div class="card">
-                        <div class="card-title">Time</div>
-                        <div class="card-value" id="clock">00:00</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">Battery</div>
-                        <div class="card-value" id="battery">--</div>
-                    </div>
-                </div>
+        function encode(str) {
+            if (!str) return str;
+            return encodeURIComponent(
+                str
+                    .toString()
+                    .split('')
+                    .map((char, ind) => ind % 2 ? String.fromCharCode(char.charCodeAt() ^ 2) : char)
+                    .join('')
+            );
+        }
 
-                <div style="margin-top: 30px;">
-                    <div class="card-title" style="margin-bottom: 16px; font-size: 0.85rem;">Quick Links</div>
-                    <a href="https://discord.gg/A32Y8hb6jJ" target="_blank" class="link-card">
-                        <div class="link-info">
-                            <h3>Discord Server</h3>
-                            <p>Join our community</p>
+        function isValidURL(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (err) {
+                return false;
+            }
+        }
+
+        function getProxyBase() {
+            try {
+                var parsed = psl.parse(location.hostname);
+                if (parsed.sld && parsed.tld && location.hostname.includes('.')) {
+                    return 'https://pb.' + parsed.sld + '.' + parsed.tld;
+                }
+            } catch(e) {
+                console.log('PSL parsing failed, using fallback');
+            }
+            return 'https://proxtest.eximlab.org';
+        }
+
+        function newTab() {
+            tabCounter++;
+            const id = tabCounter;
+            
+            tabs.push({
+                id: id,
+                frameSrc: '',
+                frameVisible: false,
+                history: [],
+                historyIndex: -1
+            });
+            
+            const tabEl = document.createElement('div');
+            tabEl.className = 'tab';
+            tabEl.id = 'tab-'+id;
+            tabEl.innerHTML = `
+                <span class="tab-title" id="title-${id}">New Tab</span>
+                <span class="tab-close" onclick="event.stopPropagation(); closeTab(${id})">×</span>
+            `;
+            tabEl.onclick = () => switchTab(id);
+            
+            document.getElementById('tabBar').insertBefore(tabEl, document.querySelector('.new-tab'));
+            
+            const contentEl = document.createElement('div');
+            contentEl.className = 'tab-content';
+            contentEl.id = 'content-'+id;
+            contentEl.innerHTML = `
+                <div class="ntp" id="ntp-${id}">
+                    <div class="logo">Zyra</div>
+                    <div class="sc">
+                        <div class="item" onclick="showPage('home', ${id})">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            </div>
+                            <span>Home</span>
                         </div>
-                        <span class="link-arrow">→</span>
-                    </a>
-                    <a href="https://forms.gle/jrvFsCAzr2qLMyKSA" target="_blank" class="link-card">
-                        <div class="link-info">
-                            <h3>Submit Request</h3>
-                            <p>Request games or features</p>
+
+                        <div class="item" onclick="showPage('ai', ${id})">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                            </div>
+                            <span>AI</span>
                         </div>
-                        <span class="link-arrow">→</span>
+
+                        <div class="item" onclick="showPage('games', ${id})">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            </div>
+                            <span>Games</span>
+                        </div>
+
+                        <div class="item" onclick="showPage('media', ${id})">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+                            </div>
+                            <span>Media</span>
+                        </div>
+
+                        <div class="item" onclick="showPage('partners', ${id})">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <span>Partners</span>
+                        </div>
+
+                        <div class="item" onclick="openProxy(${id})">
+                            <div class="icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+                            </div>
+                            <span>Proxy</span>
+                        </div>
+                    </div>
+
+                    <a href="https://discord.gg/zmeMZsfp73" target="_blank" class="dc">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        Join our Discord for more links!
                     </a>
                 </div>
-            </div>
 
-            <div id="view-games" class="view hidden">
-                <div class="link-card" onclick="launchGame('https://genizymath.github.io/')">
-                    <div class="link-info">
-                        <h3>GN Math</h3>
-                        <p>BIG game collection</p>
+                <!-- Home Page -->
+                <div class="page" id="page-home-${id}">
+                    <h1>Home</h1>
+                    <p>Welcome back</p>
+                    
+                    <div class="grid">
+                        <div class="card">
+                            <small>Time</small>
+                            <div class="big" id="chome-${id}">00:00</div>
+                        </div>
+                        <div class="card">
+                            <small>Battery</small>
+                            <div class="big" id="bhome-${id}">--%</div>
+                        </div>
                     </div>
-                    <span class="link-arrow">→</span>
-                </div>
-                <div class="link-card" onclick="window.open('https://psecurly-by-void.bostoncareercounselor.com/g', '_blank')">
-                    <div class="link-info">
-                        <h3>Velara</h3>
-                        <p>Gaming portal/pr0xy</p>
-                    </div>
-                    <span class="link-arrow">→</span>
-                </div>
-                <div class="link-card" onclick="window.open('https://quack-learn.web.app/', '_blank')">
-                    <div class="link-info">
-                        <h3>Duck Games</h3>
-                        <p>Retro games</p>
-                    </div>
-                    <span class="link-arrow">→</span>
-                </div>
-                <div class="link-card" onclick="launchCustomGame()">
-                    <div class="link-info">
-                        <h3 id="custom-game-title">Custom</h3>
-                        <p id="custom-game-desc">Configure in settings</p>
-                    </div>
-                    <span class="link-arrow">→</span>
-                </div>
-            </div>
 
-            <div id="view-media" class="view hidden">
-                <div class="link-card" onclick="window.open('https://yflix.to/home', '_blank')">
-                    <div class="link-info">
-                        <h3>YFlix</h3>
-                        <p>Movies & TV shows</p>
+                    <div style="margin-top:28px">
+                        <div style="color:#525252;font-size:11px;text-transform:uppercase;margin-bottom:14px;letter-spacing:0.5px;font-weight:600">Quick Links</div>
+                        <a href="https://discord.gg/zmeMZsfp73" target="_blank" class="link">
+                            <div>
+                                <h3>Discord</h3>
+                                <p>Join server</p>
+                            </div>
+                            <span class="ar">→</span>
+                        </a>
+                        <a href="https://forms.gle/jrvFsCAzr2qLMyKSA" target="_blank" class="link">
+                            <div>
+                                <h3>Request</h3>
+                                <p>Submit idea</p>
+                            </div>
+                            <span class="ar">→</span>
+                        </a>
                     </div>
-                    <span class="link-arrow">→</span>
                 </div>
-                <div class="link-card" onclick="window.open('https://arc018.to/', '_blank')">
-                    <div class="link-info">
-                        <h3>Arc018</h3>
-                        <p>Series archive</p>
-                    </div>
-                    <span class="link-arrow">→</span>
-                </div>
-            </div>
 
-            <div id="view-partners" class="view hidden">
-                <!-- Partners Box containing both Partner and Discord - Title removed -->
-                <div class="partners-box">
-                    <div class="partners-box-content">
-                        <a href="https://sonissosigma.keybusinessconnection.com/" target="_blank" class="partner-card">
-                            <div class="partner-logo">
+                <!-- AI Page -->
+                <div class="page" id="page-ai-${id}">
+                    <h1>AI</h1>
+                    <p>AI tools and assistants</p>
+                    <a href="https://zyragames-jj.github.io/ZyraGames.github.io/" target="_blank" class="link">
+                        <div>
+                            <h3>Zyra AI</h3>
+                            <p>Launch AI assistant</p>
+                        </div>
+                        <span class="ar">→</span>
+                    </a>
+                </div>
+
+                <!-- Games Page -->
+                <div class="page" id="page-games-${id}">
+                    <h1>Games</h1>
+                    <p>Play games</p>
+                    
+                    <a href="https://genizymath.github.io/" target="_blank" class="link">
+                        <div>
+                            <h3>GN Math</h3>
+                            <p>Collection</p>
+                        </div>
+                        <span class="ar">→</span>
+                    </a>
+                    <a href="https://psecurly-by-void.bostoncareercounselor.com/g" target="_blank" class="link">
+                        <div>
+                            <h3>Velara</h3>
+                            <p>Portal</p>
+                        </div>
+                        <span class="ar">→</span>
+                    </a>
+                    <a href="https://quack-learn.web.app/" target="_blank" class="link">
+                        <div>
+                            <h3>Duck Games</h3>
+                            <p>Retro</p>
+                        </div>
+                        <span class="ar">→</span>
+                    </a>
+                    <div class="link" onclick="openCustomGame(${id})">
+                        <div>
+                            <h3 id="ctitle-${id}">Custom</h3>
+                            <p id="cdesc-${id}">Set in settings</p>
+                        </div>
+                        <span class="ar">→</span>
+                    </div>
+                </div>
+
+                <!-- Media Page -->
+                <div class="page" id="page-media-${id}">
+                    <h1>Media</h1>
+                    <p>Watch stuff</p>
+                    
+                    <a href="https://yflix.to/home" target="_blank" class="link">
+                        <div>
+                            <h3>YFlix</h3>
+                            <p>Movies</p>
+                        </div>
+                        <span class="ar">→</span>
+                    </a>
+                    <a href="https://arc018.to/" target="_blank" class="link">
+                        <div>
+                            <h3>Arc018</h3>
+                            <p>Series</p>
+                        </div>
+                        <span class="ar">→</span>
+                    </a>
+                </div>
+
+                <!-- Partners Page -->
+                <div class="page" id="page-partners-${id}">
+                    <h1>Partners</h1>
+                    <p>Friends</p>
+                    
+                    <div class="pr">
+                        <a href="https://sonissosigma.keybusinessconnection.com/" target="_blank" class="pa">
+                            <div class="pl">
                                 <img src="https://image2url.com/r2/default/images/1770434449041-5958d4dc-e4a1-44be-845a-6250582197d1.png" alt="ZG">
                             </div>
-                            <div class="partner-name">Zane Gamez</div>
-                            <div class="partner-url">sonissosigma.keybusinessconnection.com</div>
+                            <h3>Zane Gamez</h3>
+                            <p>sonissosigma.keybusinessconnection.com</p>
                         </a>
                         
-                        <a href="https://discord.gg/A32Y8hb6jJ" target="_blank" class="link-card">
-                            <div class="link-info">
-                                <h3>Discord Server</h3>
-                                <p>discord.gg/A32Y8hb6jJ</p>
+                        <a href="https://discord.gg/zmeMZsfp73" target="_blank" class="pa">
+                            <div class="pl dc">
+                                <svg width="36" height="36" viewBox="0 0 24 24" fill="white"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
                             </div>
-                            <span class="link-arrow">→</span>
+                            <h3>Discord</h3>
+                            <p>discord.gg/zmeMZsfp73</p>
                         </a>
                     </div>
                 </div>
-            </div>
 
-        </div>
-    </div>
-
-    <div id="settings-modal" class="modal" onclick="if(event.target === this) toggleSettings()">
-        <div class="modal-box">
-            <div class="modal-header">
-                <div class="modal-title">Settings</div>
-                <button class="modal-close" onclick="toggleSettings()">×</button>
-            </div>
-            <div class="modal-body">
-
-                <!-- Stats Section moved to Settings -->
-                <div class="setting">
-                    <label class="setting-label">Performance Stats</label>
-                    <div class="stats-display">
-                        <div class="stat-box">
-                            <div class="stat-label">FPS</div>
-                            <div class="stat-number" id="fps">60</div>
-                        </div>
-                        <div class="stat-box clickable" onclick="testPing()">
-                            <div class="stat-label">PING</div>
-                            <div class="stat-number" id="ping">--</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="setting">
-                    <label class="setting-label">Account</label>
-                    <div id="account-display" style="padding: 14px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 10px; color: var(--cyan);"></div>
-                    <div class="input-row">
-                        <input type="text" id="account-name" placeholder="Username">
-                        <input type="password" id="account-pass" placeholder="Password" style="width: 120px;">
-                    </div>
-                    <button class="btn btn-main" onclick="saveAccount()" style="margin-top: 10px;">Save Account</button>
-                </div>
-
-                <div class="setting">
-                    <label class="setting-label">Panic Button</label>
-                    <div class="input-row">
-                        <input type="text" id="panic-url" placeholder="URL (e.g., https://google.com)">
-                        <input type="text" id="panic-key" placeholder="Key (e.g., `)" style="width: 100px;">
-                    </div>
-                    <button class="btn btn-danger" onclick="savePanic()" style="margin-top: 10px;">Save Panic</button>
-                </div>
-
-                <div class="setting">
-                    <label class="setting-label">Custom Game</label>
-                    <input type="text" id="custom-url" placeholder="Game URL">
-                    <input type="text" id="custom-title" placeholder="Title">
-                    <input type="text" id="custom-desc" placeholder="Description">
-                    <button class="btn btn-secondary" onclick="saveCustom()">Save Custom Game</button>
-                </div>
-
-                <div class="setting">
-                    <label class="setting-label">Tab Cloak</label>
-                    <select id="cloak-select" onchange="applyCloak(this.value)">
-                        <option value="">None</option>
-                        <option value="google">Google</option>
-                        <option value="drive">Drive</option>
-                        <option value="classroom">Classroom</option>
-                    </select>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div id="viewer">
-        <div class="viewer-bar">
-            <span id="viewer-title">Viewer</span>
-            <button class="btn btn-main" onclick="closeViewer()">Close</button>
-        </div>
-        <iframe id="viewer-frame"></iframe>
-    </div>
-
-    <script>
-        for(let i = 0; i < 50; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.animationDelay = Math.random() * 3 + 's';
-            document.getElementById('stars').appendChild(star);
-        }
-
-        const DB = {
-            account: JSON.parse(localStorage.getItem('zyra_account')) || null,
-            panic: JSON.parse(localStorage.getItem('zyra_panic')) || {},
-            custom: JSON.parse(localStorage.getItem('zyra_custom')) || {},
-            cloak: localStorage.getItem('zyra_cloak') || ''
-        };
-
-        function save(key, value) {
-            localStorage.setItem('zyra_' + key, typeof value === 'string' ? value : JSON.stringify(value));
-        }
-
-        function init() {
-            if(DB.account) {
-                document.getElementById('account-display').textContent = 'Logged in as: ' + DB.account.name;
-                document.getElementById('account-name').value = DB.account.name;
-                document.getElementById('account-pass').value = DB.account.pass;
-            } else {
-                document.getElementById('account-display').textContent = 'No account saved';
-            }
-
-            if(DB.panic.url) document.getElementById('panic-url').value = DB.panic.url;
-            if(DB.panic.key) document.getElementById('panic-key').value = DB.panic.key;
-
-            if(DB.custom.url) {
-                document.getElementById('custom-url').value = DB.custom.url;
-                document.getElementById('custom-game-title').textContent = DB.custom.title || 'Custom';
-                document.getElementById('custom-game-desc').textContent = DB.custom.desc || 'Custom game';
-            }
-            if(DB.custom.title) document.getElementById('custom-title').value = DB.custom.title;
-            if(DB.custom.desc) document.getElementById('custom-desc').value = DB.custom.desc;
-
-            if(DB.cloak) {
-                document.getElementById('cloak-select').value = DB.cloak;
-                applyCloak(DB.cloak);
-            }
-
+                <iframe src="" id="swframe-${id}" style="display: none;"></iframe>
+                <iframe src="" id="frame-${id}" class="proxy-frame"></iframe>
+            `;
+            
+            document.getElementById('content').appendChild(contentEl);
+            
             setInterval(() => {
-                document.getElementById('clock').textContent = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                const n = new Date();
+                const t = n.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+                const el = document.getElementById('chome-'+id);
+                if (el) el.textContent = t;
             }, 1000);
-
+            
             if('getBattery' in navigator) {
                 navigator.getBattery().then(b => {
-                    document.getElementById('battery').textContent = Math.round(b.level * 100) + '%';
-                    b.addEventListener('levelchange', () => {
-                        document.getElementById('battery').textContent = Math.round(b.level * 100) + '%';
-                    });
+                    function upd() {
+                        const p = Math.round(b.level*100);
+                        const el = document.getElementById('bhome-'+id);
+                        if (el) el.textContent = p+'%'+(b.charging?' ⚡':'');
+                    }
+                    upd();
+                    b.addEventListener('levelchange', upd);
+                    b.addEventListener('chargingchange', upd);
                 });
             }
+            
+            switchTab(id);
+        }
 
-            // FPS
-            let last = performance.now(), frames = 0;
-            function loop() {
-                frames++;
-                const now = performance.now();
-                if(now >= last + 1000) {
-                    document.getElementById('fps').textContent = Math.round((frames * 1000) / (now - last));
-                    frames = 0;
-                    last = now;
+        function switchTab(id) {
+            if (activeTab) {
+                const currentTab = tabs.find(t => t.id === activeTab);
+                const currentFrame = document.getElementById('frame-'+activeTab);
+                if (currentFrame) {
+                    currentTab.frameSrc = currentFrame.src;
+                    currentTab.frameVisible = currentFrame.style.display === 'block';
                 }
-                requestAnimationFrame(loop);
             }
-            loop();
+
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            document.getElementById('tab-'+id).classList.add('active');
+            document.getElementById('content-'+id).classList.add('active');
+            
+            activeTab = id;
+            
+            const tab = tabs.find(t => t.id === id);
+            const frameEl = document.getElementById('frame-'+id);
+            
+            if (frameEl) {
+                frameEl.src = tab.frameSrc || '';
+                frameEl.style.display = tab.frameVisible ? 'block' : 'none';
+            }
         }
 
-        init();
-
-        function testPing() {
-            const el = document.getElementById('ping');
-            el.textContent = '...';
-            setTimeout(() => {
-                el.textContent = Math.floor(Math.random() * 60 + 20) + 'ms';
-            }, 500);
+        function closeTab(id) {
+            const idx = tabs.findIndex(t => t.id === id);
+            if (idx === -1) return;
+            
+            tabs.splice(idx, 1);
+            document.getElementById('tab-'+id).remove();
+            document.getElementById('content-'+id).remove();
+            
+            if (activeTab === id) {
+                if (tabs.length > 0) {
+                    switchTab(tabs[Math.max(0, idx-1)].id);
+                } else {
+                    newTab();
+                }
+            }
         }
 
-        function nav(view, el) {
-            document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
-            document.getElementById('view-' + view).classList.remove('hidden');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            if(el) el.classList.add('active');
+        function showPage(page, id) {
+            document.getElementById('ntp-'+id).style.display = 'none';
+            document.getElementById('page-home-'+id).classList.remove('active');
+            document.getElementById('page-ai-'+id).classList.remove('active');
+            document.getElementById('page-games-'+id).classList.remove('active');
+            document.getElementById('page-media-'+id).classList.remove('active');
+            document.getElementById('page-partners-'+id).classList.remove('active');
+            document.getElementById('frame-'+id).style.display = 'none';
+            
+            if (page === 'home') {
+                document.getElementById('page-home-'+id).classList.add('active');
+            } else if (page === 'ai') {
+                document.getElementById('page-ai-'+id).classList.add('active');
+            } else if (page === 'games') {
+                document.getElementById('page-games-'+id).classList.add('active');
+            } else if (page === 'media') {
+                document.getElementById('page-media-'+id).classList.add('active');
+            } else if (page === 'partners') {
+                document.getElementById('page-partners-'+id).classList.add('active');
+            }
         }
 
-        function openViewer(url, title) {
-            document.getElementById('viewer-title').textContent = title;
-            document.getElementById('viewer-frame').src = url;
-            document.getElementById('viewer').classList.add('active');
+        function openProxy(id) {
+            const frameEl = document.getElementById('frame-'+id);
+            const swframeEl = document.getElementById('swframe-'+id);
+            const tab = tabs.find(t => t.id === id);
+            
+            document.getElementById('ntp-'+id).style.display = 'none';
+            document.getElementById('page-home-'+id).classList.remove('active');
+            document.getElementById('page-ai-'+id).classList.remove('active');
+            document.getElementById('page-games-'+id).classList.remove('active');
+            document.getElementById('page-media-'+id).classList.remove('active');
+            document.getElementById('page-partners-'+id).classList.remove('active');
+            
+            const base = getProxyBase();
+            const url = base + '/';
+            
+            swframeEl.src = base;
+            
+            if (tab.historyIndex < tab.history.length - 1) {
+                tab.history = tab.history.slice(0, tab.historyIndex + 1);
+            }
+            tab.history.push(url);
+            tab.historyIndex++;
+            
+            frameEl.src = url;
+            frameEl.style.display = 'block';
+            
+            document.getElementById('title-'+id).textContent = 'Proxy';
+            
+            tab.frameSrc = url;
+            tab.frameVisible = true;
         }
 
-        function closeViewer() {
-            document.getElementById('viewer').classList.remove('active');
-            setTimeout(() => document.getElementById('viewer-frame').src = '', 300);
+        function openCustomGame(id) {
+            const cust = JSON.parse(localStorage.getItem('zyra_custom')) || {};
+            if (cust.url) {
+                window.open(cust.url, '_blank');
+            } else {
+                toast('Set in settings', true);
+                toggleSettings();
+            }
         }
 
-        function launchGame(url) {
-            const w = window.open('about:blank', '_blank');
-            if(w) {
-                w.document.write('<!DOCTYPE html><html><head><title>Game</title><style>body{margin:0;background:#000}</style></head><body><iframe src="' + url + '" style="width:100vw;height:100vh;border:none;"></iframe></body></html>');
-                w.document.close();
-            } else toast('Popup blocked', true);
+        function goBack() {
+            const tab = tabs.find(t => t.id === activeTab);
+            if (!tab || tab.historyIndex <= 0) return;
+            
+            tab.historyIndex--;
+            const input = tab.history[tab.historyIndex];
+            
+            const frameEl = document.getElementById('frame-'+activeTab);
+            const swframeEl = document.getElementById('swframe-'+activeTab);
+            
+            var base = getProxyBase();
+            swframeEl.src = base;
+            
+            var url;
+            if (isValidURL(input)) {
+                url = base + '/~/' + encode(input);
+            } else {
+                url = base + '/~/' + encode('https://duckduckgo.com/?q=' + input);
+            }
+            
+            if (frameEl) {
+                frameEl.src = url;
+                tab.frameSrc = url;
+            }
         }
 
-        function launchCustomGame() {
-            if(DB.custom.url) launchGame(DB.custom.url);
-            else { toast('Configure in settings', true); toggleSettings(); }
+        function goForward() {
+            const tab = tabs.find(t => t.id === activeTab);
+            if (!tab || tab.historyIndex >= tab.history.length - 1) return;
+            
+            tab.historyIndex++;
+            const input = tab.history[tab.historyIndex];
+            
+            const frameEl = document.getElementById('frame-'+activeTab);
+            const swframeEl = document.getElementById('swframe-'+activeTab);
+            
+            var base = getProxyBase();
+            swframeEl.src = base;
+            
+            var url;
+            if (isValidURL(input)) {
+                url = base + '/~/' + encode(input);
+            } else {
+                url = base + '/~/' + encode('https://duckduckgo.com/?q=' + input);
+            }
+            
+            if (frameEl) {
+                frameEl.src = url;
+                tab.frameSrc = url;
+            }
+        }
+
+        function reload() {
+            const frame = document.getElementById('frame-'+activeTab);
+            if (frame && frame.style.display === 'block') {
+                frame.src = frame.src;
+            }
+        }
+
+        function goHome() {
+            if (!activeTab) return;
+            
+            const tab = tabs.find(t => t.id === activeTab);
+            const frame = document.getElementById('frame-'+activeTab);
+            
+            document.getElementById('ntp-'+activeTab).style.display = 'flex';
+            document.getElementById('page-home-'+activeTab).classList.remove('active');
+            document.getElementById('page-ai-'+activeTab).classList.remove('active');
+            document.getElementById('page-games-'+activeTab).classList.remove('active');
+            document.getElementById('page-media-'+activeTab).classList.remove('active');
+            document.getElementById('page-partners-'+activeTab).classList.remove('active');
+            
+            if (frame) {
+                frame.style.display = 'none';
+                frame.src = '';
+            }
+            
+            tab.frameSrc = '';
+            tab.frameVisible = false;
+            tab.history = [];
+            tab.historyIndex = -1;
+            document.getElementById('title-'+activeTab).textContent = 'New Tab';
         }
 
         function toggleSettings() {
-            document.getElementById('settings-modal').classList.toggle('active');
+            document.getElementById('settings').classList.toggle('show');
         }
 
-        function saveAccount() {
-            const name = document.getElementById('account-name').value.trim();
-            const pass = document.getElementById('account-pass').value;
-            if(!name || !pass) return toast('Enter username and password', true);
-            
-            DB.account = { name: name, pass: pass };
-            save('account', DB.account);
-            document.getElementById('account-display').textContent = 'Logged in as: ' + name;
-            toast('Account saved');
+        let last = performance.now(), frames = 0;
+        function fps() {
+            frames++;
+            const now = performance.now();
+            if (now >= last + 1000) {
+                document.getElementById('fps').textContent = Math.min(frames, 60);
+                frames = 0;
+                last = now;
+            }
+            requestAnimationFrame(fps);
+        }
+        requestAnimationFrame(fps);
+
+        function ping() {
+            const el = document.getElementById('ping');
+            el.textContent = '...';
+            setTimeout(() => {
+                el.textContent = Math.floor(Math.random() * 50 + 10) + 'ms';
+            }, 200);
+        }
+
+        function saveacc() {
+            const n = document.getElementById('in-name').value.trim();
+            const p = document.getElementById('in-pass').value;
+            if (!n || !p) return toast('Enter details', true);
+            const acc = { name: n, pass: p };
+            localStorage.setItem('zyra_account', JSON.stringify(acc));
+            document.getElementById('ainfo').textContent = 'Logged in as: ' + n;
+            toast('Saved');
         }
 
         function savePanic() {
-            const url = document.getElementById('panic-url').value.trim();
-            const key = document.getElementById('panic-key').value.trim();
-            
-            if(!url || !key) return toast('Enter both URL and key', true);
-            
-            DB.panic = { url: url, key: key };
-            save('panic', DB.panic);
-            toast('Panic button saved');
+            const u = document.getElementById('panicUrl').value.trim();
+            const k = document.getElementById('panicKey').value.trim();
+            if (!u || !k) return toast('Enter details', true);
+            localStorage.setItem('zyra_panic_url', u);
+            localStorage.setItem('zyra_panic_key', k);
+            toast('Panic set');
         }
 
-        function saveCustom() {
-            const url = document.getElementById('custom-url').value.trim();
-            const title = document.getElementById('custom-title').value.trim();
-            const desc = document.getElementById('custom-desc').value.trim();
+        function savecust() {
+            const u = document.getElementById('in-curl').value.trim();
+            const t = document.getElementById('in-ctitle').value.trim();
+            const d = document.getElementById('in-cdesc').value.trim();
+            if (!u) return toast('Enter URL', true);
+            const cust = { url: u, title: t || 'Custom', desc: d || 'Custom game' };
+            localStorage.setItem('zyra_custom', JSON.stringify(cust));
             
-            if(!url) return toast('Enter game URL', true);
+            document.querySelectorAll('[id^="ctitle-"]').forEach(el => {
+                el.textContent = cust.title;
+            });
+            document.querySelectorAll('[id^="cdesc-"]').forEach(el => {
+                el.textContent = cust.desc;
+            });
             
-            DB.custom = { 
-                url: url, 
-                title: title || 'Custom', 
-                desc: desc || 'Custom game' 
+            toast('Saved');
+        }
+
+        function applyCloak(type) {
+            const cloaks = {
+                google: { t: 'Google', i: 'https://www.google.com/favicon.ico' },
+                drive: { t: 'Drive', i: 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png' },
+                classroom: { t: 'Classroom', i: 'https://ssl.gstatic.com/classroom/ic_product_classroom_32.png' }
             };
-            save('custom', DB.custom);
-            
-            document.getElementById('custom-game-title').textContent = DB.custom.title;
-            document.getElementById('custom-game-desc').textContent = DB.custom.desc;
-            toast('Custom game saved');
+            if (type && cloaks[type]) {
+                document.title = cloaks[type].t;
+                document.querySelector('link[rel="icon"]').href = cloaks[type].i;
+                localStorage.setItem('zyra_cloak', type);
+            } else {
+                document.title = 'Zyra';
+                document.querySelector('link[rel="icon"]').href = 'https://image2url.com/r2/default/images/1770448509686-7735246e-00d6-4549-adc7-905c51174619.png';
+                localStorage.removeItem('zyra_cloak');
+            }
         }
 
-        document.addEventListener('keydown', (e) => {
-            if(DB.panic.key && e.key === DB.panic.key && DB.panic.url) {
-                window.location.href = DB.panic.url;
+        function toast(msg, bad) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast' + (bad ? ' error' : '');
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        document.addEventListener('keydown', e => {
+            const key = localStorage.getItem('zyra_panic_key');
+            const url = localStorage.getItem('zyra_panic_url');
+            if (key && url && e.key === key) {
+                window.location.href = url;
             }
         });
 
-        const cloaks = {
-            google: {t: 'Google', i: 'https://www.google.com/favicon.ico'},
-            drive: {t: 'Drive', i: 'https://ssl.gstatic.com/docs/doclist/images/drive_2022q3_32dp.png'},
-            classroom: {t: 'Classroom', i: 'https://ssl.gstatic.com/classroom/ic_product_classroom_32.png'}
-        };
-
-        function applyCloak(type) {
-            save('cloak', type);
-            if(!type) {
-                document.title = 'Zyra';
-                document.querySelector('link[rel="icon"]').href = 'https://www.google.com/favicon.ico';
-                return;
+        document.addEventListener('click', e => {
+            const panel = document.getElementById('settings');
+            const btn = document.querySelector('.settings-btn');
+            if (!panel.contains(e.target) && !btn.contains(e.target)) {
+                panel.classList.remove('show');
             }
-            document.title = cloaks[type].t;
-            document.querySelector('link[rel="icon"]').href = cloaks[type].i;
-        }
+        });
 
-        function toast(msg, err) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.className = 'toast' + (err ? ' error' : '');
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
-        }
-    </script>
-
-</body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warning </title>
-    <script>
-       
-        window.onload = function() {
-            alert("⚠ Warning: This site has ads for me to make money pls dont mind them ");
+        window.onload = () => {
+            newTab();
+            
+         
+            const acc = JSON.parse(localStorage.getItem('zyra_account'));
+            if (acc) {
+                document.getElementById('ainfo').textContent = 'Logged in as: ' + acc.name;
+                document.getElementById('in-name').value = acc.name;
+                document.getElementById('in-pass').value = acc.pass;
+            }
+            
+            const pUrl = localStorage.getItem('zyra_panic_url');
+            const pKey = localStorage.getItem('zyra_panic_key');
+            if (pUrl) document.getElementById('panicUrl').value = pUrl;
+            if (pKey) document.getElementById('panicKey').value = pKey;
+            
+            const cust = JSON.parse(localStorage.getItem('zyra_custom'));
+            if (cust) {
+                document.getElementById('in-curl').value = cust.url || '';
+                document.getElementById('in-ctitle').value = cust.title || '';
+                document.getElementById('in-cdesc').value = cust.desc || '';
+            }
+            
+            const cloak = localStorage.getItem('zyra_cloak');
+            if (cloak) {
+                document.getElementById('cloak').value = cloak;
+                applyCloak(cloak);
+            }
         };
     </script>
-</head>
-<body>
 </body>
 </html>
-
